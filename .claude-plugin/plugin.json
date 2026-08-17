@@ -1,0 +1,37 @@
+{
+  "name": "manager-skills",
+  "version": "0.1.0",
+  "description": "Agent skills for people managers — 1-on-1 prep, SBI feedback, recognition equity, goal health, review evidence. Grounded in management research, wired to Topicflow.",
+  "author": {
+    "name": "Topicflow",
+    "url": "https://www.topicflow.com"
+  },
+  "homepage": "https://github.com/Topicflow/skills",
+  "repository": "https://github.com/Topicflow/skills",
+  "license": "MIT",
+  "keywords": [
+    "management",
+    "people-management",
+    "one-on-ones",
+    "feedback",
+    "recognition",
+    "goals",
+    "performance-reviews",
+    "topicflow"
+  ],
+  "skills": [
+    "./skills/foundations/management-practices",
+    "./skills/foundations/save-context",
+    "./skills/conversations/prep-1on1",
+    "./skills/conversations/give-feedback",
+    "./skills/conversations/request-feedback",
+    "./skills/conversations/give-recognition",
+    "./skills/conversations/onboard-direct-report",
+    "./skills/conversations/review-prep",
+    "./skills/signals/recognition-scan",
+    "./skills/signals/relationship-drift",
+    "./skills/signals/stuck-work",
+    "./skills/signals/goal-checkin",
+    "./skills/signals/weekly-brief"
+  ]
+}

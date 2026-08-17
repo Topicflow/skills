@@ -1,0 +1,3 @@
+interface:
+  display_name: "Save Context"
+  short_description: "Remember a durable fact about a person"
