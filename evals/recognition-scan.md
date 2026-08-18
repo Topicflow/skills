@@ -86,6 +86,12 @@ counter — that produces exactly the generic recognition P8 forbids.
 
 ### Case 6 — portability path: wins visible, silence unmeasurable
 
+> Note: this is the **current** state on Topicflow too, not only on other backends — the
+> recognition read tool is scope-gated and unreachable
+> ([TF-1596](https://linear.app/topicflow/issue/TF-1596)). When that ships, this case still holds
+> for backends with no recognition record, and Case 1 becomes the Topicflow path. Until then, Case 1
+> cannot be run against a live Topicflow org.
+
 **Setup.** No Topicflow. Linear and GitHub show a clear, non-trivial win for Nadia on 2026-08-12.
 Nothing anywhere records who has been recognized or when. No recognition log exists.
 

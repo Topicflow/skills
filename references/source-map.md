@@ -64,6 +64,12 @@ Append where the backend allows it.
 found. This is the capability most likely to produce a false claim about a real person, so the
 rule is absolute: unverified silence is never reported as neglect. Where no backend can hold this,
 `setup-sources` offers a log; it works from creation forward and never retroactively.
+**Bind read and append separately** — this capability is asymmetric more often than any other, and
+write-only is a real state: a backend can accept recognitions and be unable to list them. A live
+example is in [topicflow-tools.md](topicflow-tools.md), where the read tool exists but is gated
+behind an unregistered permission, making it invisible to clients. From a client, "the tool is
+absent", "the tool returned nothing", and "nothing ever happened" are indistinguishable. That is
+the whole reason this contract withholds the conclusion instead of trusting an empty result.
 
 **C6 — Durable notes.** Read a person's notes; append a dated line. Both, ideally; append alone is
 still useful.

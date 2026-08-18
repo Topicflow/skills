@@ -149,9 +149,20 @@ dedicated tool would remove the keyword-scanning and the recency window.
   prove "goals hit last quarter" from the API alone: list what is open with status, then
   ask the manager to confirm what closed, and mark it as an evidence gap rather than
   reporting zero.
-- **No recognition list tool.** Recognition recency comes from `list_feedback` where the
-  deployment surfaces it there. If a live check shows it does not, treat recognition
-  drought as unverifiable and say so instead of pinging on a false drought.
+- **`list_recognitions` exists but is currently unreachable.** It is registered in the tool
+  registry and requires the OAuth scope `recognitions:read`, which is missing from the
+  server's supported scopes — so no client can hold it, and the tool never appears in
+  `tools/list`. From a client the effect is that recognitions can be **created and edited but
+  not read**. Tracked in [TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
+  [TF-1595](https://linear.app/topicflow/issue/TF-1595).
+  Recognition is **not** carried by `list_feedback` — a live check in 2026-10 found feedback
+  and feedback requests there and no recognitions, which is consistent with them living
+  behind their own tool. Until the scope ships, treat recognition recency as unreadable and
+  say so, rather than pinging on a false drought.
+  **The general lesson, worth keeping after this is fixed:** a tool that is scope-gated is
+  invisible, and from the client side "the tool is not there", "the tool returned nothing",
+  and "nothing has ever happened" look identical. That is why the C5 contract withholds the
+  drought conclusion on an unverified empty result rather than trusting it.
 - **No calendar write.** Nothing here schedules, reschedules, or cancels a meeting. A
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.
