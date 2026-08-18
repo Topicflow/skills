@@ -85,30 +85,29 @@ week. Create it only if the manager asks, with the **report** as owner.
 
 ## Sources
 
-**Needs** C6 to record the baseline (essential — it is the point), C8 to place the check-in
-topics, C1 for the profile. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+**Needs** C6 to record the baseline (this is the point of the skill), C8 to place the check-in
+topics, C1 for the profile and role detail. Resolve each through the binding record; **this skill
+never names a backend**. Contracts: [source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow.** `get_user_infos(target_names: [name], include_career_track: true)` for level,
-role, competencies, next role — the career track is what makes the day-60 conversation concrete.
-`list_meetings(is_oneonone: true, order: "start_datetime", meeting_datetime_start: <now>, limit:
-10)` for the day-7/30/60 `meeting_id`s. For an inherited report, `list_goals(owners: <id>)` and
-`list_meetings(with_notes_and_transcript: true)` for visible history. Write with
-`add_meeting_topics(meeting_id, topics)` per meeting → preview → approval → `confirm_creation`;
-optionally `create_goal(..., owner_id: <report>)`.
+**What each buys here.** C1 answers what the manager should not have to — level, role,
+competencies, and where the company documents what the next role looks like, which is what makes
+the day-60 conversation concrete. C6 files the new-to list that `stuck-work`, `goal-checkin`, and
+`review-prep` all read later. C8 puts the day-7, day-30, and day-60 topics on real dates instead of
+in a message the manager loses.
 
-**With Notion.** The baseline goes to the person's page (`notion-create-pages`, then
-`notion-update-page`) — this is the better note store today. The company's own onboarding
-checklist and career ladder usually live here too: reuse them, do not invent a parallel one. Place
-check-in topics by creating or appending the meeting note for each date with
-`notion-update-page(command: "insert_content")`.
+**Reuse the company's own material wherever it is bound.** An onboarding checklist or a career
+ladder that already exists is better than a generic one from this skill — read it, do not invent a
+parallel version next to it.
 
-**With neither.** Everything still works except the placing. Ask the four questions, hand back the
-baseline to keep, and deliver the four agendas as dated text.
+**Withheld when a capability is thin or absent.** No C6 → hand the baseline back for the manager to
+keep and say it was not filed; the four agendas are unaffected. No C1 role detail → skip the level
+language and ask what good looks like in 90 days. For an inherited report, treat a previous
+manager's visible notes as history, never as current fact — the maturity baseline is asked fresh.
 
-**No backend schedules a meeting.** Where the 1-on-1 series does not exist, deliver all four
-agendas with the dates they belong on and ask the manager to set the series up. No career track
-configured → skip the level language and ask what good looks like in 90 days.
+**No binding schedules a meeting.** Where the 1-on-1 series does not exist, deliver all four
+agendas with the dates they belong on and ask the manager to set the series up. Never claim the
+check-in topics were placed when they were not.
 
 ## Gate — routine mode
 

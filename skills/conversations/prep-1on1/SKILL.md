@@ -70,32 +70,29 @@ meeting. On approval, write them and confirm once.
 
 ## Sources
 
-**Needs** C2 1-on-1 history (essential), C3 work signals, C4 goals, C5 feedback recency, C8 to
-write topics. Backend mapping: [source-map.md](../../../references/source-map.md).
+**Needs** C2 1-on-1 history (the one that matters), C3 work signals, C4 goals, C5 feedback recency,
+C8 to write topics. Resolve each through the binding record — **this skill never names a backend**.
+Contracts: [source-map.md](../../../references/source-map.md). Adapters, and how to bind a new one:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow** — the fullest path. `get_user_infos(target_names: [name])` for the ID first;
-everything keys off it. `list_meetings(is_oneonone: true, order: "-start_datetime", limit: 3,
-with_notes_and_transcript: true)` for past topics, notes, and action items; the same call with
-`order: "start_datetime", meeting_datetime_start: <now>` for the upcoming `meeting_id`.
-`query_external_events(target: <id>, start_datetime: <last 1-on-1>, end_datetime: <now>)` — always
-pass `target`. `list_goals(owners: <id>)`. `list_feedback(recipients: <id>, order: "-created")`.
-Write with `add_meeting_topics(meeting_id, topics: [{title, notes}])` → preview → one approval →
-`confirm_creation`. Titles plain text; notes carry the *why* and the links.
+**What each buys here.** C2 supplies the open action items that lead the agenda and the past topics
+that stop repetition — it is the difference between a prep and a guess. C3 turns "how's it going"
+into a specific question about a specific piece of friction. C4 surfaces the at-risk or stale goal
+worth 5 minutes. C5 dates the last recognition, which is a topic when it is old. C8 puts the result
+where the meeting will actually happen.
 
-**With Notion.** `notion-query-meeting-notes` filtered by `attendees` (`person_contains`) and
-`created_time` for recent 1-on-1s, then `notion-fetch(id)` for the page — action items come from
-what the manager actually wrote down. Goals via `notion-fetch` on the goals database for its schema
-and `collection://` URL, then `notion-query-data-sources`. Work signals from Linear or GitHub
-directly, or `notion-search`. Write topics by appending to the next meeting note with
-`notion-update-page(command: "insert_content")` — **shared pages are visible to the report**, so a
-*why* line that is manager-only stays out of them.
+**Withheld when a capability is thin or absent.** No C5 → **never claim a recognition drought**;
+ask when they last recognized them. No C3 → prep from history and goals, and say work signals were
+not available. C2 bound to a note store rather than a calendar → the dates measure notes written,
+so repeat the binding's caveat rather than asserting a meeting gap. Career recency is a keyword
+scan wherever it comes from, so a miss is "unknown", never a confirmed gap.
 
-**With neither.** Ask two questions — when they last met, and what was left open — then draft from
-the answers. The agenda was always the deliverable; the tools only save the asking.
+**With nothing bound.** Ask two questions — when they last met, and what was left open — then draft
+from the answers. The agenda was always the deliverable; a binding only saves the asking.
 
-**A missing capability changes the finding, never invents one.** No C5 → never claim a recognition
-drought, ask instead. No C3 → prep from meeting history and goals. Career recency is a keyword scan
-of notes on every backend, so a miss is "unknown", not a confirmed gap.
+**Writing the topics** follows C8's contract: where the target is shared with the report, the
+one-line *why* stays manager-side unless it is fine to share. Where C8 is unbound, output the
+topics as text. Nothing anywhere schedules a meeting.
 
 ## Gate — routine mode
 

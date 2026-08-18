@@ -82,20 +82,39 @@ one"
 **Fail.** Overwriting with no record of the change. Keeping both as equally current, so `stuck-work`
 still offers Tony a walkthrough he no longer needs.
 
-### Case 6 — portability path: Notion is the better destination
+### Case 6 — portability path: C6 bound to a task manager, no search
 
-**Setup.** No Topicflow. Notion is connected, and `setup-sources` previously recorded a "People"
-page as the note destination. Tony has a page under it.
+**Setup.** No Topicflow. C6 is bound to Todoist: one project per report, one task per fact.
+The binding records `missing: search` and the caveat "dedup reads the whole project". The account is
+recorded as private to the manager. Tony's project has 12 existing notes.
 
 **Input.** "he's never done a migration before so I want to pair with him on it first"
 
 **Pass.**
-- The dated third-person sentence is **actually filed** — appended to Tony's page with
-  `notion-update-page(command: "insert_content")` — not handed back for the manager to paste.
+- The dated third-person sentence is **actually filed** using the binding's append call — not handed
+  back for the manager to paste.
+- Dedup uses the binding's read (listing the project), because the binding says there is no search.
 - The receipt names where it went.
-- Dedup reads the existing page first.
-- The destination is taken from the recorded map, not re-decided or re-asked.
+- The destination and the calls come from the binding; nothing is re-decided and the manager is not
+  re-asked.
+- No tool is used that the binding did not record — no reaching for a note store it happens to
+  prefer.
 
-**Fail.** Falling back to "here's a note to keep" when a real destination exists. Asking every time
-where notes should go. Creating a new page per fact instead of appending. Writing it anywhere the
-report can read.
+**Fail.** Falling back to "here's a note to keep" when a real destination is bound. Attempting a
+search the binding says does not exist. Asking again where notes go. Writing to a different tool
+because it seemed more suitable.
+
+### Case 7 — an append-only binding
+
+**Setup.** C6 is bound to a destination that can append but not read.
+
+**Input.** A durable fact, possibly already known.
+
+**Pass.**
+- The fact is filed.
+- **No claim that it is new**, because dedup was impossible.
+- If duplication matters, the manager is asked in half a sentence rather than the fact being
+  silently duplicated or silently dropped.
+
+**Fail.** "Saved — this is new for Tony" from a binding that cannot read. Skipping the save because
+dedup was unavailable.

@@ -64,34 +64,32 @@ thin.
 
 ## Sources
 
-**Needs** C2 1-on-1 history — dates, cancellations, and enough content to spot a career topic.
-Backend mapping: [source-map.md](../../../references/source-map.md).
+**Needs** C2 1-on-1 history — dates, cancellations, and enough content to spot a career topic — plus
+C1 for the roster. Resolve through the binding record; **this skill never names a backend**.
+Contracts: [source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
-`list_meetings(is_oneonone: true, order: "-start_datetime", limit: 10)` for recent dates, and the
-same with `status: <cancelled>` for cancellations — **verify the status code against a live
-response first**; a wrong mapping turns a healthy cadence into a false alarm. Add
-`with_notes_and_transcript: true` and keyword-scan topics for career, growth, development,
-promotion, aspiration. `list_feedback(recipients: <id>, order: "-created", limit: 5)` as a
-secondary recency signal. No write, except `add_meeting_topics` on the manager's action.
+**Read the binding's caveat before reading its dates.** C2's contract requires every binding to
+record **what its dates actually measure** — a meeting that happened, or a note that got written.
+This skill reports dates for a living, so that distinction is the whole finding. A note-based
+binding produces "your last note with Sam is 5 weeks old — did the meetings happen?", never "Sam
+hasn't had a 1-on-1 in 5 weeks". Repeat the caveat in the manager's own words; do not smooth it
+over.
 
-**With Notion.** `notion-query-meeting-notes` filtered by `attendees` and `created_time` gives the
-date of the last 1-on-1 *note*, and `notion-fetch` gives the content for the career scan. **This
-measures note-taking, not meeting-holding** — a gap may mean the manager skipped the note, not the
-meeting, and the finding must say so. Cancellations are invisible here; Google Calendar is the
-only real source for those.
+**Withheld when a capability is thin.** No `status` field → **cancellations are invisible, and
+their absence is not reported as "no cancellations"** — the strongest of the three signals simply
+does not fire. No content → the career check does not run, rather than returning "no career topic
+found". A keyword miss is always "unknown", never a confirmed gap.
 
-**With a calendar only.** Dates and cancellations, no content. That covers two of the three drift
-types well and disables the career check entirely.
+**Where two bindings each cover half**, use both: a calendar-backed C2 usually has dates and
+cancellations but no content, and a note-backed one the reverse. Prefer the binding whose fields
+the finding actually needs, and say which one a given line came from.
 
-**With neither.** Ask: when did you last sit down with each of them? One question, and it is the
-most accurate answer available anyway.
-
-**Be conservative about repeat pings.** Without a durable ledger ([TF-1595](https://linear.app/topicflow/issue/TF-1595)),
-cooldowns cannot be enforced across runs, so ping only on the strongest signal — consecutive
-cancels, or a gap at least twice the threshold. History unreadable → report nothing and say the
-check could not run. Nothing anywhere schedules a meeting; "schedule it" is a request to the
-manager.
+**Be conservative about repeat pings.** Without a durable ledger
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)), cooldowns cannot be enforced across runs,
+so ping only on the strongest signal — consecutive cancels, or a gap at least twice the threshold.
+History unreadable → report nothing and say the check could not run. Nothing schedules a meeting
+under any binding; "schedule it" is a request to the manager.
 
 ## Gate — routine mode
 

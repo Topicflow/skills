@@ -1,152 +1,161 @@
 ---
 name: setup-sources
-description: Work out where a manager's team data actually lives — Topicflow, Notion, a calendar, an issue tracker, or nowhere — and record it so every other skill knows what it can and cannot see. Use when a manager first installs these skills, when a skill reports a missing source, when they ask what these skills can do with their setup, or when they connect a new tool.
+description: Bind each thing this library needs — roster, 1-on-1 history, work signals, goals, feedback record, notes, delivery, agendas — to whichever tool the manager keeps it in, and say what works as a result. Use when setting these skills up for the first time, when the manager says they want to keep goals, notes, or anything else in a particular tool, when they name a tool these skills have not seen before, when they ask what these skills can do with their setup, or when another skill reports a missing source.
 ---
 
 # Setup sources
 
-Run this first. It answers one question for the whole library: **where does this manager's team
-data live?** Then it says plainly what will work, what will work with less, and what will not work
-at all — so nobody discovers the gap halfway through a review cycle.
+Answers one question for the whole library: **where does each kind of data live?** Not "which
+product does this manager use" — the eight capabilities in
+[source-map.md](../../../references/source-map.md) are bound **one at a time, independently**.
+Goals in Notion, private notes in Todoist, work signals in Linear, 1-on-1 dates in a calendar, and
+no feedback record at all is an ordinary setup, and it should be one row each.
 
-None of these skills require Topicflow. A manager on Notion, or on a calendar and an issue tracker,
-or on nothing but this conversation, still gets a working library. This skill is what makes the
-difference visible instead of surprising.
+No skill names a backend. Skills declare the capabilities they need and execute whatever this
+binding says. That is why a tool nobody here has heard of still works, and why moving one kind of
+data to a new tool changes one row rather than fourteen skills.
 
 Serves *communicates well* (P17) — an honest account of what the tooling can see is the first
 thing a manager needs from it.
-Capability detail: [source-map.md](../../../references/source-map.md).
 
 ## When to use
 
 - First install, before any other skill runs.
-- A skill reports that a source is missing or unreadable.
-- The manager asks what these skills can do, or whether they work without Topicflow.
-- The manager connects a new tool, or their team changes.
+- **The manager wants to move something:** "put goals in Notion", "keep private notes in Todoist".
+  That is a rebind of one capability, not a re-setup.
+- They name a tool these skills have never seen. Use the recipe in
+  [adapters.md](../../../references/adapters.md); an unknown backend is the normal path.
+- A skill reports a missing source, or a tool is newly connected, or the team changes.
 
 ## Non-negotiables
 
-- **Detect before asking.** Check what is connected, then ask only what detection cannot answer.
-- **At most three questions.** The roster is the one worth spending a question on.
-- **Never claim a capability that was not verified.** A connected server is not the same as
-  readable data — a real call must have succeeded.
-- **Name what will not work, without softening it.** A manager who is told the equity gates cannot
-  run is better served than one who gets a confident drought alert built on nothing.
-- **Never create anything without approval**, including the Notion pages this skill offers to set up.
-- The recorded map is a starting point, not a contract. Any skill that finds reality different says
-  so and updates it.
+- **One capability at a time.** Never bind all eight to one product because that product is
+  connected. Ask what lives where.
+- **Test before recording.** A tool that exists is not a tool that returns what the contract needs.
+  One real call per direction, per binding.
+- **Never invent a tool or a parameter.** Where nothing satisfies a contract, the binding is
+  `none` — a real answer, recorded explicitly.
+- **Record all four parts**: the exact calls, the field mapping, what is missing, and a caveat in
+  the manager's own words. A binding missing any of them is incomplete.
+- **Ask about privacy** for the notes destination. Never assume a place is private to the manager.
+- **At most three questions.** The roster is always worth one of them.
+- **Name what will not work, without softening it.** A manager told the equity checks cannot run is
+  better served than one who gets a confident drought alert built on nothing.
+- Never create anything — pages, databases, projects — without approval.
 
 ## Method
 
-**1. Detect what is reachable.** For each backend that appears connected, make one cheap read and
-see whether it actually returns data. Connected-but-empty and connected-but-unauthorized are both
-common, and both look like "connected" until something is called.
+**1. Take the manager's own account first.** Where they tell you something lives, that is the
+answer; detection only confirms it. If they say nothing, detect and propose.
 
-**2. Map the eight capabilities.** For each of C1-C8 in
-[source-map.md](../../../references/source-map.md), record the best available source and mark it
-`full`, `partial`, or `none`. Be strict: partial means the data exists but is thinner than the
-skill wants — calendar dates with no meeting content, Notion meeting notes that only exist when the
-manager wrote one.
+**2. Detect what is reachable.** One cheap read per connected backend. Connected-but-empty and
+connected-but-unauthorized both look like "connected" until something is called, and they need
+different fixes.
 
-**3. Ask what detection cannot answer**, up to three questions:
+**3. Bind each capability separately.** For each of C1-C8, pick a backend using the preference
+order in [adapters.md](../../../references/adapters.md) — the one with the fields the contract
+needs, then the one the manager actually writes to, then the one that can be written back to. For a
+backend not in that file, run the six-step recipe there: list the server's tools, match them to the
+contract, test, record.
+
+Capabilities do not have to agree with each other, and usually should not. The best C3 is an issue
+tracker even when everything else is elsewhere.
+
+**4. Ask what detection cannot answer**, up to three:
 
 1. **The roster.** "Who reports to you?" No backend answers this reliably, and a missing person is
-   a real harm. Always ask.
-2. **Where notes should go**, if more than one destination is possible. This is where every skill
-   writes back.
-3. **Where goals live**, only when a goals source was not detected.
+   a real harm.
+2. **Where notes should go**, and whether that place is private to them.
+3. **Where goals live**, only when no goals source was detected.
 
-**4. Handle the recognition gap explicitly.** Where C5 came back `none` — the usual case without
-Topicflow — say what it costs: no drought detection, no equity check across reports, no feedback
-recency in 1-on-1 prep. Then offer the fix: a simple log the manager keeps, one row per thing said,
-with person, date, kind, and what was said. Offer to create it. It works from the day it exists,
-never backwards, and say that too.
+**5. Handle an unbindable capability explicitly.** Record `none`, and say what it costs in terms of
+what the manager loses, not in capability codes. The common one is C5: no feedback or recognition
+record means no drought detection, no equity check, no feedback recency. Offer the fix — a simple
+log, one row per thing said — and say it works from creation forward, never retroactively.
 
-**5. Record the map** to wherever notes go (C6). One short block, so every later run reads it
-instead of re-detecting.
+**6. Write the binding record** in the format in [source-map.md](../../../references/source-map.md),
+to a local file if there is one, otherwise the notes destination, otherwise back to the manager to
+keep. Record where it lives at the top.
 
-**6. Report in three groups.** Works fully. Works with less, and what "less" means concretely. Does
-not work, and what would fix it. Every line names the skill it affects, because "C5 is unavailable"
-means nothing to a manager and "I can't tell you who's been overlooked for recognition" means
-everything.
+**7. Report in three groups.** Works fully. Works with less, and what "less" means concretely. Does
+not work, and the one thing that would fix it. Every line names a skill, because "C5 is unbound"
+means nothing to a manager and "I can't tell you who's been overlooked" means everything.
+
+**Rebinding** runs steps 2-3 and 6 for one capability only, then reports what changed about which
+skills. Everything else is left alone.
 
 ## Sources
 
-**Detection reads, one per backend.** Topicflow: `get_user_infos(target_names: [<the manager>])`.
-Notion: `notion-fetch(id: "self")` for the workspace identity, then `notion-get-users(page_size: 5)`
-and `notion-query-meeting-notes` with a recent date filter. Linear: `list_teams`. Slack:
-`slack_search_users`. Google Calendar: any small read.
+**Needs** nothing to start — this skill is what creates the binding everything else reads.
+Contracts: [source-map.md](../../../references/source-map.md). Known adapters and the recipe for an
+unknown one: [adapters.md](../../../references/adapters.md).
 
-**Capability mapping** is entirely in [source-map.md](../../../references/source-map.md) — this
-skill does not restate it, so a new backend is added in one place.
+**Detection reads** are one per connected backend, chosen to be cheap and to prove real access.
+Which call is per-adapter and lives in [adapters.md](../../../references/adapters.md), not here, so
+that adding a backend touches one file.
 
-**Writes, all after approval.** Notion: `notion-create-pages` for a People page or a recognition
-log, `notion-update-page` to record the map. Topicflow: the note fallback ladder in
-[topicflow-tools.md](../../../references/topicflow-tools.md), since `save_private_note` is still in
-dev ([TF-1595](https://linear.app/topicflow/issue/TF-1595)).
+**Writes**, all after approval: the binding record itself, plus anything the manager asks to be
+created — a notes page, a recognition log, a project. Nothing is created silently.
 
-**Degrading.** No backend at all is a valid outcome, not an error. Say which skills still work from
-conversation alone — `give-feedback`, `give-recognition`, `management-practices`, and the drafting
-half of `prep-1on1` all do — and record that the manager is the source for everything else.
+**Degrading.** No backend at all is a valid outcome, not an error. Bind every capability to `ask
+the manager` or `none`, say which skills still work from conversation alone — `give-feedback`,
+`give-recognition`, `management-practices`, and the drafting half of `prep-1on1` — and record it.
 
 ## Gate
 
-Not applicable. This skill only runs when a manager or another skill asks for it. It never pings.
+Not applicable. This skill runs only when a manager or another skill asks for it. It never pings.
 
 ## Write-back
 
-The capability map itself, the roster, the chosen note destination, and anything the manager says
-about where their team's data lives. Re-run and update it when a tool is connected or the team
-changes.
+The binding record is the write-back: bindings, the roster, the notes destination and whether it is
+private, and every caveat discovered while testing. Re-run per capability whenever a tool changes.
 
 ## Output
 
-Three groups — works, works with less, does not work — each line naming the affected skill and, for
-the gaps, the one thing that would fix it. Plain text, no tables.
+Three groups — works, works with less, does not work — each line naming the affected skill, and for
+the gaps the one thing that would fix it. Plain text, no tables, no capability codes.
 
-`[create the recognition log]` `[save this map]` `[re-run detection]`
+`[save these bindings]` `[create the recognition log]` `[rebind one of these]`
 
 ## Worked example
 
-**Manager:** I use Notion, not Topicflow. Do these actually work for me?
+**Manager:** I keep goals in Notion, private notes in Todoist, and tickets in Linear. No Topicflow.
 
-**Agent:** Checking what's reachable, then I have one question.
+**Agent:** Binding those separately, then one question.
 
-> Notion is connected: 34 workspace members, and meeting notes going back to March. Linear is
-> connected. No Topicflow, no calendar.
+> Notion: found a "Team Goals" database — columns Objective, Owner, Health, Target date. No
+> check-in column.
+> Todoist: task create and project-filtered list, no search across tasks.
+> Linear: full issue history.
 >
-> One question: who reports to you? Notion has no org chart, so this is the one thing I can't work
-> out on my own.
+> One question: who reports to you, and is that Todoist account private to you?
 
-**Manager:** Tony, Nadia, Sam, Priya.
+**Manager:** Tony, Nadia, Sam, Priya. Yes, it's my personal account.
 
 **Agent:**
 
-> Saved. Here is what you get.
+> Bound and saved.
 >
 > **Works fully**
-> - `prep-1on1` — your 1:1 notes are in Notion, so open action items and past topics are readable.
-> - `save-context` — a People page per report, appended to as you tell me things. This is actually
->   better than a Topicflow setup today.
-> - `give-feedback`, `give-recognition` — drafting was always the valuable part. You send them.
-> - `stuck-work` — Linear covers stalled tickets.
+> - `save-context` — a project per person in Todoist, one task per fact. Dedup reads the whole
+>   project, so it'll slow down past a couple of hundred notes.
+> - `stuck-work` — Linear has the state history, which is what staleness actually needs.
+> - `give-feedback`, `give-recognition` — you deliver them; drafting was always the valuable part.
 >
 > **Works with less**
-> - `relationship-drift` — I can see when you last wrote a 1:1 note, not when the meeting was
->   scheduled or cancelled. So a gap might mean you skipped the note, not the meeting. Connecting
->   Google Calendar would close that.
-> - `review-prep` — goals and Linear work are readable; peer input isn't, so packs will lean on
->   what you tell me.
+> - `goal-checkin` — I'll use Health, not Status. Your database has no check-in column, so I can
+>   tell you a goal is unmeasurable or that Sam has five, but not that one has gone quiet.
+>   Adding a "Last check-in" column would turn that on.
+> - `prep-1on1` — no 1:1 notes anywhere yet, so I'll ask what was left open instead of reading it.
 >
 > **Does not work**
-> - `recognition-scan`. Nothing in Notion records who you recognized and when, so I can't tell you
->   who's been overlooked — and I won't guess, because a made-up drought about a real person is
->   worse than silence.
->   The fix: a small log, one row per thing you say to someone — person, date, kind, what you said.
->   I can create it in Notion now. It only works from today forward.
+> - `recognition-scan`. Nothing records who you recognized and when, so I can't tell you who's
+>   been overlooked — and I won't guess, because a made-up drought about a real person is worse
+>   than silence. A log fixes it, in Notion or Todoist, working from the day you start it.
 >
-> `[create the recognition log]` `[save this map]` `[re-run detection]`
+> `[save these bindings]` `[create the recognition log]` `[rebind one of these]`
 
-Note what this refuses to do: it does not claim `recognition-scan` half-works, and it does not
-quietly downgrade it to something useless. It names the one skill that is genuinely off, says why,
-and offers the smallest thing that turns it on.
+Later: **"actually put the private notes in Notion too"** — that is one row. Bind C6 to a Notion
+page per person, test the read and the append, confirm the page is private, rewrite that block, and
+report the one thing that changed: dedup now searches instead of listing, so the slowdown caveat
+goes away. Nothing else moves.

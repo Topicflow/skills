@@ -69,31 +69,32 @@ visible to the writers, and that `review-prep` will pick the answers up when the
 
 ## Sources
 
-**Needs** C3 work signals to propose writers, C7 to send the requests. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+**Needs** C3 work signals to propose writers, C7 to send the requests, C5 to see what is already
+outstanding and to keep what comes back. Resolve each through the binding record; **this skill never
+names a backend**. Contracts: [source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow** — the only backend that can actually collect the answers.
-`get_user_infos(target_names: [...])` or `(team_name: ...)` for IDs.
-`query_external_events(target: <subject id>, start_datetime, end_datetime)` for who shows up in
-the subject's work — reviewers, co-assignees, cross-team touches. `list_feedback(recipients:
-<subject id>, state: 3)` for requests already outstanding. Then one write per writer:
-`create_feedback(title, description, sender_id: <writer>, recipient_id: <subject>)` → preview →
-approval → `confirm_creation`. **`sender_*` is the person being asked to write; `recipient_*` is
-the subject.** Backwards, this sends the manager's question to the wrong person as feedback —
-check before confirming.
+**What each buys here.** C3 is the writer shortlist: reviewers, co-assignees, cross-team touches —
+people with real shared work rather than people the manager happens to remember. C5 shows requests
+already outstanding, so nobody is asked twice in a month, and holds the answers as evidence. C7
+sends the request.
 
-**With Notion or an issue tracker.** Linear and GitHub show reviewers and co-assignees, so the
-writer list still holds up. There is no request object to create: the output is the writer list
-plus the questions, ready for the manager to send by message or email, and a note that answers
-come back to them rather than into a system. Where they keep a feedback log, offer to record what
-comes back.
+**Withheld when a capability is thin or absent.** No C3 → ask the manager for names and say why:
+"I can't see who Tony worked with — who are the three or four closest to his work last quarter?" A
+guessed writer list is worse than an asked one on every binding. No C5 → do not claim someone has
+not been asked recently.
 
-**With neither.** Ask the manager who the subject worked with, and say why: "I can't see who Tony
-worked with — who are the three or four people closest to his work last quarter?" A guessed writer
-list is worse than an asked one on every backend.
+**Where C7 cannot carry a request** — most bindings, since a feedback-request object is rare — the
+output is the writer list plus the questions, ready for the manager to send by message or email,
+and it says that answers come back to them rather than into a system. Offer to record what comes
+back wherever C5 is bound.
 
-**Never automate the ask.** Whatever the backend, the writer list is approved by the manager
-before anything is sent (P10 — who comments on someone's work is a judgement call).
+**Where the binding does carry requests**, check the direction before confirming: the *writer* is
+the sender, the *subject* is who it is about. Backwards, this sends the manager's question to the
+wrong person as feedback.
+
+**Never automate the ask.** Under every binding, the writer list is approved by the manager before
+anything is sent (P10 — who comments on someone's work is a judgement call).
 
 ## Gate — routine mode
 

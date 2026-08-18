@@ -68,28 +68,28 @@ work the manager cannot see.
 ## Sources
 
 **Needs both** C3 work signals (to find the win) **and** C5 the recognition record (to find the
-silence). This skill is the pairing of the two, so losing either one disables it. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+silence), plus C1 for the roster. This skill is the pairing of the two, so losing either disables
+it. Resolve each through the binding record; **this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow** — the only backend where this skill runs on evidence.
-`get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
-`query_external_events(target: <id>, start_datetime: <now - lookback>, end_datetime: <now>)` for
-candidate wins, one call per report, always passing `target`. `list_feedback(recipients: <id>,
-order: "-created", limit: 10)` for the date of last recognition — recognition surfaces here in
-deployments that route it through feedback, so **verify against a live response before treating an
-empty result as a drought**. No write; hand off to `give-recognition`.
+**What each buys here.** C3 supplies candidate wins — one read per report over the lookback window,
+scoped to that person. C5 supplies the date of the last recognition, which is the entire drought
+calculation. C1 decides who is in scope, and a person missing from the roster is a person who can
+never be found overlooked.
 
-**With Notion or an issue tracker.** Wins are findable — Linear and GitHub show what shipped, and
-`notion-search` reaches connected sources for the wins that never touch a tracker. **The drought
-half is not.** Nothing in Notion records who was recognized and when, so unless the manager keeps a
-recognition log, this skill cannot tell anyone they have been overlooked, and it must not guess.
-Say that once, offer the log (`setup-sources` creates it), and stay quiet until it has history.
+**Withheld, and this is the strictest rule in the library.** **No C5, or a C5 whose emptiness is
+unverified → no drought finding for anyone.** Not "none found". Not a cautious hedge. Nothing.
+Report the wins that were found and ask the manager when they last recognized that person. This is
+the skill most likely to produce a false claim about a real person, and an unverified silence read
+as neglect is exactly that claim.
 
-**With neither.** The skill has nothing to run on. Say so once and stop.
+**Verify emptiness before trusting it.** An empty result from a binding that has never been written
+to is not a drought — it is a binding with no history yet. Where C5 was bound recently, say so once
+and stay quiet until it has enough history to measure.
 
-**This is the skill most likely to produce a false claim about a real person, so the rule is
-absolute:** no verified recognition history, no drought finding. Report the wins you did find and
-ask the manager when they last recognized that person. Roster unknown → ask once.
+**With C3 unbound** the skill has nothing to detect on. Say so once and stop. Roster unknown → ask
+once. No write here under any binding; the draft belongs to `give-recognition`.
 
 ## Gate — routine mode
 

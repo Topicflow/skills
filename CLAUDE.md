@@ -10,13 +10,16 @@ a wrong sentence in a SKILL.md is a bug that ships to every manager using it.
    skill follows.
 2. [references/management-practices.md](./references/management-practices.md) — the P1-P17 rules
    skills cite.
-3. [references/source-map.md](./references/source-map.md) — the eight capabilities and every
-   backend that supplies each one. **No skill may require Topicflow.** A manager on Notion, on an
-   issue tracker, or on nothing at all still gets a working skill — what changes is how much it can
-   see, and the skill always says which.
-4. [references/topicflow-tools.md](./references/topicflow-tools.md) — what the Topicflow MCP
-   actually offers. **Never invent a tool or a parameter.** If a skill needs something that does not
-   exist, document the fallback in the skill and add the gap to this file.
+3. [references/source-map.md](./references/source-map.md) — the eight capabilities, their
+   contracts, and the binding record. **A SKILL.md must not contain a backend tool name.** Skills
+   declare capabilities; the binding routes each one to a tool, independently. That is what lets a
+   manager keep goals in one product and private notes in another, and lets a tool nobody here has
+   heard of work at all.
+4. [references/adapters.md](./references/adapters.md) — known backends, and the six-step recipe for
+   binding one that is not listed. The recipe is the normal path, not a fallback.
+5. [references/topicflow-tools.md](./references/topicflow-tools.md) — Topicflow's tool detail, as
+   one adapter among others. **Never invent a tool or a parameter.** If nothing satisfies a
+   contract, the binding is `none` — a real answer.
 
 ## Anatomy of a skill
 
@@ -38,11 +41,11 @@ Body sections, in this order:
 3. `## Non-negotiables` — the rules that make this skill correct, in imperative voice. This is the
    section a hurried agent actually obeys, so put the things that would cause harm here.
 4. `## Method` — numbered steps, **tool-agnostic**. A tool rename must not touch this section.
-5. `## Sources` — **capability-first, never backend-first.** Open with the capabilities from
-   [source-map.md](./references/source-map.md) the skill needs, then one short block per backend
-   that can supply them: with Topicflow, with Notion or an issue tracker, with neither. Close with
-   what a missing capability changes — which is never "the skill stops" and never "the finding
-   becomes negative". Exact tool names and parameters belong here; the Method above stays clean.
+5. `## Sources` — **capabilities only, no tool names anywhere.** Which capabilities the skill
+   needs, what each one buys it, and the **withheld conclusions**: the specific claims it must stop
+   making when a capability is thin or absent. Never "the skill stops", never "the finding becomes
+   negative". Tool names, parameters, and field mappings live in the binding record and in
+   [adapters.md](./references/adapters.md) — the checker fails a SKILL.md that names one.
 6. `## Gate` — for anything a routine can run. `worth_attention: yes/no` conditions plus named,
    tunable thresholds. Skills that only run in chat say "not applicable" and why.
 7. `## Write-back` — what durable findings get saved (library convention 3).
@@ -81,12 +84,14 @@ Body sections, in this order:
 `scripts/check-skills.sh` is mechanical, not semantic. It checks: frontmatter present with `name`
 and `description`; `name` matches the directory; description contains a "Use when" trigger; body
 within the line budget; the required sections exist; no markdown tables in a SKILL.md; the Sources
-section references `source-map.md`; `agents/openai.yaml` exists; the skill is registered in
-`plugin.json`; `evals/<skill>.md` exists and contains a portability case.
+section references `source-map.md`; **no backend tool name appears in a SKILL.md**;
+`agents/openai.yaml` exists; the skill is registered in `plugin.json`; `evals/<skill>.md` exists and
+contains a portability case.
 
-The `source-map.md` reference is a proxy for backend neutrality — it proves the skill *pointed at*
-the capability map, not that the non-Topicflow paths it describes are correct or complete. It
-cannot check whether the Method is good management practice either. That is what review is for.
+The tool-name check is the real guard on backend neutrality, and it is a blacklist — a tool from a
+backend nobody has added yet will slip through. The `source-map.md` reference is a weaker proxy: it
+proves the skill *pointed at* the contracts, not that its capability reasoning is right. Neither
+can check whether the Method is good management practice. That is what review is for.
 
 ## Common mistakes
 
@@ -103,8 +108,11 @@ cannot check whether the Method is good management practice either. That is what
   choosing their peer reviewers. Every one of these fails P15.
 - **Status theater.** Any topic, line, or brief that tells the manager what happened without
   something to do about it fails P3.
-- **Assuming Topicflow.** A Sources section that lists Topicflow tools and stops is half a skill.
-  Most managers trying this library will not have Topicflow, and the first thing they will notice
-  is whether it works anyway. Write the Notion and the nothing-at-all paths with the same care.
+- **Naming a backend in a skill.** Even as a helpful example, even in a fallback. It hardcodes a
+  routing decision that belongs in the binding, and it will be wrong for the next manager — who
+  keeps goals in one tool, notes in another, and tickets in a third.
+- **Enumerating backends instead of contracts.** "With Topicflow… with Notion… with neither" does
+  not scale and cannot express a mixed setup. Say what the capability buys and what is withheld
+  without it; the binding handles the rest.
 - **Silent thinness.** Producing a weaker answer on a weaker backend is fine. Producing it without
   saying so is not — the manager has no way to calibrate what they are reading.

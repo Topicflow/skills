@@ -17,15 +17,24 @@ Every skill file has at least these, in this order:
 4. **Practice-conformance path** — an output that violates a mapped P-rule must be rejected. The
    skill either fixes it before showing it or asks the question that fixes it. Showing a
    non-conformant draft with a caveat is a fail.
-5. **Portability path** — **the skill runs without Topicflow.** Usually Notion plus an issue
-   tracker, sometimes nothing at all. It must do the most it can on that backend, name the
-   capability it is missing in one line, and never let a missing source become a claim about a
-   person. A skill that only works on Topicflow fails here, and a skill that quietly produces a
-   thinner answer without saying so fails harder — the manager cannot calibrate what they are
-   reading.
+5. **Portability path** — **the skill runs on a binding it was not written for.** A mixed setup
+   (goals in one tool, notes in another, no feedback record at all), a backend nobody anticipated,
+   or nothing at all. It must execute the binding rather than reach for a tool it prefers, do the
+   most the bound capabilities allow, name what is missing in one line, and never let an absent
+   source become a claim about a person. Three ways to fail: only working on one backend; naming a
+   tool the binding did not; and quietly producing a thinner answer without saying so — the last is
+   worst, because the manager cannot calibrate what they are reading.
 
 Extra cases are welcome, and several skills have one: the case where the skill must **refuse** or
 **reroute** rather than produce what was asked for.
+
+## Reading the backend names in a case
+
+Several cases name a product in their **Setup** — "Notion holds the meeting notes", "Linear shows
+the ticket". That describes what the *binding points at* in that scenario, not something the skill
+knows. The skill under test reads its capabilities from the binding record, and a product name
+appearing in the skill's own output or reasoning is a fail in every case, not just the portability
+one.
 
 ## Case format
 

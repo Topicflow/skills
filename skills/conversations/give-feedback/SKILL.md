@@ -80,30 +80,29 @@ it to the next 1-on-1 as a topic rather than sending anything.
 
 ## Sources
 
-**Needs** nothing, strictly. The manager's account of the situation is enough to draft from. C3
-work signals ground the date, C5 shows what they were recently told, C7 delivers it. Backend
-mapping: [source-map.md](../../../references/source-map.md).
+**Needs** nothing, strictly — the manager's account is enough to draft from. C3 work signals ground
+the date, C5 shows what they were recently told and stores what was said, C7 delivers it. Resolve
+each through the binding record; **this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow.** `get_user_infos(target_names: [name])` for the ID.
-`query_external_events(target: <id>, start_datetime, end_datetime)` for the artifact and date.
-`list_feedback(recipients: <id>, state: 2, order: "-created", limit: 5)` so this is not the third
-message about the same thing. Write with `create_feedback(title, description, recipient_id)` →
-preview → one approval → `confirm_creation`; `description` is plain text, 2-4 sentences. For
-corrective feedback: `recipients_can_view: true`, `recipients_managers_can_view: false`,
-`admins_can_view: false` (P7). Reroute instead of sending with `add_meeting_topics`.
+**What each buys here.** C3 turns "last week sometime" into a dated artifact, which is most of what
+makes feedback land. C5 stops this being the third message about the same thing, and — where it can
+be appended to — keeps the feedback as evidence `review-prep` can cite in six months. C7 sends it
+with an audience the manager chose.
 
-**With Notion or an issue tracker.** Ground the situation in Linear or GitHub directly — the PR,
-the ticket, the date. Notion has no feedback object, so the draft is text the manager delivers
-themselves, in person or in a message. Log it afterwards to their feedback log if they keep one,
-so `review-prep` can cite it in six months.
+**Withheld when a capability is thin or absent.** No C3 → draft from the manager's account and say
+the date is theirs rather than verified; never invent a corroborating artifact. No C5 → do not
+claim this is the first or the third time; ask if it matters.
 
-**With neither.** Draft from what the manager tells you, and say the date is theirs rather than
-verified. This is the common case and it is a fine one — the SBI shape is what makes feedback
-land, not the lookup.
+**Delivery is never assumed.** Where C7 is unbound, the output is the draft plus who should hear it
+and when — and it never claims something was sent. That is the common case, and the SBI shape was
+always the valuable part.
 
-**Delivery is never assumed.** Where nothing can send a message, the output is the draft plus who
-should hear it and when. Never claim something was sent. A recipient who cannot be resolved is a
-full stop — ask; never send feedback to a guessed person.
+**Private-first survives every binding.** Corrective feedback goes to the recipient only. Where the
+binding has visibility controls, set them to the narrowest audience; where it does not, say in the
+output that this one is meant for them alone. A recipient who cannot be resolved is a full stop —
+ask; never send feedback to a guessed person.
 
 ## Gate — routine mode
 

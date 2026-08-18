@@ -9,11 +9,15 @@ specific practice from management research — SBI feedback, the report's agenda
 goal staleness — and produces a draft you can send in one click.
 
 They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. And they run on
-whatever you already use — [Topicflow](https://www.topicflow.com), Notion, a calendar, an issue
-tracker, or nothing but the conversation. **No skill here requires Topicflow.** Run
-[`setup-sources`](./skills/foundations/setup-sources/SKILL.md) first and it tells you, in plain
-language, which skills work fully on your setup, which work with less, and which do not work at
-all.
+whatever you already use, **one kind of data at a time**: goals in Notion, private notes in Todoist,
+tickets in Linear, 1-on-1s in a calendar, and nothing at all for recognition is an ordinary setup
+here, not a compromise.
+
+No skill in this library names a tool. Each declares the *capabilities* it needs — roster, 1-on-1
+history, work signals, goals, feedback record, notes, delivery, agendas — and
+[`setup-sources`](./skills/foundations/setup-sources/SKILL.md) binds each one to whichever tool you
+keep it in. Moving something later changes one row, not fourteen skills. A tool nobody here has
+heard of works too: there is a [recipe](./references/adapters.md) for binding one.
 
 ## Quickstart
 
@@ -41,22 +45,25 @@ npx skills@latest add Topicflow/skills
 `agents/openai.yaml`, so the same directories install unchanged. Nothing in this library is
 model-specific: no Claude-only syntax, no GPT-only prompt tricks.
 
-**Then run `/setup-sources` once.** It checks what is actually connected and reachable, asks who
-reports to you, and records where your notes should go. Everything after that reads the map instead
-of guessing.
+**Then run `/setup-sources` once.** It tests what is actually reachable, asks who reports to you and
+where each kind of data lives, and records a binding per capability. After that, tell it things like
+"put goals in Notion" or "keep private notes in Todoist" and it rebinds one row.
 
-Whatever you connect, the skills adapt:
+Some things worth knowing before you bind:
 
-- **Topicflow** — the fullest single source, and the only one with a feedback and recognition
-  record, which is what the equity and drought checks measure.
-- **Notion** — 1-on-1 notes, goals databases, and a per-person page for durable notes. That last
-  one is currently *better* than the Topicflow path, which is still waiting on
-  [TF-1595](https://linear.app/topicflow/issue/TF-1595). What Notion has no equivalent for is a
-  recognition record — so `setup-sources` offers to create a simple log, and until it exists,
-  `recognition-scan` stays quiet rather than guessing.
-- **Linear or GitHub** — stalled work and shipped work, in more detail than any summarized feed.
-- **Nothing at all** — `give-feedback`, `give-recognition`, `management-practices`, and the
-  drafting half of `prep-1on1` all work from the conversation alone. The draft was always the
+- **Topicflow** is the fullest single source, and the only one that holds a feedback and recognition
+  record — which is exactly what the equity and drought checks measure.
+- **An issue tracker** is the best source for stalled work, whatever else you use. Staleness needs
+  real state history; a last-edited timestamp is not a substitute, and the skills refuse to treat it
+  as one.
+- **A note store** — a Notion page, a Todoist project, a text file — covers durable notes well. That
+  is currently *better* than the Topicflow path, which is still waiting on
+  [TF-1595](https://linear.app/topicflow/issue/TF-1595).
+- **A recognition record has no common equivalent.** Most setups cannot hold one, and without it
+  `recognition-scan` stays silent rather than inventing a drought. `setup-sources` offers to create
+  a simple log; it works from the day you start it.
+- **Nothing at all** is a valid setup. `give-feedback`, `give-recognition`, `management-practices`,
+  and the drafting half of `prep-1on1` work from the conversation alone. The draft was always the
   valuable part.
 
 > **If you copy a single skill directory** rather than installing the whole set, its links into
@@ -104,9 +111,9 @@ Topicflow engine can run on a schedule. They differ only in the gate.
 
 ### [Foundations](./skills/foundations) — install first
 
-- **[setup-sources](./skills/foundations/setup-sources/SKILL.md)** — find out where your team data
-  lives and what these skills can actually do with it. Says plainly what works, what works with
-  less, and what does not work at all.
+- **[setup-sources](./skills/foundations/setup-sources/SKILL.md)** — bind each kind of data to
+  whichever tool you keep it in, then say plainly what works, what works with less, and what does
+  not work at all. Also how you move one thing to a new tool later.
 - **[management-practices](./skills/foundations/management-practices/SKILL.md)** — the seventeen
   rules as pass/fail checks. Every other skill runs them on its own drafts.
 - **[save-context](./skills/foundations/save-context/SKILL.md)** — catch the durable fact the moment
@@ -164,8 +171,9 @@ go in.
 references/
   management-practices.md   the seventeen rules, with sources
   library-conventions.md    the eight rules every skill follows
-  source-map.md             the eight capabilities, and every backend that supplies each
-  topicflow-tools.md        Topicflow tool inventory, the write pattern, its gaps
+  source-map.md             the eight capabilities, their contracts, the binding record
+  adapters.md               known backends, and the recipe for binding an unknown one
+  topicflow-tools.md        Topicflow's detail, as one adapter among others
 skills/
   foundations/  conversations/  signals/
 evals/                      4 cases per skill: golden, silence, graceful-fail, conformance

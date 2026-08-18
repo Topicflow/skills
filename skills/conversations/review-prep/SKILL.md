@@ -70,32 +70,32 @@ person hears it — so offer a 1-on-1 topic for anything in the pack they have n
 
 ## Sources
 
-**Needs** C3 work signals, C4 goals, C5 the feedback and recognition record, C6 notes. C5 is the
-one that decides how thick the packs are. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+**Needs** C3 work signals, C4 goals, C5 the feedback and recognition record, C6 notes, C1 for role
+expectations. C5 is the capability that decides how thick the packs are. Resolve each through the
+binding record; **this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow** — much the fullest path, and the only one with peer input.
-`list_my_review_tasks(current_only: true)` is the trigger; `list_review_programs(current_only:
-true, include_participants: true)` gives the cycle and its dates.
-`get_user_infos(..., include_career_track: true)` frames growth against the next role.
-`list_goals(owners: <id>)` — **open goals only**. `list_feedback(recipients: <id>, state: 2,
-created_datetime_start, created_datetime_end)`. `list_assessments(target: <id>, program_id,
-include_content: true)` for the written peer answers. `query_external_events(target: <id>, ...)`
-for dated artifacts. Writes are limited to `add_meeting_topics`; the assessment is the manager's.
+**What each buys here.** C3 carries the *delivered* section: dated artifacts, and the work done
+outside their own scope that nobody remembers at review time. C4 gives objectives and status. C5 is
+peer input and recognition — the *how they worked with others* section, and the equity comparison
+across reports. C6 holds what they were new to at the start of the period, which is the only honest
+way to describe growth. C1 supplies the level or ladder the review is graded against.
 
-**With Notion or an issue tracker.** Dated artifacts from Linear and GitHub carry the *delivered*
-section well. Goals from a goals database. The career ladder the review is graded against usually
-lives in Notion — read it. What is missing is peer input and recognition history, so those two
-sections come from the manager's own log if they keep one, and from asking if they do not. Say
-which.
+**Withheld when a capability is thin or absent — and this is the skill where it does the most
+damage, so be strict.** No C5 → peer input and recognition are **unreadable, not absent**; both go
+in the gaps section as a collection problem, and the offered action is to collect peer input now.
+No `last_checkin` on C4 → no staleness claim. **Closed-goal history is unavailable under almost
+every binding — never report "no goals completed";** list what is open with status and ask the
+manager what closed.
 
-**With neither.** The pack is built by interview: what did they deliver, who saw it, what changed.
-Slower, still evidence rather than adjectives, and the gaps section carries more weight.
+**Never let a thin pack read as a weak quarter.** An empty section is a fact about the binding or
+about where the manager's attention went, and the output says which. That sentence is usually the
+most valuable one in the pack.
 
-**This is the skill where a missing source does the most damage, so be strict.** Closed goals are
-not reliably listable anywhere — never report "no goals completed". No C5 → peer input and
-recognition are **unreadable, not absent**, and that goes in the gaps section as a collection
-problem. Never let a thin pack read as a weak quarter.
+**With little bound**, the pack is built by interview: what did they deliver, who saw it, what
+changed. Slower, still evidence rather than adjectives, and the gaps section carries more weight.
+The assessment itself is never written automatically under any binding.
 
 ## Gate — routine mode
 

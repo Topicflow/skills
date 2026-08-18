@@ -71,30 +71,28 @@ third time.
 
 ## Sources
 
-**Needs** whatever is available — this skill is a filter over the other skills' findings, so it
-degrades by getting shorter rather than by breaking. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+**Needs** whatever is bound. This skill is a filter over what the others already found, so it
+degrades by getting shorter rather than by breaking. C2 for this week's 1-on-1s and whether they
+have an agenda, C3 for finishable work and stalls, C4 for status changes, C1 for the roster.
+Resolve through the binding record; **this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
-`query_external_events(target: <id>, start_datetime: <now - 7d>, end_datetime: <now>)` per report,
-read for finishable things and stalls, never for volume. `list_meetings(is_oneonone: true, order:
-"start_datetime", meeting_datetime_start: <now>, meeting_datetime_end: <now + 7d>,
-with_notes_and_transcript: true)` for this week's 1-on-1s and whether they have an agenda yet — an
-agenda-less 1-on-1 two days out is the single most actionable line the brief can carry, and it
-hands straight to `prep-1on1`. The same call with `status: <cancelled>` for last week's
-cancellations. `list_goals(owners: [<ids>])` for status changes. No write.
+**The highest-value line comes from C2**: an agenda-less 1-on-1 two days out. It is specific,
+it is fixable in one click, and it hands straight to `prep-1on1`. Where C2 is bound, look for that
+first.
 
-**With Notion or an issue tracker.** Upcoming 1-on-1s and whether a note exists yet from
-`notion-query-meeting-notes`; stalls from Linear or GitHub; goals from the goals database.
-Cancellations are invisible without a calendar, so that line simply does not appear — it is not
-reported as "no cancellations".
+**Withheld when a capability is thin.** No `status` on C2 → no cancellation lines, and **their
+absence is not reported as "no cancellations"** — the line simply does not exist. No
+`last_movement` on C3 → no stall lines. Every withheld conclusion here removes a line rather than
+weakening one, which is exactly how this skill should degrade.
 
-**With neither.** This skill has nothing to filter and should not be scheduled. Say so once.
+**With little bound**, the brief is two lines. That is a good brief. Never pad it to look complete.
 
-**A short brief is the normal case, not a failure.** Two lines is a good brief. Never pad it to
-look complete, and never add a line explaining what could not be seen — the one exception to the
-disclosure rule, because a digest is exactly where meta-commentary becomes noise. Tell the manager
-about missing capabilities once, in `setup-sources`, not every Monday.
+**This skill is the one exception to the disclosure rule.** It does not add a line explaining what
+it could not see — a weekly digest is precisely where meta-commentary becomes the noise that gets
+it muted. The manager is told about missing capabilities once, in `setup-sources`, not every
+Monday. With nothing useful bound, it should not be scheduled at all; say that once.
 
 ## Gate — routine mode
 

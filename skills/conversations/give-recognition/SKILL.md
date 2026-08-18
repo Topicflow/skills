@@ -73,30 +73,28 @@ visible to the recipient only rather than a broadcast recognition.
 ## Sources
 
 **Needs** the win (from the manager or C3 work signals), C6 for the public-vs-private preference,
-C5 for the equity check, C7 to deliver it. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+C5 for the equity check and to keep what was said, C7 to deliver it. Resolve each through the
+binding record; **this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Topicflow.** `get_user_infos(target_names: [name])` for the ID, `team_name` for a group.
-`query_external_events(target: <id>, start_datetime, end_datetime)` for the artifact, the date,
-and often the impact the manager half-remembers. `list_feedback(recipients: <id>, order:
-"-created")` for recency, run across the team for distribution. Write public with
-`create_recognition(title: <the message>, recipient_id)` → preview → approval →
-`confirm_creation` — **`title` is the message itself**, 2-4 sentences, plain text, no markdown;
-`recipient_ids` for several people; `core_value_id` only when one genuinely fits. Write private
-with `create_feedback(..., recipients_can_view: true, recipients_managers_can_view: false)`.
+**What each buys here.** C3 supplies the artifact, the date, and often the impact the manager only
+half-remembers — the detail that separates real recognition from praise. C6 holds the
+public-or-private preference so it is asked once and never guessed again. C5 is the distribution
+check, and the place the sent recognition is recorded so the next scan has something to measure.
 
-**With Notion or an issue tracker.** The artifact and date come from Linear or GitHub. The
-preference comes from the person's page (`notion-fetch`). There is no recognition object and no
-history, so: the draft is the manager's to deliver, and **the equity check cannot run** unless
-they keep a recognition log — append to it with `notion-update-page(command: "insert_content")`
-after they send, so the next scan has something to measure.
+**Withheld when a capability is thin or absent.** **No C5 → no equity line and no drought claim.**
+Skip it rather than invent one; an absence you cannot verify is not evidence. No C6, or a
+preference not on file, and the manager is not present → draft private and say why. Never
+broadcast on a guess (P9).
 
-**With neither.** Draft from what the manager describes, ask the preference once, and hand over
-the text. Two to four specific sentences are the whole product.
+**Where C7 cannot deliver**, hand over the text with a note on audience — that is the whole
+product, and two to four specific sentences were always the valuable part. Where C5 can be appended
+to, offer to log what was sent afterwards.
 
-**No recognition history means no drought claim.** Skip the distribution line rather than invent
-one; an absence you cannot verify is not evidence. Preference unknown and the manager is not
-present → draft private and say why.
+**Public and private are different audiences, not different formats.** Where the binding
+distinguishes them, use the narrow one for a private preference. Where it does not, say in the
+output which audience the draft assumes so the manager can choose.
 
 ## Gate — routine mode
 

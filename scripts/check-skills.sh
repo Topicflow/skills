@@ -114,11 +114,18 @@ while IFS= read -r skill_md; do
   fi
 
   # --- backend neutrality (convention 2) ---------------------------------
-  # Mechanical proxy: a skill with a Sources section must point at the capability
-  # map, which is where the non-Topicflow paths are defined. Cannot verify that the
-  # paths are correct — that is review.
+  # A skill declares capabilities and executes the binding; routing decisions live in
+  # the binding record, never in a SKILL.md. Two checks:
+  #   1. the Sources section points at the capability contracts
+  #   2. no backend tool name appears anywhere in the body
+  # Neither can verify that the capability reasoning is *correct* — that is review.
   if grep -q '^## Sources' "$skill_md" && ! grep -q 'source-map.md' "$skill_md"; then
-    err "Sources does not reference source-map.md (no skill may require Topicflow)"
+    err "Sources does not reference source-map.md (declare capabilities, not backends)"
+  fi
+
+  backend_tools='notion-[a-z-]+|slack_[a-z_]+|list_meetings|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_my_review_tasks|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
+  if named="$(grep -oiE "$backend_tools" "$skill_md" | sort -u | tr '\n' ' ')"; [ -n "$named" ]; then
+    err "names backend tools ($named) — routing belongs in the binding, not the skill"
   fi
 
   # --- companion files ---------------------------------------------------

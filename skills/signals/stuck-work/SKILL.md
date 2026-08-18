@@ -75,31 +75,30 @@ daily ping.
 
 ## Sources
 
-**Needs** C3 work signals. Without them this skill has nothing to detect, on any backend. Backend
-mapping: [source-map.md](../../../references/source-map.md).
+**Needs** C3 work signals, and specifically the `last_movement` field. C2 is a useful secondary —
+it shows whether the item was already raised in a 1-on-1. Resolve through the binding record;
+**this skill never names a backend**. Contracts:
+[source-map.md](../../../references/source-map.md). Adapters:
+[adapters.md](../../../references/adapters.md).
 
-**With Linear or GitHub directly** — the best source here, whatever else is connected. An event
-feed says a review is open; the native tool says *why* it is stuck (a requested change, a failing
-check, a comment thread gone quiet). That reason is the difference between a useful check-in and
-an annoying one, so reach for it even when Topicflow is present.
+**Prefer the C3 binding with real state history**, even when another one is closer to hand. Stall
+detection is date arithmetic — `first_seen`, `last_movement`, current state — and a binding that
+only proves work exists cannot do it. An issue tracker also carries the *reason* an item is stuck:
+a requested change, a failing check, a thread gone quiet. That reason is the difference between a
+useful check-in and an annoying one, so read it where the binding has it.
 
-**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
-`query_external_events(target: <id>, start_datetime: <now - 30d>, end_datetime: <now>)` for
-changes, reviews, and ticket movement — stall detection is date arithmetic on these: first seen,
-last movement, current state. `list_meetings(is_oneonone: true, with_notes_and_transcript: true,
-limit: 2)` to check the item was not already discussed. Write only on the manager's action:
-`add_meeting_topics(meeting_id, topics)` → preview → approval → `confirm_creation`.
+**Withheld, and this one is easy to get wrong.** **No `last_movement` → no staleness claim at all.**
+A last-edited timestamp on a page, or a search hit, is not evidence that work has stalled — it is
+evidence that a document exists. Never substitute one for the other, and never fall back to meeting
+notes or goals as a proxy for work signals.
 
-**With Notion.** `notion-search` finds that work exists but is weak on dates and state changes, so
-**do not compute staleness from it**. Use the issue tracker for the detection and Notion for the
-1-on-1 note the item may already have been raised in.
+**With C3 unbound** this skill has nothing to detect on. Say so once and stop. That is one of only
+two skills in the library that stop rather than narrow.
 
-**With neither.** Nothing to run on. Say so once and stop — do not substitute meeting notes or
-goals as a proxy for work signals.
-
-**Never repeat a ping.** Without a durable ledger ([TF-1595](https://linear.app/topicflow/issue/TF-1595)),
-dedupe within the run and stay conservative across runs: prefer the single oldest item over three
-medium ones.
+**Never repeat a ping.** Without a durable ledger
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)), dedupe within the run and stay
+conservative across runs: prefer the single oldest item over three medium ones. Writes happen only
+on the manager's action, through the C8 binding.
 
 ## Gate — routine mode
 

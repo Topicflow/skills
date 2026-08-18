@@ -21,19 +21,21 @@ Gate section and in whether questions may be asked.
 the lines of unwrapped text, so the checker warns at 150 and fails at 165. One worked
 example at the end. `agents/openai.yaml` for Codex / ChatGPT harnesses.
 
-**2. Two-part body, and no required backend.** *Method* first — the management practice,
-tool-agnostic, so it survives a tool rename. *Sources* second — which of the eight
-capabilities in [source-map.md](source-map.md) the skill needs, and what it does on each
-backend that can supply them. **No skill may require Topicflow.** Topicflow is the fullest
-single source; Notion, an issue tracker, a calendar, and the manager's own answers are all
-first-class alternatives. A skill states what it does with each, including with none.
+**2. Two-part body, and no skill names a backend.** *Method* first — the management
+practice, tool-agnostic, so it survives a tool rename. *Sources* second — which of the eight
+capabilities in [source-map.md](source-map.md) the skill needs, what each one buys it, and
+which conclusions are withheld when one is thin or absent. **A SKILL.md must not contain a
+backend tool name.** Capabilities are bound to tools one at a time in the binding record;
+skills execute the binding. That is what lets a manager keep goals in one tool and private
+notes in another, and lets a tool nobody here has heard of work at all. Adapters and the
+recipe for an unknown backend: [adapters.md](adapters.md).
 
-**3. Write-back to the system of record.** Anything durable learned during a run — from the
-manager's words or from a tool — is saved to wherever that manager keeps notes: Topicflow,
-a Notion page, or their own file. `setup-sources` records the destination once so it is not
-re-decided per run. This holds even when the run ends in silence: a finding nobody was
-pinged about is still worth keeping for review time. Where nothing can be written, produce
-the note text and say plainly it was not filed (see the `save-context` skill).
+**3. Write-back through the C6 binding.** Anything durable learned during a run — from the
+manager's words or from a tool — is appended wherever C6 points, whatever that is.
+`setup-sources` records the destination, the calls, and whether the place is private, so
+none of it is re-decided per run. This holds even when the run ends in silence: a finding
+nobody was pinged about is still worth keeping for review time. Where C6 cannot be written,
+produce the note text and say plainly it was not filed (see the `save-context` skill).
 
 **4. Confirm once.** Every Topicflow write tool is a two-step: the write tool returns a
 *preview* plus a `pending_id`, and `confirm_creation(pending_id)` commits it. Show the
@@ -70,7 +72,10 @@ the manager.
   manager's own notes; shared surfaces get behaviour and impact.
 - Never asks more than 3 questions before producing a draft. A rough draft the manager
   edits beats an interrogation.
-- Never assumes a backend. A skill that only works on Topicflow is not finished.
+- Never names a backend. A skill that mentions a specific tool has hardcoded a routing
+  decision that belongs in the binding, and it will be wrong for the next manager.
+- Never re-decides a binding mid-run. If it looks wrong, say so and point at
+  `setup-sources`; do not silently read from somewhere else.
 
 ## Degrading gracefully
 
@@ -81,8 +86,10 @@ confidence of the affected finding — never fail the whole run, never silently 
 gap is a negative result ("no recognition found" is different from "recognition history
 unreadable"). The manager should never have to guess how much the skill could actually see.
 
-Per-capability alternatives: [source-map.md](source-map.md). Topicflow tool detail and its
-known gaps: [topicflow-tools.md](topicflow-tools.md).
+Capability contracts and the withheld conclusions each one carries:
+[source-map.md](source-map.md). Known adapters and how to bind a new backend:
+[adapters.md](adapters.md). Topicflow detail and its gaps:
+[topicflow-tools.md](topicflow-tools.md).
 
 Two skills are the exception to "degrade, don't stop": `stuck-work` and `recognition-scan`
 without work signals have nothing to detect on, and should say so once and stay quiet.
@@ -93,8 +100,8 @@ without work signals have nothing to detect on, and should say so once and stay 
 2. Check the catalog for an existing skill with the same job. One skill per job — extend
    the existing one instead of adding a near-duplicate.
 3. Write the Method before touching any tool names.
-4. Map it to the capabilities in [source-map.md](source-map.md), and write what it does on
-   each backend — including with no backend at all.
+4. Map it to the capabilities in [source-map.md](source-map.md): what each one buys the
+   skill, and which conclusions are withheld without it. Do not name a tool.
 5. Add 5 eval cases in `evals/<skill>.md`: golden path, silence path, graceful-fail path,
    practice-conformance path, and portability path (it works without Topicflow).
 6. Register it in `.claude-plugin/plugin.json`, the category README, and the root README.

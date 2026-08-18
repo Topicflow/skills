@@ -68,32 +68,28 @@ whatever the manager was doing.
 
 ## Sources
 
-**Needs** C6 durable notes, read and write. That is the whole skill. `setup-sources` records where
-notes go; this skill does not re-decide it per run. Backend mapping:
-[source-map.md](../../../references/source-map.md).
+**Needs** C6 durable notes, read and append. That is the whole skill. **This skill never names a
+backend** — it executes the C6 binding, whatever it points at: a note tool, a task manager, a page
+per person, a plain file. Contract: [source-map.md](../../../references/source-map.md). Adapters,
+and how to bind one nobody has seen: [adapters.md](../../../references/adapters.md).
 
-**With Notion** — the best destination today. Keep one page per report under a People page.
-`notion-create-pages` to start it, then
-`notion-update-page(page_id, command: "insert_content", position: {type: "end"})` to append the
-dated sentence. Read it back with `notion-fetch(id)` to dedupe. Private as long as the page is —
-check that once, not every time.
+**The binding is not re-decided per run.** `setup-sources` recorded the destination, the append
+call, the read call, and whether the place is private. Use them. Asking the manager where notes go
+every time they say something worth keeping is how a memory habit dies.
 
-**With Topicflow.** `save_private_note(person, text)` and `read_ai_memory` are **in dev**
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)). Until they land: show the note text and
-ask the manager to keep it. Only if the manager confirms individual 1-on-1 notes are private to
-them, `edit_meeting_topic_notes(meeting_id, topic_id, text, operation: "append", notes_type:
-"individual")` on a standing "Context" topic — **ask first**, because shared notes are visible to
-the report.
+**Withheld when the binding is thin.** Append but no read → dedup is impossible, so ask in half a
+sentence rather than duplicating, and **never report a fact as new**. No append → produce the
+sentence and say plainly it was not filed; a fact the manager pastes somewhere is still kept, a
+fact silently dropped is not.
 
-**With neither.** Produce the sentence and say plainly it was not filed. A fact the manager pastes
-somewhere is still a fact kept; a fact silently dropped is not.
+**Privacy is part of the contract, and it is checked once at bind time, not guessed here.** Where
+the C6 destination is not confirmed private to the manager, maturity observations and preferences
+do not go there. **Never write a manager-private observation to a surface the report can read** —
+a shared page, a shared meeting note, a channel. Dropping the note is better under every binding.
 
-**Never write a manager-private observation to a surface the report can read** — a shared meeting
-note, a team page, a channel. Dropping the note is better on every backend.
-
-**Dedup** against whatever can be read: the person's page, recent 1-on-1 notes, the current
-conversation. Where nothing is readable, ask in half a sentence rather than duplicating — and
-never report "not already known" as a fact.
+**The receipt names where it went**, because on a rebound C6 the manager may not remember. "Saved
+to Tony's page" and "couldn't file this, keep it somewhere" are both complete receipts; silence is
+not.
 
 ## Gate
 
