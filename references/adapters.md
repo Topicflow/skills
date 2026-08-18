@@ -62,13 +62,17 @@ whole project, so it gets slower as notes pile up."
 
 Exact Topicflow parameters, its write pattern, and its gaps: [topicflow-tools.md](topicflow-tools.md).
 
-**Topicflow** — C1 `get_user_infos`. C2 `list_meetings(is_oneonone: true,
-with_notes_and_transcript: true)`, the richest single call in any adapter: dates, cancellations,
-topics, notes, action items. C3 `query_external_events(target, start_datetime, end_datetime)`. C4
-`list_goals(owners)`, open goals only. **C5 `list_feedback` / `list_assessments` — the only adapter
-that satisfies C5 at all.** C6 in dev ([TF-1595](https://linear.app/topicflow/issue/TF-1595)). C7
-`create_feedback` / `create_recognition`. C8 `add_meeting_topics`. All writes are
-preview-then-`confirm_creation`.
+**Topicflow** — C1 `get_user_infos`; its `reports` array is a hint, not a roster (see
+[topicflow-tools.md](topicflow-tools.md)). C2 `list_meetings(is_oneonone: true,
+with_notes_and_transcript: true)`, potentially the richest single call in any adapter — dates,
+cancellations, topics, notes, action items — but **`is_oneonone: true` also returns peer and social
+1-on-1s, so the binding must filter on the `is_manager_and_report_oneonone` response field.** C3
+`query_external_events(target, start_datetime, end_datetime)`. C4 `list_goals(owners)`, open goals
+only. **C5 `list_feedback` / `list_assessments` — the only adapter that satisfies C5 at all**, and
+recognition surfacing there is unconfirmed; a live check in 2026-10 found feedback and feedback
+requests but no recognition, so verify per deployment before trusting an empty result. C6 in dev
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)). C7 `create_feedback` /
+`create_recognition`. C8 `add_meeting_topics`. All writes are preview-then-`confirm_creation`.
 
 **Notion** — C1 `notion-get-users`, or `notion-search(query_type: "user")`; no org chart, so the
 roster still gets asked. C2 `notion-query-meeting-notes` filtered on `attendees`

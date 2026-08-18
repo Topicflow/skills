@@ -31,9 +31,19 @@ per change, but one approval from the manager covers the batch they approved.
   next role — use it for career and review work, skip it otherwise. **This is how you get
   user IDs.** Resolve IDs once at the start of a run and reuse them; IDs beat names
   everywhere else.
+  **The `reports` array is not a trustworthy roster.** Verified 2026-10 against a live org:
+  it returned a duplicate account with the same name as the manager themselves. Treat it as
+  a hint to confirm, never as the roster — which is what C1's contract already requires.
 - **`list_meetings(is_oneonone?, title?, status?, limit?, order?, meeting_datetime_start?, meeting_datetime_end?, with_notes_and_transcript?)`**
-  — the authenticated manager's meetings. `is_oneonone: true` for 1-on-1s. `order:
-  "-start_datetime"` for most recent first, `"start_datetime"` for upcoming.
+  — the authenticated manager's meetings. `order: "-start_datetime"` for most recent first,
+  `"start_datetime"` for upcoming.
+  **`is_oneonone: true` is not "1-on-1s with my reports".** Verified 2026-10 against a live
+  org: it returned a recurring lunch with a peer, flagged `is_formal_oneonone: true` and
+  `is_manager_and_report_oneonone: false`. There is no request parameter for the distinction —
+  it is a **response field**, so filter after the call on
+  `is_manager_and_report_oneonone: true`, and cross-check the other participant against the
+  confirmed roster. Skipping this makes `relationship-drift` report drift on a lunch and
+  `prep-1on1` prep an agenda for someone who does not report to the manager.
   `status` filters confirmed / tentative / cancelled (values 1, 2, 3 — confirm the mapping
   against a live response before relying on it). **`with_notes_and_transcript: true`
   returns topics, agendas, and notes** — this is where open action items and past topics
