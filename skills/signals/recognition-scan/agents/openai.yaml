@@ -1,0 +1,3 @@
+interface:
+  display_name: "Recognition Scan"
+  short_description: "Find unrecognized wins and droughts"

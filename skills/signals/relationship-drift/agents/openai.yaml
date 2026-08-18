@@ -1,0 +1,3 @@
+interface:
+  display_name: "Relationship Drift"
+  short_description: "Cadence gaps and cancellations, by date"

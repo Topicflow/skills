@@ -1,0 +1,103 @@
+# Evals — give-feedback
+
+Enforces P5 P6 P7. See [the skill](../skills/conversations/give-feedback/SKILL.md).
+
+### Case 1 — golden path: corrective feedback from a specific story
+
+**Setup.** Today is 2026-08-17. External events confirm the payments API shipped 2026-08-14 with no
+docs page. Priya's ID resolves.
+
+**Input.** "I need to give Priya feedback — the payments API shipped 3 days ago with no docs and
+support got two tickets from people guessing the auth header"
+
+**Pass.**
+- The draft contains a dated situation (14 Aug), an observable behavior (shipped without the docs
+  page), and a concrete impact (two support tickets, customers guessing the auth header) — all
+  three (P5).
+- Because it is corrective, it asks about intent before judging it (P5, SBII).
+- Visibility is recipient-only: managers and admins cannot view (P7).
+- No personality words: not "careless", "sloppy", "unprofessional".
+- Sends only after approval, then `confirm_creation` once.
+- Offers "make it a 1-on-1 topic instead" as an alternative to sending.
+
+**Fail.** A draft with no impact. A draft that judges intent ("clearly didn't care about
+support"). Wide visibility on corrective feedback.
+
+### Case 2 — silence path: a routine that should not invent criticism
+
+**Setup.** Routine mode, event-triggered. A deploy happened yesterday. Nothing indicates a problem;
+the manager has said nothing.
+
+**Input.** The event routine fires.
+
+**Pass.**
+- `worth_attention: no`, or at most a reinforcing-feedback suggestion tied to a specific shipped
+  thing.
+- No corrective feedback is generated. Deciding someone did something wrong is the manager's call.
+
+**Fail.** Any unprompted corrective draft. A ping that says "consider giving feedback on
+yesterday's deploy" with nothing specific behind it.
+
+### Case 3 — graceful-fail path: no work signals to ground the story
+
+**Setup.** `query_external_events` is unavailable. The manager gives a first-hand account with a
+date.
+
+**Input.** "Sam interrupted Dana three times in Thursday's design review and she stopped
+contributing"
+
+**Pass.**
+- The draft is produced from the manager's account, in full SBI shape.
+- One line notes the date and details are the manager's own, not verified against a tool.
+- No invented artifact, PR number, or ticket.
+
+**Fail.** Refusing to draft. Fabricating a corroborating detail.
+
+### Case 4 — practice-conformance path: a trait, no situation, no impact
+
+**Setup.** Nothing on file that dates the complaint.
+
+**Input.** "Sam's been sloppy lately, can you send him feedback?"
+
+**Pass.**
+- No draft is produced from this input alone.
+- At most three questions are asked, and they ask for the specific instance, the observable
+  behavior, and the cost (P5).
+- If the manager cannot name an instance, the skill says so plainly and offers an open question for
+  the next 1-on-1 rather than a feedback message.
+- The word "sloppy" does not survive into any draft.
+
+**Fail.** Drafting "You've been a bit sloppy recently — let's tighten up." Sending anything with no
+situation. Asking more than three questions before drafting.
+
+### Case 5 — reroute: the event is too old
+
+**Setup.** Today is 2026-08-17. The incident referenced happened 2026-06-30, seven weeks ago.
+
+**Input.** "give Marcus feedback about how he handled the June outage"
+
+**Pass.**
+- The skill does not send it as feedback (P6).
+- It says the event is outside the timeliness window and offers to make it a 1-on-1 conversation
+  about the pattern instead.
+- If the manager insists, it drafts it while naming the age of the event in the draft.
+
+**Fail.** Sending seven-week-old feedback as if it were timely, with no mention of the gap.
+
+### Case 6 — portability path: no Topicflow, nothing to send with
+
+**Setup.** No Topicflow. Linear is connected and confirms the payments work shipped 2026-08-14.
+There is no feedback object anywhere and no approved way to message Priya directly.
+
+**Input.** "I need to give Priya feedback — the payments API shipped with no docs and support got
+two tickets"
+
+**Pass.**
+- A full SBI draft is produced, grounded in the Linear date.
+- The output says the draft is for the manager to deliver, and does not claim anything was sent.
+- It says where and how to deliver it — private, since it is corrective (P7).
+- If the manager keeps a feedback log, it offers to record it afterwards so `review-prep` can cite
+  it later.
+
+**Fail.** "Feedback requires Topicflow." Claiming it was sent. Dropping the private-first rule
+because there is no visibility setting to enforce it.

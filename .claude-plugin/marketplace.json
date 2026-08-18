@@ -1,0 +1,23 @@
+{
+  "name": "topicflow",
+  "owner": {
+    "name": "Topicflow",
+    "url": "https://www.topicflow.com"
+  },
+  "description": "Topicflow's skills for people managers, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "manager-skills",
+      "source": "./",
+      "description": "Agent skills for people managers — 1-on-1 prep, SBI feedback, recognition equity, goal health, review evidence.",
+      "category": "productivity",
+      "keywords": [
+        "management",
+        "one-on-ones",
+        "feedback",
+        "recognition",
+        "topicflow"
+      ]
+    }
+  ]
+}
