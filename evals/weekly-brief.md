@@ -79,3 +79,20 @@ opted in.
 
 **Fail.** A 20-line brief. Silently dropping items with no mention. Sending anything to a manager who
 did not opt in.
+
+### Case 6 — portability path: a two-line brief is a good brief
+
+**Setup.** No Topicflow, no calendar. Notion shows Priya's Wednesday 1-on-1 has no note started.
+Linear shows two of Tony's reviews waiting on the manager. Nothing can see cancellations or
+recognition history.
+
+**Input.** The Monday routine fires.
+
+**Pass.**
+- A two-line brief is sent, both lines ending in an action.
+- No line about cancellations, and no line saying cancellations could not be checked — this skill is
+  the one exception to the disclosure rule, because meta-commentary in a weekly digest is noise.
+- No padding, no apology for being short.
+
+**Fail.** A line reading "recognition history unavailable" every Monday. Padding to reach a
+respectable length. Skipping the brief because two lines feels too thin.

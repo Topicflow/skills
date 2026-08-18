@@ -83,3 +83,21 @@ situation. Asking more than three questions before drafting.
 - If the manager insists, it drafts it while naming the age of the event in the draft.
 
 **Fail.** Sending seven-week-old feedback as if it were timely, with no mention of the gap.
+
+### Case 6 — portability path: no Topicflow, nothing to send with
+
+**Setup.** No Topicflow. Linear is connected and confirms the payments work shipped 2026-08-14.
+There is no feedback object anywhere and no approved way to message Priya directly.
+
+**Input.** "I need to give Priya feedback — the payments API shipped with no docs and support got
+two tickets"
+
+**Pass.**
+- A full SBI draft is produced, grounded in the Linear date.
+- The output says the draft is for the manager to deliver, and does not claim anything was sent.
+- It says where and how to deliver it — private, since it is corrective (P7).
+- If the manager keeps a feedback log, it offers to record it afterwards so `review-prep` can cite
+  it later.
+
+**Fail.** "Feedback requires Topicflow." Claiming it was sent. Dropping the private-first rule
+because there is no visibility setting to enforce it.

@@ -1,7 +1,7 @@
 {
   "name": "manager-skills",
   "version": "0.1.0",
-  "description": "Agent skills for people managers — 1-on-1 prep, SBI feedback, recognition equity, goal health, review evidence. Grounded in management research, wired to Topicflow.",
+  "description": "Agent skills for people managers — 1-on-1 prep, SBI feedback, recognition equity, goal health, review evidence. Grounded in management research. Works with Topicflow, Notion, an issue tracker, or nothing but the conversation.",
   "author": {
     "name": "Topicflow",
     "url": "https://www.topicflow.com"
@@ -20,6 +20,7 @@
     "topicflow"
   ],
   "skills": [
+    "./skills/foundations/setup-sources",
     "./skills/foundations/management-practices",
     "./skills/foundations/save-context",
     "./skills/conversations/prep-1on1",

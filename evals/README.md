@@ -17,6 +17,12 @@ Every skill file has at least these, in this order:
 4. **Practice-conformance path** — an output that violates a mapped P-rule must be rejected. The
    skill either fixes it before showing it or asks the question that fixes it. Showing a
    non-conformant draft with a caveat is a fail.
+5. **Portability path** — **the skill runs without Topicflow.** Usually Notion plus an issue
+   tracker, sometimes nothing at all. It must do the most it can on that backend, name the
+   capability it is missing in one line, and never let a missing source become a claim about a
+   person. A skill that only works on Topicflow fails here, and a skill that quietly produces a
+   thinner answer without saying so fails harder — the manager cannot calibrate what they are
+   reading.
 
 Extra cases are welcome, and several skills have one: the case where the skill must **refuse** or
 **reroute** rather than produce what was asked for.

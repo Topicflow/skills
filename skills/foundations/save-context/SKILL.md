@@ -68,29 +68,32 @@ whatever the manager was doing.
 
 ## Sources
 
-**Primary — Topicflow.** `save_private_note(person, text)` is the destination. **It does not
-exist yet** and is the library's P0 dependency (see
-[topicflow-tools.md](../../../references/topicflow-tools.md)).
+**Needs** C6 durable notes, read and write. That is the whole skill. `setup-sources` records where
+notes go; this skill does not re-decide it per run. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Until it ships**, degrade in this order:
+**With Notion** — the best destination today. Keep one page per report under a People page.
+`notion-create-pages` to start it, then
+`notion-update-page(page_id, command: "insert_content", position: {type: "end"})` to append the
+dated sentence. Read it back with `notion-fetch(id)` to dedupe. Private as long as the page is —
+check that once, not every time.
 
-1. Show the note text and ask the manager to keep it: "Worth keeping — want to paste this
-   into Tony's notes?" A fact the manager keeps by hand is still kept.
-2. If the manager confirms that individual 1-on-1 notes are private to them in their
-   deployment, append to a standing "Context" topic in that person's 1-on-1 via
-   `edit_meeting_topic_notes(meeting_id, topic_id, text, operation: "append", notes_type:
-   "individual")`. **Ask first.** Shared notes are visible to the report, and a
-   maturity observation in shared notes is a bad day for everyone.
-3. Never write a manager-private observation to a shared surface as a fallback. Dropping the
-   note is better.
+**With Topicflow.** `save_private_note(person, text)` and `read_ai_memory` are **in dev**
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)). Until they land: show the note text and
+ask the manager to keep it. Only if the manager confirms individual 1-on-1 notes are private to
+them, `edit_meeting_topic_notes(meeting_id, topic_id, text, operation: "append", notes_type:
+"individual")` on a standing "Context" topic — **ask first**, because shared notes are visible to
+the report.
 
-**Dedup** uses `read_ai_memory(person?)` — also missing. Until then, check the current
-conversation and recent 1-on-1 notes (`list_meetings(is_oneonone: true,
-with_notes_and_transcript: true, limit: 3)`), and when unsure whether something is already
-known, ask in half a sentence rather than duplicating.
+**With neither.** Produce the sentence and say plainly it was not filed. A fact the manager pastes
+somewhere is still a fact kept; a fact silently dropped is not.
 
-**Secondary.** None. This skill only ever writes; it does not go looking for facts in other
-tools.
+**Never write a manager-private observation to a surface the report can read** — a shared meeting
+note, a team page, a channel. Dropping the note is better on every backend.
+
+**Dedup** against whatever can be read: the person's page, recent 1-on-1 notes, the current
+conversation. Where nothing is readable, ask in half a sentence rather than duplicating — and
+never report "not already known" as a fact.
 
 ## Gate
 

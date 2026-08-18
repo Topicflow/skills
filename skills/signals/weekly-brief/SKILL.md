@@ -71,27 +71,30 @@ third time.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** whatever is available — this skill is a filter over the other skills' findings, so it
+degrades by getting shorter rather than by breaking. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
+`query_external_events(target: <id>, start_datetime: <now - 7d>, end_datetime: <now>)` per report,
+read for finishable things and stalls, never for volume. `list_meetings(is_oneonone: true, order:
+"start_datetime", meeting_datetime_start: <now>, meeting_datetime_end: <now + 7d>,
+with_notes_and_transcript: true)` for this week's 1-on-1s and whether they have an agenda yet — an
+agenda-less 1-on-1 two days out is the single most actionable line the brief can carry, and it
+hands straight to `prep-1on1`. The same call with `status: <cancelled>` for last week's
+cancellations. `list_goals(owners: [<ids>])` for status changes. No write.
 
-- `get_user_infos(team_name: <team>)` or a confirmed roster → IDs.
-- `query_external_events(target: <id>, start_datetime: <now - 7d>, end_datetime: <now>)` → one
-  call per report. Read for finishable things and stalls, not for volume.
-- `list_meetings(is_oneonone: true, order: "start_datetime", meeting_datetime_start: <now>,
-  meeting_datetime_end: <now + 7d>, with_notes_and_transcript: true)` → this week's 1-on-1s and
-  whether they have an agenda yet. An agenda-less 1-on-1 two days out is the single most
-  actionable line the brief can carry — it hands straight to `prep-1on1`.
-- `list_meetings(is_oneonone: true, status: <cancelled>, meeting_datetime_start: <now - 7d>)` →
-  last week's cancellations.
-- `list_goals(owners: [<ids>])` → status changes and staleness.
-- No write. The brief's actions hand off to skills that own their own confirmations.
+**With Notion or an issue tracker.** Upcoming 1-on-1s and whether a note exists yet from
+`notion-query-meeting-notes`; stalls from Linear or GitHub; goals from the goals database.
+Cancellations are invisible without a calendar, so that line simply does not appear — it is not
+reported as "no cancellations".
 
-**Secondary.** None by default. A digest is exactly where extra sources turn into noise. Add one
-only if the manager explicitly asks for it.
+**With neither.** This skill has nothing to filter and should not be scheduled. Say so once.
 
-**Degrading.** No external events → the brief is meetings and goals only, and is usually two or
-three lines. That is a fine brief. A short brief is the normal case, not a failure.
+**A short brief is the normal case, not a failure.** Two lines is a good brief. Never pad it to
+look complete, and never add a line explaining what could not be seen — the one exception to the
+disclosure rule, because a digest is exactly where meta-commentary becomes noise. Tell the manager
+about missing capabilities once, in `setup-sources`, not every Monday.
 
 ## Gate — routine mode
 

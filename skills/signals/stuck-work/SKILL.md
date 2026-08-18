@@ -75,28 +75,31 @@ daily ping.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C3 work signals. Without them this skill has nothing to detect, on any backend. Backend
+mapping: [source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Linear or GitHub directly** — the best source here, whatever else is connected. An event
+feed says a review is open; the native tool says *why* it is stuck (a requested change, a failing
+check, a comment thread gone quiet). That reason is the difference between a useful check-in and
+an annoying one, so reach for it even when Topicflow is present.
 
-- `get_user_infos(team_name: <team>)` or a confirmed roster → IDs.
-- `query_external_events(target: <id>, start_datetime: <now - 30d>, end_datetime: <now>)` →
-  changes, reviews, and ticket movement. Stall detection is date arithmetic on these events:
-  first seen, last movement, current state.
-- `list_meetings(is_oneonone: true, with_notes_and_transcript: true, limit: 2)` → whether this
-  item was already discussed in a 1-on-1. If it was, stay silent.
-- Write, only on the manager's action: `add_meeting_topics(meeting_id, topics)` for the 1-on-1
-  route → preview → approval → `confirm_creation(pending_id)`. The direct check-in message is
-  the manager's to send in their own channel; this skill drafts the text.
+**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
+`query_external_events(target: <id>, start_datetime: <now - 30d>, end_datetime: <now>)` for
+changes, reviews, and ticket movement — stall detection is date arithmetic on these: first seen,
+last movement, current state. `list_meetings(is_oneonone: true, with_notes_and_transcript: true,
+limit: 2)` to check the item was not already discussed. Write only on the manager's action:
+`add_meeting_topics(meeting_id, topics)` → preview → approval → `confirm_creation`.
 
-**Secondary, and often necessary here.** GitHub or Linear directly — an event feed says a review
-is open, but the *reason* it is stuck (a requested change, a failing check, a comment thread
-gone quiet) usually needs the native tool. That reason is the difference between a useful
-check-in and an annoying one.
+**With Notion.** `notion-search` finds that work exists but is weak on dates and state changes, so
+**do not compute staleness from it**. Use the issue tracker for the detection and Notion for the
+1-on-1 note the item may already have been raised in.
 
-**Degrading.** No connected tools → this skill has nothing to work with. Say so once and stop;
-do not substitute meeting notes for work signals. No memory for the ping ledger → dedupe within
-the run and be conservative across runs: prefer the single oldest item over three medium ones.
+**With neither.** Nothing to run on. Say so once and stop — do not substitute meeting notes or
+goals as a proxy for work signals.
+
+**Never repeat a ping.** Without a durable ledger ([TF-1595](https://linear.app/topicflow/issue/TF-1595)),
+dedupe within the run and stay conservative across runs: prefer the single oldest item over three
+medium ones.
 
 ## Gate — routine mode
 

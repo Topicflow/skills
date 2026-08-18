@@ -70,32 +70,32 @@ person hears it — so offer a 1-on-1 topic for anything in the pack they have n
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C3 work signals, C4 goals, C5 the feedback and recognition record, C6 notes. C5 is the
+one that decides how thick the packs are. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow** — much the fullest path, and the only one with peer input.
+`list_my_review_tasks(current_only: true)` is the trigger; `list_review_programs(current_only:
+true, include_participants: true)` gives the cycle and its dates.
+`get_user_infos(..., include_career_track: true)` frames growth against the next role.
+`list_goals(owners: <id>)` — **open goals only**. `list_feedback(recipients: <id>, state: 2,
+created_datetime_start, created_datetime_end)`. `list_assessments(target: <id>, program_id,
+include_content: true)` for the written peer answers. `query_external_events(target: <id>, ...)`
+for dated artifacts. Writes are limited to `add_meeting_topics`; the assessment is the manager's.
 
-- `list_my_review_tasks(current_only: true)` → what the manager owes and for whom. The trigger.
-- `list_review_programs(current_only: true, include_participants: true)` → cycle, stage, dates.
-- `get_user_infos(target_names: [...], include_career_track: true)` → level, competencies, and
-  next-role expectations to frame growth against.
-- `list_goals(owners: <id>)` → **open goals only.** Status and progress; see the gap below.
-- `list_feedback(recipients: <id>, state: 2, created_datetime_start, created_datetime_end)` →
-  feedback and recognition in the period, with dates.
-- `list_assessments(target: <id>, program_id: <cycle>, include_content: true)` → peer and self
-  assessments, with the written answers.
-- `query_external_events(target: <id>, start_datetime, end_datetime)` → dated artifacts.
-- Writes are limited to `add_meeting_topics` for a pre-review conversation. The assessment itself
-  is written by the manager in Topicflow.
+**With Notion or an issue tracker.** Dated artifacts from Linear and GitHub carry the *delivered*
+section well. Goals from a goals database. The career ladder the review is graded against usually
+lives in Notion — read it. What is missing is peer input and recognition history, so those two
+sections come from the manager's own log if they keep one, and from asking if they do not. Say
+which.
 
-**Secondary.** Linear or GitHub for project outcomes an event feed summarizes too thinly. Notion
-for the career ladder the review is graded against, and for project retrospectives.
+**With neither.** The pack is built by interview: what did they deliver, who saw it, what changed.
+Slower, still evidence rather than adjectives, and the gaps section carries more weight.
 
-**Degrading, and this matters here.** Closed goals are not reliably listable — never report "no
-goals completed"; list what is open with status, ask the manager what closed, and put the rest in
-the gaps section. Recognition history may not be readable in every deployment; where a live check
-shows it is not, mark it unverifiable rather than absent. With no memory tool, growth history
-relies on meeting notes and the manager's recall — ask, and do not infer a trajectory from three
-data points.
+**This is the skill where a missing source does the most damage, so be strict.** Closed goals are
+not reliably listable anywhere — never report "no goals completed". No C5 → peer input and
+recognition are **unreadable, not absent**, and that goes in the gaps section as a collection
+problem. Never let a thin pack read as a weak quarter.
 
 ## Gate — routine mode
 

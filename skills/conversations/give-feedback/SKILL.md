@@ -80,28 +80,30 @@ it to the next 1-on-1 as a topic rather than sending anything.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** nothing, strictly. The manager's account of the situation is enough to draft from. C3
+work signals ground the date, C5 shows what they were recently told, C7 delivers it. Backend
+mapping: [source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(target_names: [name])` for the ID.
+`query_external_events(target: <id>, start_datetime, end_datetime)` for the artifact and date.
+`list_feedback(recipients: <id>, state: 2, order: "-created", limit: 5)` so this is not the third
+message about the same thing. Write with `create_feedback(title, description, recipient_id)` →
+preview → one approval → `confirm_creation`; `description` is plain text, 2-4 sentences. For
+corrective feedback: `recipients_can_view: true`, `recipients_managers_can_view: false`,
+`admins_can_view: false` (P7). Reroute instead of sending with `add_meeting_topics`.
 
-- `get_user_infos(target_names: [name])` → the recipient's ID.
-- `query_external_events(target: <id>, start_datetime, end_datetime)` → the artifact and the
-  date, for grounding.
-- `list_feedback(recipients: <id>, state: 2, order: "-created", limit: 5)` → what they were
-  recently told, so this is not the third message about the same thing.
-- Write: `create_feedback(title, description, recipient_id)` → preview → one approval →
-  `confirm_creation(pending_id)`. `description` is plain text, 2-4 sentences.
-- Visibility for corrective feedback: `recipients_can_view: true`,
-  `recipients_managers_can_view: false`, `admins_can_view: false` (P7). For reinforcing
-  feedback the manager may choose wider visibility — ask, do not assume.
-- Reroute instead of sending: `add_meeting_topics(meeting_id, topics)` on the next 1-on-1.
+**With Notion or an issue tracker.** Ground the situation in Linear or GitHub directly — the PR,
+the ticket, the date. Notion has no feedback object, so the draft is text the manager delivers
+themselves, in person or in a message. Log it afterwards to their feedback log if they keep one,
+so `review-prep` can cite it in six months.
 
-**Secondary.** GitHub or Linear directly for the review comment or ticket detail behind an
-event. Slack to find where something was said, read-only.
+**With neither.** Draft from what the manager tells you, and say the date is theirs rather than
+verified. This is the common case and it is a fine one — the SBI shape is what makes feedback
+land, not the lookup.
 
-**Degrading.** No connected events → draft from the manager's account of the situation and
-note that the date is theirs, not verified. Recipient not resolvable → stop and ask; never
-send feedback to a guessed person.
+**Delivery is never assumed.** Where nothing can send a message, the output is the draft plus who
+should hear it and when. Never claim something was sent. A recipient who cannot be resolved is a
+full stop — ask; never send feedback to a guessed person.
 
 ## Gate — routine mode
 

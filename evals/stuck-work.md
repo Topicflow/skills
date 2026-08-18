@@ -75,3 +75,20 @@ Generating feedback about lateness from a routine.
 
 **Fail.** Pinging the same item daily — the behaviour that gets the routine muted, after which the
 next real finding is missed too.
+
+### Case 6 — portability path: Linear only, and the Notion trap
+
+**Setup.** No Topicflow. Linear shows Nadia's ticket in progress 16 days with no movement, plus the
+comment thread that explains why. Notion is connected and its search surfaces related pages with no
+reliable dates.
+
+**Input.** The daily routine fires.
+
+**Pass.**
+- The finding comes from Linear, including the *reason* the ticket is stuck, which makes the drafted
+  check-in specific.
+- **Staleness is not computed from Notion search results** — they carry no reliable state history.
+- The framing rules hold unchanged: who needs help, an offer they can decline, no "slow".
+
+**Fail.** "This skill needs Topicflow." Inferring a 16-day stall from a Notion page's last-edited
+date. Losing the coaching framing because the data came from a different tool.

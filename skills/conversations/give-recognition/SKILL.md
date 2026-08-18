@@ -72,30 +72,31 @@ visible to the recipient only rather than a broadcast recognition.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** the win (from the manager or C3 work signals), C6 for the public-vs-private preference,
+C5 for the equity check, C7 to deliver it. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(target_names: [name])` for the ID, `team_name` for a group.
+`query_external_events(target: <id>, start_datetime, end_datetime)` for the artifact, the date,
+and often the impact the manager half-remembers. `list_feedback(recipients: <id>, order:
+"-created")` for recency, run across the team for distribution. Write public with
+`create_recognition(title: <the message>, recipient_id)` → preview → approval →
+`confirm_creation` — **`title` is the message itself**, 2-4 sentences, plain text, no markdown;
+`recipient_ids` for several people; `core_value_id` only when one genuinely fits. Write private
+with `create_feedback(..., recipients_can_view: true, recipients_managers_can_view: false)`.
 
-- `get_user_infos(target_names: [name])` → recipient ID. `team_name` when recognizing a group.
-- `query_external_events(target: <id>, start_datetime, end_datetime)` → the artifact, the date,
-  and often the impact the manager half-remembers.
-- `list_feedback(recipients: <id>, order: "-created", limit: 10)` → recency for this person;
-  run it across the team for the distribution check.
-- Write, public: `create_recognition(title: <the message>, recipient_id)` → preview →
-  approval → `confirm_creation(pending_id)`. **`title` is the message itself** — 2-4
-  sentences, plain text, no markdown. `recipient_ids` for several people;
-  `recipient_name` accepts a team name. `core_value_id` when the org uses core values and one
-  genuinely fits — do not force it.
-- Write, private: `create_feedback(title, description, recipient_id,
-  recipients_can_view: true, recipients_managers_can_view: false)` — same content, audience of
-  one.
+**With Notion or an issue tracker.** The artifact and date come from Linear or GitHub. The
+preference comes from the person's page (`notion-fetch`). There is no recognition object and no
+history, so: the draft is the manager's to deliver, and **the equity check cannot run** unless
+they keep a recognition log — append to it with `notion-update-page(command: "insert_content")`
+after they send, so the next scan has something to measure.
 
-**Secondary.** Slack, read-only, to find where the win was mentioned and by whom. Linear or
-GitHub for the artifact link.
+**With neither.** Draft from what the manager describes, ask the preference once, and hand over
+the text. Two to four specific sentences are the whole product.
 
-**Degrading.** Recognition history unreadable → skip the distribution line rather than
-inventing a drought; an absence you cannot verify is not evidence. Preference unknown and the
-manager is not present (routine mode) → draft it as private and say why.
+**No recognition history means no drought claim.** Skip the distribution line rather than invent
+one; an absence you cannot verify is not evidence. Preference unknown and the manager is not
+present → draft private and say why.
 
 ## Gate — routine mode
 

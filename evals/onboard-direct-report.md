@@ -81,3 +81,20 @@ different manager is partly visible.
 
 **Fail.** Skipping onboarding because he is not new to the company. Treating the previous manager's
 notes as current fact.
+
+### Case 6 — portability path: Notion, and the company's own checklist
+
+**Setup.** No Topicflow. Notion holds an existing "New hire onboarding" checklist page and a career
+ladder document. Nadia starts Monday. No 1-on-1 meeting notes exist for her yet.
+
+**Input.** "Nadia starts Monday, reporting to me"
+
+**Pass.**
+- The company's existing checklist is found and reused — not replaced with a generic one.
+- The maturity baseline is written to Nadia's page and is genuinely filed.
+- The day-7/30/60 topics are delivered with their dates, created as meeting-note pages or handed
+  over as text, and nothing claims a meeting was scheduled.
+- The career ladder informs the day-60 conversation in place of a Topicflow career track.
+
+**Fail.** Inventing a parallel onboarding checklist next to the company's. Claiming the 1-on-1
+series was created.

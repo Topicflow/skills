@@ -85,27 +85,30 @@ week. Create it only if the manager asks, with the **report** as owner.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C6 to record the baseline (essential — it is the point), C8 to place the check-in
+topics, C1 for the profile. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(target_names: [name], include_career_track: true)` for level,
+role, competencies, next role — the career track is what makes the day-60 conversation concrete.
+`list_meetings(is_oneonone: true, order: "start_datetime", meeting_datetime_start: <now>, limit:
+10)` for the day-7/30/60 `meeting_id`s. For an inherited report, `list_goals(owners: <id>)` and
+`list_meetings(with_notes_and_transcript: true)` for visible history. Write with
+`add_meeting_topics(meeting_id, topics)` per meeting → preview → approval → `confirm_creation`;
+optionally `create_goal(..., owner_id: <report>)`.
 
-- `get_user_infos(target_names: [name], include_career_track: true)` → level, role,
-  competencies, next role. The career track is what makes the day-60 conversation concrete.
-- `list_meetings(is_oneonone: true, order: "start_datetime", meeting_datetime_start: <now>,
-  limit: 10)` → the upcoming 1-on-1s and their `meeting_id`s for day 7, 30, and 60.
-- `list_goals(owners: <id>)` → for an inherited report, goals already in flight.
-- `list_meetings(with_notes_and_transcript: true)` → visible history with a previous manager.
-- Write: `add_meeting_topics(meeting_id, topics)` per meeting → preview → approval →
-  `confirm_creation(pending_id)`. Optionally `create_goal(title, scope, key_results,
-  owner_id: <report>)`.
-- Note saving is missing (`save_private_note`); `save-context` handles the fallback.
+**With Notion.** The baseline goes to the person's page (`notion-create-pages`, then
+`notion-update-page`) — this is the better note store today. The company's own onboarding
+checklist and career ladder usually live here too: reuse them, do not invent a parallel one. Place
+check-in topics by creating or appending the meeting note for each date with
+`notion-update-page(command: "insert_content")`.
 
-**Secondary.** Notion for the team's onboarding checklist and career ladder — reuse the company's
-own, do not invent a parallel one. Google Calendar to confirm the 1-on-1 series exists.
+**With neither.** Everything still works except the placing. Ask the four questions, hand back the
+baseline to keep, and deliver the four agendas as dated text.
 
-**Degrading.** No upcoming 1-on-1s → deliver all four agendas as text with the dates they belong
-on, and say the topics can be written once the series exists. No career track configured → skip
-the level language and ask the manager what good looks like in 90 days.
+**No backend schedules a meeting.** Where the 1-on-1 series does not exist, deliver all four
+agendas with the dates they belong on and ask the manager to set the series up. No career track
+configured → skip the level language and ask what good looks like in 90 days.
 
 ## Gate — routine mode
 

@@ -75,34 +75,30 @@ next month.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C4 goals with status and check-in recency, C8 to place a 1-on-1 topic. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
+`list_goals(owners: [<report ids>], limit: 50)` → **open goals only**, with status, key results,
+and progress; `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track. Count per person here for the
+overload check. Check-in recency comes from the goal's own history where the deployment includes
+it; where it does not, fall back to progress-value movement and **say which one you used** — "no
+check-in" and "no visible check-in" are different claims. Writes:
+`add_meeting_topics(meeting_id, topics)` for the preferred route; `edit_goal(goal_id, key_results:
+[{op: "edit", id, title}])` to sharpen a key result; `create_goal_checkin(goal_id, message)`
+**only** for goals the manager owns or has explicitly asked to update for someone.
 
-- `get_user_infos(team_name: <team>)` or a confirmed roster → IDs.
-- `list_goals(owners: [<report ids>], limit: 50)` → **open goals only**, with status, key
-  results, and progress. `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track. Count per person
-  here for the overload check.
-- Last check-in date comes from the goal's own check-in history in the same response where the
-  deployment includes it. Where it does not, treat check-in recency as unknown and fall back to
-  progress-value movement — and say which one you used, because "no check-in" and "no visible
-  check-in" are different claims.
-- `list_meetings(is_oneonone: true, with_notes_and_transcript: true, limit: 2)` → whether the
-  goal was already discussed recently. If it was, stay silent.
-- Writes: `add_meeting_topics(meeting_id, topics)` for the preferred route.
-  `edit_goal(goal_id, key_results: [{op: "edit", id, title}])` to sharpen a key result.
-  `create_goal_checkin(goal_id, message, current_value?)` **only** for goals the manager owns or
-  has explicitly asked to update on someone's behalf. All are preview → one approval →
-  `confirm_creation(pending_id)`.
+**With Notion.** `notion-fetch(<goals database url>)` first for the schema and the `collection://`
+data source URL, then `notion-query-data-sources` with SQL over it. **Read the schema — property
+names differ per workspace**, so never assume a column called `Status` or `Last check-in`. Where
+the database has no check-in or last-updated column, staleness is unmeasurable: report shape and
+status problems only, and say recency is unknown.
 
-**Secondary.** Linear or Notion where the real progress lives and Topicflow's number lags —
-common with engineering goals tracked as project milestones. Use it to inform the conversation,
-not to silently overwrite the report's own progress number.
+**With neither.** Ask what each person's current goals are. A goal nobody can name is itself the
+finding (P11), and the overload count works from the answer alone.
 
-**Degrading.** Closed goals are not reliably listable, so this skill sees only what is open —
-never report "nothing completed". Check-in history unreadable → say recency is unknown rather
-than declaring everything stale. No goals at all for a report is itself a finding worth one
-line, but not a ping on its own.
+**Closed goals are not reliably listable anywhere** — never report "nothing completed". No goals
+found for a report is worth one line, but not a ping on its own.
 
 ## Gate — routine mode
 

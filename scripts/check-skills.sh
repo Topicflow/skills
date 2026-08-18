@@ -113,11 +113,24 @@ while IFS= read -r skill_md; do
     err "contains a markdown table; output must survive Slack mrkdwn (convention 5)"
   fi
 
+  # --- backend neutrality (convention 2) ---------------------------------
+  # Mechanical proxy: a skill with a Sources section must point at the capability
+  # map, which is where the non-Topicflow paths are defined. Cannot verify that the
+  # paths are correct — that is review.
+  if grep -q '^## Sources' "$skill_md" && ! grep -q 'source-map.md' "$skill_md"; then
+    err "Sources does not reference source-map.md (no skill may require Topicflow)"
+  fi
+
   # --- companion files ---------------------------------------------------
   [ -f "$dir/agents/openai.yaml" ] || err "missing agents/openai.yaml (Codex/ChatGPT interface)"
 
   if ! is_reference_skill "$name"; then
-    [ -f "$REPO/evals/$name.md" ] || err "missing evals/$name.md (4 cases required)"
+    if [ -f "$REPO/evals/$name.md" ]; then
+      grep -qi 'portability' "$REPO/evals/$name.md" \
+        || err "evals/$name.md has no portability case (must run without Topicflow)"
+    else
+      err "missing evals/$name.md (5 cases required)"
+    fi
   fi
 
   # --- registration ------------------------------------------------------

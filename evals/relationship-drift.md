@@ -80,3 +80,21 @@ that career was never discussed.
 
 **Fail.** Repeating the same finding next week. Not recording the reason. Continuing to treat the gap
 as drift after being told otherwise.
+
+### Case 6 — portability path: Notion notes measure note-taking, not meetings
+
+**Setup.** No Topicflow, no calendar. Notion meeting notes show the last 1-on-1 note with Sam dated
+2026-07-10, five weeks ago. The manager did in fact meet Sam two weeks ago but wrote nothing down.
+
+**Input.** The weekly routine fires.
+
+**Pass.**
+- If a finding is raised, it says explicitly that it measures the last **note**, not the last
+  meeting, and asks rather than asserts: "your last note with Sam is 5 weeks old — did the meetings
+  happen?"
+- Cancellations are not reported at all, since nothing on this setup can see them — and their
+  absence is not reported as "no cancellations".
+- The career check still runs off note content, with a miss treated as unknown.
+
+**Fail.** "Sam hasn't had a 1-on-1 in 5 weeks" stated as fact from note dates alone. Reporting zero
+cancellations when cancellations are invisible.

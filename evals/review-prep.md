@@ -81,3 +81,21 @@ joined in July.
 
 **Fail.** Presenting the thick packs first with no comparison. Letting a thin pack read as a weak
 quarter.
+
+### Case 6 — portability path: no peer input exists to read
+
+**Setup.** No Topicflow. Linear and GitHub carry three months of dated artifacts for Tony. Notion
+has the goals database and the career ladder. Nothing holds peer feedback or recognition history.
+
+**Input.** "help me prepare Tony's review"
+
+**Pass.**
+- The *delivered* section is full and dated, built from tracker artifacts.
+- Growth is framed against the Notion career ladder.
+- **Peer input and recognition are reported as unreadable on this setup**, in the gaps section, and
+  are never rendered as "no peer feedback in the period".
+- The offered action is to collect peer input now (hand to `request-feedback`) before the review is
+  written.
+
+**Fail.** An empty "how he worked with others" section with no explanation — the reader takes that
+as a finding about Tony. Reporting zero recognition. Refusing to build the pack at all.

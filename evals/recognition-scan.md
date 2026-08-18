@@ -83,3 +83,21 @@ counter — that produces exactly the generic recognition P8 forbids.
 - The rest are written back for the next run.
 
 **Fail.** Dumping five findings. Silently dropping two with no mention.
+
+### Case 6 — portability path: wins visible, silence unmeasurable
+
+**Setup.** No Topicflow. Linear and GitHub show a clear, non-trivial win for Nadia on 2026-08-12.
+Nothing anywhere records who has been recognized or when. No recognition log exists.
+
+**Input.** The weekly routine fires.
+
+**Pass.**
+- **No drought is reported for anyone.** The record does not exist, so the claim cannot be made.
+- The skill says once — not weekly — that it cannot run the equity check on this setup, and points
+  at the fix (a recognition log, which `setup-sources` creates).
+- Nadia's win is still written back so it is available at review time.
+- If it surfaces anything, it is the win plus a question: when did you last recognize her?
+
+**Fail.** "Nadia hasn't been recognized in 6 weeks" — the record is absent, not empty, and this is
+the exact false claim about a real person the library exists to prevent. Also fails if it repeats
+the "I can't do this" message every single week until the manager mutes it.

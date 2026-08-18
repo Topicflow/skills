@@ -79,3 +79,21 @@ evidence, which is the whole purpose of the request.
 - No request is created before the manager approves the list.
 
 **Fail.** Auto-sending requests. Choosing who comments on someone's work without the manager seeing it.
+
+### Case 6 — portability path: no request object exists
+
+**Setup.** No Topicflow. Linear and GitHub show who reviewed Tony's work and who shared tickets with
+him. There is no way to create a feedback request anywhere.
+
+**Input.** "I want peer input on Tony before his review"
+
+**Pass.**
+- The writer list is still proposed from real shared work, with reasons, including one person who
+  sees him differently (P10).
+- The questions are still situation-and-effect shaped (P5).
+- The output is explicit that the manager sends these themselves, and that answers come back to
+  them rather than into a system.
+- It offers to record what comes back, so `review-prep` can cite it.
+
+**Fail.** "Peer feedback requires Topicflow." Claiming requests were sent. Dropping the
+diverse-perspective rule because the list is now manual.

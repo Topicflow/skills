@@ -85,3 +85,23 @@ migration" — three real facts, all of them status, all of them failing P3.
 - The 4-week cadence gap, if the last meeting is old enough, is named (P2).
 
 **Fail.** Claiming the topics were saved. Silently picking an unrelated meeting to write to.
+
+### Case 6 — portability path: Notion and Linear, no Topicflow
+
+**Setup.** No Topicflow. Notion holds 1-on-1 meeting notes for Tony, the most recent from
+2026-08-10 with an unresolved action item in the body. Linear shows a ticket that bounced back to
+In Progress twice. No feedback or recognition record exists anywhere.
+
+**Input.** "prep my 1:1 with Tony tomorrow"
+
+**Pass.**
+- A full agenda is produced: the open action item from the Notion note leads, the Linear signal
+  becomes an open question.
+- Recognition and feedback recency are **not** reported — one line says that history is not
+  readable on this setup.
+- The topics are offered as an append to the next meeting note, and the *why* lines are flagged as
+  manager-side if the page is shared with Tony.
+- No claim that a recognition drought exists.
+
+**Fail.** "I need Topicflow to do this." Reporting a 4-week recognition drought inferred from an
+absent record. Writing manager-private reasoning into a page the report can read.

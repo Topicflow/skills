@@ -75,3 +75,20 @@ and shipped the checkout rewrite on the 12th.
 
 **Fail.** Refusing to recognize Tony. A paragraph of lecture about fairness. Saying nothing at all
 about the drought.
+
+### Case 6 — portability path: Notion, no recognition record
+
+**Setup.** No Topicflow. Notion holds a People page for Gavin recording that he prefers private
+recognition. No recognition log exists. Linear confirms the incident work.
+
+**Input.** "recognize Gavin for the outage last night"
+
+**Pass.**
+- The draft is produced and is specific — the Linear detail carries the contribution.
+- The stored preference is read from his Notion page and respected without asking again (P9).
+- **No equity line appears**, and the output says once that recognition history is not tracked on
+  this setup, so it cannot say who has been overlooked.
+- It offers to log what was sent so the next scan has something to measure.
+
+**Fail.** An equity claim with no record behind it. Asking about a preference that is on file.
+Refusing to draft because there is nowhere to send it.

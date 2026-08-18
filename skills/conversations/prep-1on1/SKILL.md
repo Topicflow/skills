@@ -70,35 +70,32 @@ meeting. On approval, write them and confirm once.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C2 1-on-1 history (essential), C3 work signals, C4 goals, C5 feedback recency, C8 to
+write topics. Backend mapping: [source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow** — the fullest path. `get_user_infos(target_names: [name])` for the ID first;
+everything keys off it. `list_meetings(is_oneonone: true, order: "-start_datetime", limit: 3,
+with_notes_and_transcript: true)` for past topics, notes, and action items; the same call with
+`order: "start_datetime", meeting_datetime_start: <now>` for the upcoming `meeting_id`.
+`query_external_events(target: <id>, start_datetime: <last 1-on-1>, end_datetime: <now>)` — always
+pass `target`. `list_goals(owners: <id>)`. `list_feedback(recipients: <id>, order: "-created")`.
+Write with `add_meeting_topics(meeting_id, topics: [{title, notes}])` → preview → one approval →
+`confirm_creation`. Titles plain text; notes carry the *why* and the links.
 
-- `get_user_infos(target_names: [name])` → the report's ID. Do this first; everything else
-  keys off it.
-- `list_meetings(is_oneonone: true, order: "-start_datetime", limit: 3,
-  with_notes_and_transcript: true)` → the last meetings, their topics, notes, and action
-  items. Notes are the substitute for a dedicated action-item tool.
-- `list_meetings(is_oneonone: true, order: "start_datetime", meeting_datetime_start: <now>,
-  limit: 5)` → the upcoming 1-on-1 and its `meeting_id`.
-- `query_external_events(target: <id>, start_datetime: <last 1-on-1>, end_datetime: <now>)`
-  → work signals. Always pass `target`, or you get the manager's own activity.
-- `list_goals(owners: <id>)` → open goals with status.
-- `list_feedback(recipients: <id>, order: "-created", limit: 10)` → feedback and recognition
-  recency.
-- Write: `add_meeting_topics(meeting_id, topics: [{title, notes}])` → preview → one approval
-  → `confirm_creation(pending_id)`. Titles are plain text. Notes carry the *why* and the
-  links.
+**With Notion.** `notion-query-meeting-notes` filtered by `attendees` (`person_contains`) and
+`created_time` for recent 1-on-1s, then `notion-fetch(id)` for the page — action items come from
+what the manager actually wrote down. Goals via `notion-fetch` on the goals database for its schema
+and `collection://` URL, then `notion-query-data-sources`. Work signals from Linear or GitHub
+directly, or `notion-search`. Write topics by appending to the next meeting note with
+`notion-update-page(command: "insert_content")` — **shared pages are visible to the report**, so a
+*why* line that is manager-only stays out of them.
 
-**Secondary.** Linear or GitHub directly for detail an event summary lacks. Google Calendar
-when Topicflow's meeting history looks incomplete. Notion for a career-ladder document when
-drafting a growth topic.
+**With neither.** Ask two questions — when they last met, and what was left open — then draft from
+the answers. The agenda was always the deliverable; the tools only save the asking.
 
-**Degrading.** No external events connected → prep from meeting history and goals, and say so
-in one line. No upcoming meeting → deliver the agenda and ask the manager to schedule.
-Career recency is unverifiable without memory (`read_ai_memory` is missing) → fall back to
-keyword-scanning recent meeting notes, and treat "not found" as unknown rather than as a
-confirmed 8-week gap.
+**A missing capability changes the finding, never invents one.** No C5 → never claim a recognition
+drought, ask instead. No C3 → prep from meeting history and goals. Career recency is a keyword scan
+of notes on every backend, so a miss is "unknown", not a confirmed gap.
 
 ## Gate — routine mode
 
@@ -127,7 +124,8 @@ On a silent run, the findings are still written back so the next prep starts fro
 ## Output
 
 Plain text, short sentences, no tables, third person about people. Each topic as a title, a
-one-line why, then the actions:
+one-line why, then the actions. Where a capability was missing, one line says so — "no upcoming
+meeting found" or "I can't see recognition history" — never a silent gap:
 
 `[add these to the meeting]` `[edit]` `[skip]`
 

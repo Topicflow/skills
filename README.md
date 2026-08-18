@@ -8,9 +8,12 @@ right practice at the exact moment you are busy. These skills close that gap. Ea
 specific practice from management research — SBI feedback, the report's agenda, recognition equity,
 goal staleness — and produces a draft you can send in one click.
 
-They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. They read and
-write through [Topicflow](https://www.topicflow.com), so the output lands where your team already
-works instead of in a chat window you close.
+They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. And they run on
+whatever you already use — [Topicflow](https://www.topicflow.com), Notion, a calendar, an issue
+tracker, or nothing but the conversation. **No skill here requires Topicflow.** Run
+[`setup-sources`](./skills/foundations/setup-sources/SKILL.md) first and it tells you, in plain
+language, which skills work fully on your setup, which work with less, and which do not work at
+all.
 
 ## Quickstart
 
@@ -38,9 +41,23 @@ npx skills@latest add Topicflow/skills
 `agents/openai.yaml`, so the same directories install unchanged. Nothing in this library is
 model-specific: no Claude-only syntax, no GPT-only prompt tricks.
 
-**One more thing.** Connect the Topicflow MCP server in your agent. Without it the skills still
-work as method — the practice, the questions, the draft shape — but they cannot see your team or
-write anything back.
+**Then run `/setup-sources` once.** It checks what is actually connected and reachable, asks who
+reports to you, and records where your notes should go. Everything after that reads the map instead
+of guessing.
+
+Whatever you connect, the skills adapt:
+
+- **Topicflow** — the fullest single source, and the only one with a feedback and recognition
+  record, which is what the equity and drought checks measure.
+- **Notion** — 1-on-1 notes, goals databases, and a per-person page for durable notes. That last
+  one is currently *better* than the Topicflow path, which is still waiting on
+  [TF-1595](https://linear.app/topicflow/issue/TF-1595). What Notion has no equivalent for is a
+  recognition record — so `setup-sources` offers to create a simple log, and until it exists,
+  `recognition-scan` stays quiet rather than guessing.
+- **Linear or GitHub** — stalled work and shipped work, in more detail than any summarized feed.
+- **Nothing at all** — `give-feedback`, `give-recognition`, `management-practices`, and the
+  drafting half of `prep-1on1` all work from the conversation alone. The draft was always the
+  valuable part.
 
 > **If you copy a single skill directory** rather than installing the whole set, its links into
 > `references/` will not resolve. Each skill restates the rules it depends on inline, so it still
@@ -73,7 +90,8 @@ one written as a pass/fail check.
 **They are honest about what they cannot see.** A missing source produces "recognition history is
 unreadable", never a silent zero. The difference matters: an unverifiable absence is not evidence,
 and a skill that pretends otherwise will eventually tell you a well-supported colleague has been
-neglected for six weeks.
+neglected for six weeks. Every skill names the capability it was missing, in one line, in its own
+output — you never have to guess how much it could actually see.
 
 **They keep ownership where it belongs.** Goal check-ins are not posted on someone's behalf. Stuck
 work asks what is in the way rather than demanding a status. Peer-review writers are proposed, never
@@ -86,6 +104,9 @@ Topicflow engine can run on a schedule. They differ only in the gate.
 
 ### [Foundations](./skills/foundations) — install first
 
+- **[setup-sources](./skills/foundations/setup-sources/SKILL.md)** — find out where your team data
+  lives and what these skills can actually do with it. Says plainly what works, what works with
+  less, and what does not work at all.
 - **[management-practices](./skills/foundations/management-practices/SKILL.md)** — the seventeen
   rules as pass/fail checks. Every other skill runs them on its own drafts.
 - **[save-context](./skills/foundations/save-context/SKILL.md)** — catch the durable fact the moment
@@ -143,7 +164,8 @@ go in.
 references/
   management-practices.md   the seventeen rules, with sources
   library-conventions.md    the eight rules every skill follows
-  topicflow-tools.md        tool inventory, the write pattern, fallbacks
+  source-map.md             the eight capabilities, and every backend that supplies each
+  topicflow-tools.md        Topicflow tool inventory, the write pattern, its gaps
 skills/
   foundations/  conversations/  signals/
 evals/                      4 cases per skill: golden, silence, graceful-fail, conformance

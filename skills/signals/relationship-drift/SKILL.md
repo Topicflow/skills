@@ -64,31 +64,33 @@ thin.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C2 1-on-1 history — dates, cancellations, and enough content to spot a career topic.
+Backend mapping: [source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow.** `get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
+`list_meetings(is_oneonone: true, order: "-start_datetime", limit: 10)` for recent dates, and the
+same with `status: <cancelled>` for cancellations — **verify the status code against a live
+response first**; a wrong mapping turns a healthy cadence into a false alarm. Add
+`with_notes_and_transcript: true` and keyword-scan topics for career, growth, development,
+promotion, aspiration. `list_feedback(recipients: <id>, order: "-created", limit: 5)` as a
+secondary recency signal. No write, except `add_meeting_topics` on the manager's action.
 
-- `get_user_infos(team_name: <team>)` or a confirmed roster → IDs.
-- `list_meetings(is_oneonone: true, order: "-start_datetime", limit: 10)` → recent 1-on-1s and
-  their dates. Filter to each report's meetings.
-- `list_meetings(is_oneonone: true, status: <cancelled>, order: "-start_datetime")` →
-  cancellations. **Verify the status code against a live response before relying on it**; a
-  wrong mapping here turns a healthy cadence into a false alarm.
-- `list_meetings(is_oneonone: true, with_notes_and_transcript: true, limit: 5)` → topic titles
-  and notes, keyword-scanned for career, growth, development, promotion, aspiration. This is a
-  weak proxy; treat "not found" as unknown.
-- `list_feedback(recipients: <id>, order: "-created", limit: 5)` → last written contact of any
-  kind, as a secondary recency signal.
-- No write, except `add_meeting_topics` when the manager takes the "add a topic" action.
+**With Notion.** `notion-query-meeting-notes` filtered by `attendees` and `created_time` gives the
+date of the last 1-on-1 *note*, and `notion-fetch` gives the content for the career scan. **This
+measures note-taking, not meeting-holding** — a gap may mean the manager skipped the note, not the
+meeting, and the finding must say so. Cancellations are invisible here; Google Calendar is the
+only real source for those.
 
-**Secondary.** Google Calendar when Topicflow's meeting history is incomplete — it is the better
-source for what was actually cancelled versus never scheduled.
+**With a calendar only.** Dates and cancellations, no content. That covers two of the three drift
+types well and disables the career check entirely.
 
-**Degrading.** `read_ai_memory` and a ping ledger do not exist yet: without them, cooldowns
-cannot be enforced across runs, so **be conservative** — ping only on the strongest signal
-(consecutive cancels, or a gap at least twice the threshold) rather than everything that
-technically fires. Meeting history unreadable → report nothing and say the check could not run.
-No calendar write exists anywhere in the library: "schedule it" is always a request to the
+**With neither.** Ask: when did you last sit down with each of them? One question, and it is the
+most accurate answer available anyway.
+
+**Be conservative about repeat pings.** Without a durable ledger ([TF-1595](https://linear.app/topicflow/issue/TF-1595)),
+cooldowns cannot be enforced across runs, so ping only on the strongest signal — consecutive
+cancels, or a gap at least twice the threshold. History unreadable → report nothing and say the
+check could not run. Nothing anywhere schedules a meeting; "schedule it" is a request to the
 manager.
 
 ## Gate — routine mode

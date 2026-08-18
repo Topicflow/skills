@@ -69,30 +69,31 @@ visible to the writers, and that `review-prep` will pick the answers up when the
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs** C3 work signals to propose writers, C7 to send the requests. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow** — the only backend that can actually collect the answers.
+`get_user_infos(target_names: [...])` or `(team_name: ...)` for IDs.
+`query_external_events(target: <subject id>, start_datetime, end_datetime)` for who shows up in
+the subject's work — reviewers, co-assignees, cross-team touches. `list_feedback(recipients:
+<subject id>, state: 3)` for requests already outstanding. Then one write per writer:
+`create_feedback(title, description, sender_id: <writer>, recipient_id: <subject>)` → preview →
+approval → `confirm_creation`. **`sender_*` is the person being asked to write; `recipient_*` is
+the subject.** Backwards, this sends the manager's question to the wrong person as feedback —
+check before confirming.
 
-- `get_user_infos(target_names: [...])` or `get_user_infos(team_name: ...)` → IDs for the
-  subject and candidate writers.
-- `query_external_events(target: <subject id>, start_datetime, end_datetime)` → who shows up
-  in the subject's work: reviewers, co-assignees, cross-team touches. This is the writer
-  shortlist.
-- `list_feedback(recipients: <subject id>, state: 3)` → requests already outstanding, so the
-  same person is not asked twice in a month.
-- Write, once per writer: `create_feedback(title, description, sender_id: <writer>,
-  recipient_id: <subject>)` → preview → approval → `confirm_creation(pending_id)`.
-  `sender_*` is the person being **asked to write**; `recipient_*` is the **subject**. Getting
-  these backwards sends the manager's question to the wrong person as feedback — check it
-  before confirming.
-- `description` carries the questions, plain text.
+**With Notion or an issue tracker.** Linear and GitHub show reviewers and co-assignees, so the
+writer list still holds up. There is no request object to create: the output is the writer list
+plus the questions, ready for the manager to send by message or email, and a note that answers
+come back to them rather than into a system. Where they keep a feedback log, offer to record what
+comes back.
 
-**Secondary.** Linear or GitHub directly when event data does not show reviewers. Notion or
-Slack to spot a cross-team project the tools missed.
+**With neither.** Ask the manager who the subject worked with, and say why: "I can't see who Tony
+worked with — who are the three or four people closest to his work last quarter?" A guessed writer
+list is worse than an asked one on every backend.
 
-**Degrading.** No connected work signals → ask the manager for names outright, and say why:
-"I can't see who Tony worked with — who are the three people closest to his work last
-quarter?" A guessed writer list is worse than an asked one.
+**Never automate the ask.** Whatever the backend, the writer list is approved by the manager
+before anything is sent (P10 — who comments on someone's work is a judgement call).
 
 ## Gate — routine mode
 

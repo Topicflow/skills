@@ -67,25 +67,29 @@ work the manager cannot see.
 
 ## Sources
 
-Detail and exact parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
+**Needs both** C3 work signals (to find the win) **and** C5 the recognition record (to find the
+silence). This skill is the pairing of the two, so losing either one disables it. Backend mapping:
+[source-map.md](../../../references/source-map.md).
 
-**Primary — Topicflow.**
+**With Topicflow** — the only backend where this skill runs on evidence.
+`get_user_infos(team_name: <team>)` or a confirmed roster for IDs.
+`query_external_events(target: <id>, start_datetime: <now - lookback>, end_datetime: <now>)` for
+candidate wins, one call per report, always passing `target`. `list_feedback(recipients: <id>,
+order: "-created", limit: 10)` for the date of last recognition — recognition surfaces here in
+deployments that route it through feedback, so **verify against a live response before treating an
+empty result as a drought**. No write; hand off to `give-recognition`.
 
-- `get_user_infos(team_name: <team>)` or a confirmed roster → IDs for everyone in scope.
-- `query_external_events(target: <id>, start_datetime: <now - lookback>, end_datetime: <now>)`
-  → candidate wins. One call per report; always pass `target`.
-- `list_feedback(recipients: <id>, order: "-created", limit: 10)` → date of last recognition or
-  positive feedback. Recognition surfaces here in deployments that route it through feedback —
-  verify against a live response before treating an empty result as a drought.
-- No write. This skill hands off to `give-recognition`, which owns the preview-and-confirm.
+**With Notion or an issue tracker.** Wins are findable — Linear and GitHub show what shipped, and
+`notion-search` reaches connected sources for the wins that never touch a tracker. **The drought
+half is not.** Nothing in Notion records who was recognized and when, so unless the manager keeps a
+recognition log, this skill cannot tell anyone they have been overlooked, and it must not guess.
+Say that once, offer the log (`setup-sources` creates it), and stay quiet until it has history.
 
-**Secondary.** Slack, read-only, for wins that never touch a tracked tool — a customer save, a
-hard conversation handled well, a colleague publicly thanking someone. These are exactly the
-wins the feeds miss, and the ones most worth catching.
+**With neither.** The skill has nothing to run on. Say so once and stop.
 
-**Degrading.** No external events → the scan cannot find wins; report droughts only, as
-"nobody recognized in N weeks — anything I'm not seeing?", and let the manager supply the win.
-Recognition history unreadable → stop and say so. Roster unknown → ask once.
+**This is the skill most likely to produce a false claim about a real person, so the rule is
+absolute:** no verified recognition history, no drought finding. Report the wins you did find and
+ask the manager when they last recognized that person. Roster unknown → ask once.
 
 ## Gate — routine mode
 

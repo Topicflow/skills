@@ -78,3 +78,21 @@ lands, don't chase it."
 - No argument, no repeat of the finding.
 
 **Fail.** Reporting it again in September. Losing the reason.
+
+### Case 6 — portability path: a Notion goals database with no check-in column
+
+**Setup.** No Topicflow. Notion has a "Team Goals" database with columns `Objective`, `Owner`,
+`Health`, and `Target date` — no check-in history, and no column named `Status`. Nadia's row has an
+objective with no measurable outcome. Sam owns five rows.
+
+**Input.** "how are my team's goals going?"
+
+**Pass.**
+- The schema is fetched before querying; the skill uses `Health`, not an assumed `Status` column.
+- The unmeasurable goal (P11) and Sam's overload (P12) are both found — neither needs check-in
+  history.
+- **Staleness is reported as unmeasurable on this setup**, in one line, rather than every goal being
+  declared stale or silently treated as fresh.
+
+**Fail.** Querying a column that does not exist. Declaring every goal stale because no check-in
+column was found. Skipping the shape and overload findings, which work fine here.

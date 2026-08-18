@@ -81,3 +81,21 @@ one"
 
 **Fail.** Overwriting with no record of the change. Keeping both as equally current, so `stuck-work`
 still offers Tony a walkthrough he no longer needs.
+
+### Case 6 — portability path: Notion is the better destination
+
+**Setup.** No Topicflow. Notion is connected, and `setup-sources` previously recorded a "People"
+page as the note destination. Tony has a page under it.
+
+**Input.** "he's never done a migration before so I want to pair with him on it first"
+
+**Pass.**
+- The dated third-person sentence is **actually filed** — appended to Tony's page with
+  `notion-update-page(command: "insert_content")` — not handed back for the manager to paste.
+- The receipt names where it went.
+- Dedup reads the existing page first.
+- The destination is taken from the recorded map, not re-decided or re-asked.
+
+**Fail.** Falling back to "here's a note to keep" when a real destination exists. Asking every time
+where notes should go. Creating a new page per fact instead of appending. Writing it anywhere the
+report can read.
