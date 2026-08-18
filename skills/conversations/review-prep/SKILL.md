@@ -77,17 +77,19 @@ binding record; **this skill never names a backend**. Contracts:
 [adapters.md](../../../references/adapters.md).
 
 **What each buys here.** C3 carries the *delivered* section: dated artifacts, and the work done
-outside their own scope that nobody remembers at review time. C4 gives objectives and status. C5 is
-peer input and recognition — the *how they worked with others* section, and the equity comparison
-across reports. C6 holds what they were new to at the start of the period, which is the only honest
-way to describe growth. C1 supplies the level or ladder the review is graded against.
+outside their own scope that nobody remembers at review time. C4 gives objectives and status. C5
+supplies peer input and feedback evidence; its recognition read, where bound, adds the recognition
+section and equity comparison across reports. C6 holds what they were new to at the start of the
+period, which is the only honest way to describe growth. C1 supplies the level or ladder the review
+is graded against.
 
 **Withheld when a capability is thin or absent — and this is the skill where it does the most
-damage, so be strict.** No C5 → peer input and recognition are **unreadable, not absent**; both go
-in the gaps section as a collection problem, and the offered action is to collect peer input now.
-No `last_checkin` on C4 → no staleness claim. **Closed-goal history is unavailable under almost
-every binding — never report "no goals completed";** list what is open with status and ask the
-manager what closed.
+damage, so be strict.** No feedback read in C5 → peer input is **unreadable, not absent**; put it
+in the gaps section as a collection problem, and offer to collect peer input now. No recognition
+read in C5 → recognition is unreadable, so do not turn an empty section into an equity finding. No
+`last_checkin` on C4 → no staleness claim. **Closed-goal history is unavailable under almost every
+binding — never report "no goals completed";** list what is open with status and ask the manager
+what closed.
 
 **Never let a thin pack read as a weak quarter.** An empty section is a fact about the binding or
 about where the manager's attention went, and the output says which. That sentence is usually the

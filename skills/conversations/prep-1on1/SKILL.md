@@ -78,11 +78,12 @@ Contracts: [source-map.md](../../../references/source-map.md). Adapters, and how
 **What each buys here.** C2 supplies the open action items that lead the agenda and the past topics
 that stop repetition — it is the difference between a prep and a guess. C3 turns "how's it going"
 into a specific question about a specific piece of friction. C4 surfaces the at-risk or stale goal
-worth 5 minutes. C5 dates the last recognition, which is a topic when it is old. C8 puts the result
-where the meeting will actually happen.
+worth 5 minutes. C5 dates recent feedback and, where its recognition read is bound, the last
+recognition. C8 puts the result where the meeting will actually happen.
 
-**Withheld when a capability is thin or absent.** No C5 → **never claim a recognition drought**;
-ask when they last recognized them. No C3 → prep from history and goals, and say work signals were
+**Withheld when a capability is thin or absent.** No recognition read in C5 → **never claim a
+recognition drought**; ask when they last recognized them. No feedback read in C5 → do not imply
+that feedback is recent or overdue. No C3 → prep from history and goals, and say work signals were
 not available. C2 bound to a note store rather than a calendar → the dates measure notes written,
 so repeat the binding's caveat rather than asserting a meeting gap. Career recency is a keyword
 scan wherever it comes from, so a miss is "unknown", never a confirmed gap.

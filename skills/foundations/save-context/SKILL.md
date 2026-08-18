@@ -1,6 +1,6 @@
 ---
 name: save-context
-description: Capture a durable fact about a person, decision, or preference into Topicflow the moment the manager says it. Use whenever the manager mentions something worth remembering about a report — a preference, an aspiration, a strength, something they are new to, a commitment made — even in the middle of another task.
+description: Capture a durable fact about a person, decision, or preference in the manager's configured notes source the moment they say it. Use whenever the manager mentions something worth remembering about a report — a preference, an aspiration, a strength, something they are new to, a commitment made — even in the middle of another task.
 ---
 
 # Save context
@@ -47,7 +47,7 @@ task-relevant maturity). Rules: [management-practices.md](../../../references/ma
 - *Commitment* — something the manager or report agreed to do, with a date.
 
 Everything else is conversation, not memory. Status, opinions in the moment, and anything
-already visible in Topicflow are not saved.
+already visible in the bound notes source are not saved.
 
 **2. Restate.** One sentence, third person, with the date and the source of the claim:
 
@@ -61,7 +61,7 @@ and one guess.
 should be saved twice, and a fact that *contradicts* a known one is the interesting case:
 save the new one and note that it supersedes, do not silently overwrite.
 
-**4. Save.** Write it to the person's file in Topicflow.
+**4. Save.** Execute the C6 binding's append call for the person's configured notes destination.
 
 **5. Receipt.** One line: "Saved to Tony's file: prefers private recognition." Then return to
 whatever the manager was doing.

@@ -69,9 +69,10 @@ tracker even when everything else is elsewhere.
 3. **Where goals live**, only when no goals source was detected.
 
 **5. Handle an unbindable capability explicitly.** Record `none`, and say what it costs in terms of
-what the manager loses, not in capability codes. The common one is C5: no feedback or recognition
-record means no drought detection, no equity check, no feedback recency. Offer the fix — a simple
-log, one row per thing said — and say it works from creation forward, never retroactively.
+what the manager loses, not in capability codes. C5 has two records: no feedback read means no
+feedback-recency claim; no recognition read means no drought detection or equity check. Offer the
+fix — a simple log, one row per thing said — and say it works from creation forward, never
+retroactively.
 
 **6. Write the binding record** in the format in [source-map.md](../../../references/source-map.md),
 to a local file if there is one, otherwise the notes destination, otherwise back to the manager to

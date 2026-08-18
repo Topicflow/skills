@@ -31,13 +31,13 @@ per change, but one approval from the manager covers the batch they approved.
   next role — use it for career and review work, skip it otherwise. **This is how you get
   user IDs.** Resolve IDs once at the start of a run and reuse them; IDs beat names
   everywhere else.
-  **The `reports` array is not a trustworthy roster.** Verified 2026-10 against a live org:
+  **The `reports` array is not a trustworthy roster.** Observed in a live org:
   it returned a duplicate account with the same name as the manager themselves. Treat it as
   a hint to confirm, never as the roster — which is what C1's contract already requires.
 - **`list_meetings(is_oneonone?, title?, status?, limit?, order?, meeting_datetime_start?, meeting_datetime_end?, with_notes_and_transcript?)`**
   — the authenticated manager's meetings. `order: "-start_datetime"` for most recent first,
   `"start_datetime"` for upcoming.
-  **`is_oneonone: true` is not "1-on-1s with my reports".** Verified 2026-10 against a live
+  **`is_oneonone: true` is not "1-on-1s with my reports".** Observed in a live
   org: it returned a recurring lunch with a peer, flagged `is_formal_oneonone: true` and
   `is_manager_and_report_oneonone: false`. There is no request parameter for the distinction —
   it is a **response field**, so filter after the call on
@@ -56,9 +56,8 @@ per change, but one approval from the manager covers the batch they approved.
   Closed and completed goals are not reliably retrievable — see the gaps below.
 - **`list_feedback(recipients?, sender?, state?, created_datetime_start?, created_datetime_end?, search_term?, limit?, order?)`**
   — informal feedback. `state`: 1 draft, 2 sent, 3 requested. Filter `state: 2` for what
-  actually reached someone. This is the primary source for feedback recency and, in
-  deployments where recognition surfaces as feedback, for recognition recency too —
-  verify against a live response before treating an empty result as a drought.
+  actually reached someone. This is the primary source for feedback recency; it does not include
+  recognition.
 - **`list_assessments(target?, responder?, program_id?, program_title?, state?, include_content?, submitted_datetime_start?, submitted_datetime_end?)`**
   — review-cycle assessments. `target` is the person being assessed, `responder` is the
   person who wrote it. `state` defaults to 2 (submitted). `include_content: true` for the
@@ -155,7 +154,7 @@ dedicated tool would remove the keyword-scanning and the recency window.
   `tools/list`. From a client the effect is that recognitions can be **created and edited but
   not read**. Tracked in [TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
   [TF-1595](https://linear.app/topicflow/issue/TF-1595).
-  Recognition is **not** carried by `list_feedback` — a live check in 2026-10 found feedback
+  Recognition is **not** carried by `list_feedback` — a live check found feedback
   and feedback requests there and no recognitions, which is consistent with them living
   behind their own tool. Until the scope ships, treat recognition recency as unreadable and
   say so, rather than pinging on a false drought.

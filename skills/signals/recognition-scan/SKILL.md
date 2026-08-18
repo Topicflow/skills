@@ -78,11 +78,11 @@ scoped to that person. C5 supplies the date of the last recognition, which is th
 calculation. C1 decides who is in scope, and a person missing from the roster is a person who can
 never be found overlooked.
 
-**Withheld, and this is the strictest rule in the library.** **No C5, or a C5 whose emptiness is
-unverified → no drought finding for anyone.** Not "none found". Not a cautious hedge. Nothing.
-Report the wins that were found and ask the manager when they last recognized that person. This is
-the skill most likely to produce a false claim about a real person, and an unverified silence read
-as neglect is exactly that claim.
+**Withheld, and this is the strictest rule in the library.** **No recognition read in C5, or a
+recognition record whose emptiness is unverified → no drought finding for anyone.** Not "none
+found". Not a cautious hedge. Nothing. Report the wins that were found and ask the manager when
+they last recognized that person. This is the skill most likely to produce a false claim about a
+real person, and an unverified silence read as neglect is exactly that claim.
 
 **Verify emptiness before trusting it.** An empty result from a binding that has never been written
 to is not a drought — it is a binding with no history yet. Where C5 was bound recently, say so once

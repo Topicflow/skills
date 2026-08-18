@@ -66,8 +66,8 @@ that might work once auth is fixed. Reporting the workspace as empty.
 
 ### Case 4 — practice-conformance path: no unverified capability claims
 
-**Setup.** A feedback record is bound and reachable, but returns an empty list for every report —
-a real response, from a system nobody has written to yet.
+**Setup.** Feedback and recognition records are bound and reachable, but return empty lists for
+every report — real responses, from a system nobody has written to yet.
 
 **Input.** "what can you do for me?"
 

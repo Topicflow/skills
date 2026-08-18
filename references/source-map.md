@@ -58,18 +58,21 @@ stuck from a last-edited timestamp or a search hit. No signals → `stuck-work` 
 `measure` → that is itself the finding (P11), not a gap. Closed-goal history is unavailable on most
 backends, so "nothing completed" is never a conclusion.
 
-**C5 — Feedback and recognition record.** Per person, a list of: `date`, `kind`, `text`, `from`.
-Append where the backend allows it.
-*Withheld:* no record → **no drought, no recency, no equity finding**. Not "none found" — not
-found. This is the capability most likely to produce a false claim about a real person, so the
-rule is absolute: unverified silence is never reported as neglect. Where no backend can hold this,
-`setup-sources` offers a log; it works from creation forward and never retroactively.
-**Bind read and append separately** — this capability is asymmetric more often than any other, and
-write-only is a real state: a backend can accept recognitions and be unable to list them. A live
-example is in [topicflow-tools.md](topicflow-tools.md), where the read tool exists but is gated
-behind an unregistered permission, making it invisible to clients. From a client, "the tool is
-absent", "the tool returned nothing", and "nothing ever happened" are indistinguishable. That is
-the whole reason this contract withholds the conclusion instead of trusting an empty result.
+**C5 — Feedback and recognition record.** Per person, keep two lists — feedback and recognition —
+each with `date`, `kind`, `text`, `from`. Append where the backend allows it.
+*Withheld:* no feedback read → no feedback-recency or repeat-feedback claim. No recognition read →
+**no drought or recognition-equity finding**. Not "none found" — not found. This is the capability
+most likely to produce a false claim about a real person, so the rule is absolute: unverified
+silence is never reported as neglect. Where no backend can hold a record, `setup-sources` offers a
+log; it works from creation forward and never retroactively.
+**Bind feedback and recognition independently, and bind read and append separately.** A backend can
+return feedback while accepting but not listing recognition. That is a partial C5 binding, not a
+write-only one: feedback remains usable for feedback recency and review evidence, while
+recognition-only conclusions stay withheld. A live example is in
+[topicflow-tools.md](topicflow-tools.md), where the recognition read tool exists but is gated behind
+an unregistered permission, making it invisible to clients. From a client, "the tool is absent",
+"the tool returned nothing", and "nothing ever happened" are indistinguishable. That is why the
+contract withholds the recognition conclusion instead of trusting an empty result.
 
 **C6 — Durable notes.** Read a person's notes; append a dated line. Both, ideally; append alone is
 still useful.
@@ -109,8 +112,12 @@ C6 notes: todoist
   append: <the call that adds an item to it>
   private: yes (confirmed by manager 2026-08-17)
 
-C5 feedback record: none
-  effect: no drought detection, no equity check, no feedback recency
+C5 feedback and recognition record: topicflow
+  feedback read: list sent feedback for <person>
+  feedback append: create feedback for <person>
+  recognition read: none (scope unavailable)
+  recognition append: create recognition for <person>
+  caveat: feedback history is readable; recognition droughts and equity are unknown
 ```
 
 Four things make a binding usable, and a binding missing any of them is incomplete:

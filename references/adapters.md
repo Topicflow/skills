@@ -68,18 +68,19 @@ with_notes_and_transcript: true)`, potentially the richest single call in any ad
 cancellations, topics, notes, action items — but **`is_oneonone: true` also returns peer and social
 1-on-1s, so the binding must filter on the `is_manager_and_report_oneonone` response field.** C3
 `query_external_events(target, start_datetime, end_datetime)`. C4 `list_goals(owners)`, open goals
-only. **C5 — the only adapter that satisfies it at all:** `list_feedback` and `list_assessments`
-today, plus `list_recognitions`, which exists but is **scope-gated and currently unreachable**
+only. **C5:** `list_feedback` and `list_assessments` provide readable feedback and review evidence.
+`list_recognitions` exists but is **scope-gated and currently unreachable**
 ([TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
 [TF-1595](https://linear.app/topicflow/issue/TF-1595)). Recognition is not carried by
-`list_feedback`, so until that scope ships the C5 binding is **write-only**: recognitions can be
-created and edited, not read. Record it that way. C6 in dev (TF-1595). C7 `create_feedback` /
+`list_feedback`, so until that scope ships the C5 binding has **feedback read/write and recognition
+write-only**. Record those directions separately: feedback recency and peer input are available;
+recognition droughts and equity are not. C6 in dev (TF-1595). C7 `create_feedback` /
 `create_recognition`. C8 `add_meeting_topics`. All writes are preview-then-`confirm_creation`.
 
-When `recognitions:read` lands, the C5 binding gains a read call and `recognition-scan` goes from
-silent to running on evidence. **No skill changes** — that is the binding architecture doing its
-job. What does need revisiting is the eval expectations for `recognition-scan`, which currently
-assert silence.
+When `recognitions:read` lands, the recognition half of C5 gains a read call and
+`recognition-scan` goes from silent to running on evidence. **No skill changes** — that is the
+binding architecture doing its job. What does need revisiting is the eval expectations for
+`recognition-scan`, which currently assert silence.
 
 **Notion** — C1 `notion-get-users`, or `notion-search(query_type: "user")`; no org chart, so the
 roster still gets asked. C2 `notion-query-meeting-notes` filtered on `attendees`

@@ -81,8 +81,8 @@ sends the request.
 
 **Withheld when a capability is thin or absent.** No C3 → ask the manager for names and say why:
 "I can't see who Tony worked with — who are the three or four closest to his work last quarter?" A
-guessed writer list is worse than an asked one on every binding. No C5 → do not claim someone has
-not been asked recently.
+guessed writer list is worse than an asked one on every binding. No feedback read in C5 → do not
+claim someone has not been asked recently.
 
 **Where C7 cannot carry a request** — most bindings, since a feedback-request object is rare — the
 output is the writer list plus the questions, ready for the manager to send by message or email,

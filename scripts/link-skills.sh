@@ -13,7 +13,8 @@ set -euo pipefail
 # to keep the installed skills current.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DESTS=("$HOME/.claude/skills" "$HOME/.agents/skills")
+SKILLS_LINK_HOME="${SKILLS_LINK_HOME:-$HOME}"
+DESTS=("$SKILLS_LINK_HOME/.claude/skills" "$SKILLS_LINK_HOME/.agents/skills")
 
 names=()
 srcs=()
@@ -32,7 +33,8 @@ for DEST in "${DESTS[@]}"; do
   # A $DEST symlinked into this repo would make us write the per-skill symlinks
   # back into the working copy. Bail out instead of polluting it.
   if [ -L "$DEST" ]; then
-    resolved="$(readlink "$DEST")"
+    resolved="$(cd "$DEST" 2>/dev/null && pwd -P)" \
+      || { echo "error: $DEST is a dangling or inaccessible symlink." >&2; exit 1; }
     case "$resolved" in
       "$REPO"|"$REPO"/*)
         echo "error: $DEST is a symlink into this repo ($resolved)." >&2
@@ -42,16 +44,30 @@ for DEST in "${DESTS[@]}"; do
     esac
   fi
 
+  if [ -e "$DEST" ] && [ ! -d "$DEST" ]; then
+    echo "error: $DEST exists but is not a directory." >&2
+    exit 1
+  fi
+
+  for i in "${!names[@]}"; do
+    name="${names[$i]}"
+    target="$DEST/$name"
+
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+      echo "error: refusing to replace existing skill directory $target." >&2
+      echo "Move it aside or remove it yourself, then re-run this script." >&2
+      exit 1
+    fi
+  done
+done
+
+for DEST in "${DESTS[@]}"; do
   mkdir -p "$DEST"
 
   for i in "${!names[@]}"; do
     name="${names[$i]}"
     src="${srcs[$i]}"
     target="$DEST/$name"
-
-    if [ -e "$target" ] && [ ! -L "$target" ]; then
-      rm -rf "$target"
-    fi
 
     ln -sfn "$src" "$target"
     echo "linked $name -> $src ($DEST)"

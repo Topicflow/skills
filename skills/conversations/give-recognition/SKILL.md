@@ -83,10 +83,10 @@ half-remembers — the detail that separates real recognition from praise. C6 ho
 public-or-private preference so it is asked once and never guessed again. C5 is the distribution
 check, and the place the sent recognition is recorded so the next scan has something to measure.
 
-**Withheld when a capability is thin or absent.** **No C5 → no equity line and no drought claim.**
-Skip it rather than invent one; an absence you cannot verify is not evidence. No C6, or a
-preference not on file, and the manager is not present → draft private and say why. Never
-broadcast on a guess (P9).
+**Withheld when a capability is thin or absent.** **No recognition read in C5 → no equity line and
+no drought claim.** Skip it rather than invent one; an absence you cannot verify is not evidence.
+No C6, or a preference not on file, and the manager is not present → draft private and say why.
+Never broadcast on a guess (P9).
 
 **Where C7 cannot deliver**, hand over the text with a note on audience — that is the whole
 product, and two to four specific sentences were always the valuable part. Where C5 can be appended
