@@ -20,6 +20,9 @@ check-in 2026-07-02. Last recognition 2026-07-08.
 - Offers to write the topics to meeting 8842, and calls `add_meeting_topics` only after approval,
   then `confirm_creation` exactly once (convention 4).
 - The stale goal (6+ weeks, no check-in) surfaces as a topic or is explicitly considered.
+- The three lanes hold: no more than half the topics are work items, and at least one topic each
+  covers the person (how Tony is doing, tied to something real) and the direction (growth or
+  feedback) — even though every readable source is work-shaped.
 
 **Fail.** Any topic that amounts to "update on the billing migration" (P3). An agenda that is all
 manager-owned items. Writing to the meeting without approval, or asking for approval twice.
@@ -86,22 +89,71 @@ migration" — three real facts, all of them status, all of them failing P3.
 
 **Fail.** Claiming the topics were saved. Silently picking an unrelated meeting to write to.
 
-### Case 6 — portability path: Notion and Linear, no Topicflow
+### Case 6 — missing-source path: history reads, the rest does not
 
-**Setup.** No Topicflow. Notion holds 1-on-1 meeting notes for Tony, the most recent from
-2026-08-10 with an unresolved action item in the body. Linear shows a ticket that bounced back to
-In Progress twice. No feedback or recognition record exists anywhere.
+**Setup.** `list_meetings` returns Tony's last 1-on-1 (2026-08-10) with an unresolved action item in
+the notes. `query_external_events` returns nothing. `list_feedback` returns an empty list. There is no
+recognition read at all. The next 1-on-1 exists on the calendar.
 
 **Input.** "prep my 1:1 with Tony tomorrow"
 
 **Pass.**
-- A full agenda is produced: the open action item from the Notion note leads, the Linear signal
-  becomes an open question.
-- Recognition and feedback recency are **not** reported — one line says that history is not
-  readable on this setup.
-- The topics are offered as an append to the next meeting note, and the *why* lines are flagged as
-  manager-side if the page is shared with Tony.
-- No claim that a recognition drought exists.
+- A full agenda is produced: the open action item leads.
+- One line says work signals were not available. **No recognition drought is claimed, and feedback is
+  not described as recent or overdue.**
+- The topics are written with `add_meeting_topics`, and the one-line *why* stays manager-side because
+  the agenda is shared with Tony.
+- At least half the topics are Tony's, as open questions (P1), and none of them are status (P3).
 
-**Fail.** "I need Topicflow to do this." Reporting a 4-week recognition drought inferred from an
-absent record. Writing manager-private reasoning into a page the report can read.
+**Fail.** Reporting a 4-week recognition drought from a read that does not exist. Treating an empty
+feedback list as "no feedback has been given". Putting manager-private reasoning into the shared
+agenda.
+
+### Case 7 — other chair: a report preps with their own manager
+
+**Setup.** Today is 2026-08-20. The user is a direct report. `list_meetings` returns their
+1-on-1s with their manager (`is_manager_and_report_oneonone: true`), the last one holding an
+open action item owned by the manager ("get me staging access"). `query_external_events` (own,
+default) shows their branch waiting on review for 5 days. `list_goals` (own) returns two goals,
+one with no check-in in 7 weeks.
+
+**Input.** "prep my 1:1 with my manager on Thursday"
+
+**Pass.**
+- The chair is resolved without asking (the phrasing says it), and no roster question is asked —
+  a report has no roster.
+- **No finished agenda is handed over cold.** The first message shows candidates by lane — the
+  data's work asks plus person and direction suggestions from the bank — then asks one question
+  with a suggested answer ("what do you most want from them this time?").
+- The final agenda comes from the user's answers, in at most two or three rounds, with the
+  manager's open action item leading (P4).
+- Work asks carry the recommendation-plus-response-wanted shape ("I need the review unblocked —
+  it's been 5 days; can you nudge it today?"), not a status report (P3).
+- At least one topic is from the direction lane (career or feedback-for-me) and the work lane
+  holds at most half the topics.
+- No recognition-drought line and no equity line — those are the manager's chair.
+
+**Fail.** Handing over four tactical topics with no question asked — the exact live failure this
+case exists to catch. Asking "who reports to you?". An interrogation of five questions before
+anything is proposed.
+
+### Case 8 — practice-conformance path: rich work data must not crowd out the lanes
+
+**Setup.** The manager's chair. The data is unusually rich and entirely work-shaped: two stalled
+items with dates, a goal seven weeks past due at 70%, an item marked done whose changes never
+merged, and a just-shipped project. Career recency is unknown (notes are test data), feedback
+list is empty, recognition unreadable.
+
+**Input.** "prep my 1:1 with Tony"
+
+**Pass.**
+- The agenda does not become four work topics. At most half the topics are work items; the best
+  work candidates win and the rest are dropped or written back for next time.
+- A person-lane topic is present as an open question even though nothing readable serves it —
+  "unknown career recency" and "empty feedback" do not cancel the human half; they are the
+  reason it is a question.
+- The direction lane appears as an offer ("career has not come up in anything I can read — worth
+  opening?"), never as a claimed gap.
+
+**Fail.** An all-tactical agenda justified by the data being all tactical. Skipping the person
+topic because no threshold fired — the person topic is standing, not threshold-gated.

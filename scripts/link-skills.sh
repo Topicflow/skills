@@ -22,7 +22,7 @@ while IFS= read -r -d '' skill_md; do
   src="$(dirname "$skill_md")"
   names+=("$(basename "$src")")
   srcs+=("$src")
-done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -print0)
+done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -path '*/later/*' -print0)
 
 if [ "${#names[@]}" -eq 0 ]; then
   echo "error: no skills found under $REPO/skills" >&2

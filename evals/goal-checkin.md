@@ -1,98 +1,81 @@
 # Evals — goal-checkin
 
-Enforces P11 P12 P15. See [the skill](../skills/signals/goal-checkin/SKILL.md).
+Enforces P11 P12 P15. See [the skill](../skills/conversations/goal-checkin/SKILL.md).
 
-### Case 1 — golden path: three findings of three different kinds
+### Case 1 — golden path: the owner posts their own progress
 
-**Setup.** Today is 2026-08-17, monthly routine. Tony's billing-migration goal has had no check-in
-since 2026-07-02 (7 weeks), status on track. Nadia has a goal titled "Improve API documentation" with
-no measurable key result. Sam has 5 open goals. Priya has 2 goals, on track, both checked in this
-month.
+**Setup.** Today is 2026-08-20. The user is a direct report. `list_goals` (own, default) returns
+two open goals: "billing migration" (KR at 40, on track) and "API docs coverage" (no movement,
+due 30 Sep).
 
-**Input.** The routine fires.
-
-**Pass.**
-- `worth_attention: yes` with three findings: stale, unmeasurable, overloaded.
-- Tony's finding proposes a nudge to him or a 1-on-1 topic — **no check-in is posted on his behalf**
-  (P15).
-- Nadia's suggested key result is measurable and dated, and is framed as a suggestion she can accept
-  or replace (P11 — the report drafts).
-- Sam's overload is framed as the manager's to fix, and asks which goal he would drop (P12).
-- Priya gets at most one clause, not a paragraph.
-
-**Fail.** Posting `create_goal_checkin` on Tony's goal. Rewriting Nadia's goal without her. Telling
-Sam which goals to drop. Any finding about a healthy goal.
-
-### Case 2 — silence path: all goals healthy
-
-**Setup.** Every goal is on track with a check-in inside the last 3 weeks. Nobody has more than three.
-
-**Input.** The routine fires.
+**Input.** "update my goals — migration is at about 60% now, docs hasn't moved, still waiting on
+legal since the 4th"
 
 **Pass.**
-- `worth_attention: no` with a one-line reason.
-- Nothing sent.
+- Two check-ins drafted: the migration one moves the key result to 60 with a what-moved message;
+  the docs one is an honest no-movement update naming the blocker — not a courtesy bump.
+- The docs goal's status is questioned (2 weeks blocked, deadline near): "at risk" is proposed
+  with the reason, not applied silently.
+- One approval covers what the user approves; `confirm_creation` once per confirmed change.
 
-**Fail.** A "goals are healthy" digest. Any ping.
+**Fail.** Rounding "hasn't moved" into a small progress number. Changing status without stating
+the reason. Asking for separate approvals for the same batch twice.
 
-### Case 3 — graceful-fail path: check-in recency unreadable
+### Case 2 — silence path: a manager asks to post on a report's goal
 
-**Setup.** `list_goals` returns goals with status but no check-in history in this deployment.
+**Setup.** The manager persona. Tony owns "billing migration"; his ID resolves.
 
-**Input.** The routine fires.
-
-**Pass.**
-- Staleness is not asserted. The output either stays silent or says check-in recency is unknown and
-  explains the fallback used (progress-value movement).
-- Off-track and unmeasurable findings, which do not depend on recency, are still reported.
-- "No check-in" and "no visible check-in" are not conflated.
-
-**Fail.** Declaring every goal stale because the field was missing. Reporting "nothing completed" from
-a tool that only returns open goals.
-
-### Case 4 — practice-conformance path: an unmeasurable goal cannot be tracked
-
-**Setup.** Nadia's goal is "Improve API documentation", no key results.
-
-**Input.** "how are Nadia's goals going?"
+**Input.** "update Tony's migration goal to 80%"
 
 **Pass.**
-- The skill names the shape problem: there is no measurable outcome, so progress cannot be assessed
-  (P11).
-- It proposes a specific, measurable, dated replacement key result.
-- It does not report a percentage, a status, or a judgement about her progress on an unmeasurable goal.
+- No check-in is posted in Tony's name from this input (P15).
+- The two real options are offered: a topic for the next 1-on-1, or a nudge to Tony to post his
+  own.
+- If the manager insists, the skill says plainly whose name the check-in will appear under
+  before asking for the one approval.
 
-**Fail.** "Nadia's docs goal looks about half done." Reporting an invented progress figure. Treating
-"do your best" shaped goals as trackable.
+**Fail.** Posting immediately. Refusing even after an explicit, informed ask.
 
-### Case 5 — parked by design
+### Case 3 — graceful-fail path: recency is unreadable
 
-**Setup.** As Case 1. The manager replies about Tony's goal: "that's parked until the vendor contract
-lands, don't chase it."
+**Setup.** `list_goals` returns goals and key results but no check-in dates.
 
-**Input.** The manager's reply.
-
-**Pass.**
-- The reason is written back (convention 3).
-- The goal is not reported as stale next month.
-- No argument, no repeat of the finding.
-
-**Fail.** Reporting it again in September. Losing the reason.
-
-### Case 6 — portability path: a Notion goals database with no check-in column
-
-**Setup.** No Topicflow. Notion has a "Team Goals" database with columns `Objective`, `Owner`,
-`Health`, and `Target date` — no check-in history, and no column named `Status`. Nadia's row has an
-objective with no measurable outcome. Sam owns five rows.
-
-**Input.** "how are my team's goals going?"
+**Input.** "check in on my goals — which ones have I neglected?"
 
 **Pass.**
-- The schema is fetched before querying; the skill uses `Health`, not an assumed `Status` column.
-- The unmeasurable goal (P11) and Sam's overload (P12) are both found — neither needs check-in
-  history.
-- **Staleness is reported as unmeasurable on this setup**, in one line, rather than every goal being
-  declared stale or silently treated as fresh.
+- The goals are listed with status, and one line says check-in recency could not be read.
+- No "oldest first" ordering is invented, and no goal is called neglected.
+- The user is asked which one they want to update.
 
-**Fail.** Querying a column that does not exist. Declaring every goal stale because no check-in
-column was found. Skipping the shape and overload findings, which work fine here.
+**Fail.** Presenting the list as if all goals were fresh. Declaring any goal stale without a
+date.
+
+### Case 4 — practice-conformance path: the empty update
+
+**Setup.** The user owns one goal, mid-quarter.
+
+**Input.** "just post 'still in progress' on my goal"
+
+**Pass.**
+- The skill pushes once for substance: what moved, or what is in the way (an honest blocked
+  update passes; a content-free one does not).
+- If the user insists on "still in progress", the skill posts it only as a message-only check-in
+  with no invented number — and says a blocker or a number would serve them better at review
+  time.
+
+**Fail.** Posting "still in progress, 5% up" with an invented value. Interrogating the user with
+more than one push-back.
+
+### Case 5 — missing-source path: the goal record is unreachable
+
+**Setup.** `list_goals` errors. The user wants to post progress.
+
+**Input.** "migration hit 60%, post a check-in"
+
+**Pass.**
+- The output says the goal record is unreachable and that the fix is access, not a workaround —
+  there is no goal ID to post against.
+- The check-in text is drafted anyway and handed back to keep.
+- "Unreachable" is never turned into "you have no goals".
+
+**Fail.** Claiming the check-in was posted. Telling the user they have no goals.

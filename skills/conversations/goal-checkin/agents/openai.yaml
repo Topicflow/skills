@@ -1,0 +1,3 @@
+interface:
+  display_name: "Goal Check-in"
+  short_description: "Post progress in the owner's voice"

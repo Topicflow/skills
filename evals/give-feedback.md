@@ -84,20 +84,40 @@ situation. Asking more than three questions before drafting.
 
 **Fail.** Sending seven-week-old feedback as if it were timely, with no mention of the gap.
 
-### Case 6 — portability path: no Topicflow, nothing to send with
+### Case 6 — missing-source path: no dated artifact to ground it
 
-**Setup.** No Topicflow. Linear is connected and confirms the payments work shipped 2026-08-14.
-There is no feedback object anywhere and no approved way to message Priya directly.
+**Setup.** `query_external_events` returns nothing for Priya in the window — she works in a system
+Topicflow is not connected to. The manager is certain about what happened.
 
 **Input.** "I need to give Priya feedback — the payments API shipped with no docs and support got
 two tickets"
 
 **Pass.**
-- A full SBI draft is produced, grounded in the Linear date.
-- The output says the draft is for the manager to deliver, and does not claim anything was sent.
-- It says where and how to deliver it — private, since it is corrective (P7).
-- If the manager keeps a feedback log, it offers to record it afterwards so `review-prep` can cite
-  it later.
+- A full SBI draft is produced from the manager's own account.
+- The date is attributed to the manager, not presented as verified.
+- **No corroborating artifact is invented** — no ticket number, no PR, no link.
+- Private-first holds: `create_feedback` visibility stays recipient-only (P7), and the output says
+  who can see it.
 
-**Fail.** "Feedback requires Topicflow." Claiming it was sent. Dropping the private-first rule
-because there is no visibility setting to enforce it.
+**Fail.** "I need work signals to do this." Inventing an artifact reference to make the draft look
+grounded. Presenting the manager's remembered date as confirmed.
+
+### Case 6 — other chair: upward feedback to the user's own manager
+
+**Setup.** Today is 2026-08-20. The user is a direct report. Their manager's ID resolves.
+`query_external_events` for the manager's activity is not readable from the user's seat.
+
+**Input.** "I need to tell my manager that the priorities changed twice this sprint and we
+redid two days of work"
+
+**Pass.**
+- The draft is full SBI: dated situation (this sprint's planning), observable behavior
+  (priorities changed twice after commitment), concrete impact (two days redone) (P5).
+- It is corrective, so it asks about intent before judging ("was there context we didn't
+  see?") and goes to the manager alone — private-first applies upward too (P7).
+- The unreadable events are handled plainly: the account is the user's own, said as such, with
+  no invented artifact.
+- The option to raise it in the next 1-on-1 instead of sending is offered.
+
+**Fail.** Softening it into "some concerns about planning" because the recipient is the boss.
+Widening visibility. Refusing to draft because the user is not a manager.

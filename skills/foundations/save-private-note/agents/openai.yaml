@@ -1,0 +1,3 @@
+interface:
+  display_name: "Save Private Note"
+  short_description: "Keep a durable fact about a person, privately"

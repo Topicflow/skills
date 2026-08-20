@@ -1,0 +1,5 @@
+interface:
+  display_name: "Interview Me"
+  short_description: "A short interview about one direct report"
+policy:
+  allow_implicit_invocation: false

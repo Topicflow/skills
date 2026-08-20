@@ -1,23 +1,29 @@
 # Conversations
 
-Skills that produce something a manager says or sends to a person. The manager is present, a
-draft comes out, and nothing is sent without an explicit approval.
+The core workflow: skills that produce something the user says, sends, or posts. The user is
+present, a draft comes out, and nothing is written without an explicit approval.
+
+Every one of these works from either chair — a manager working on their team, or a direct report
+working on their own 1-on-1s, feedback, and goals — except where a step is explicitly the
+manager's, and the skill says so.
 
 - **[prep-1on1](./prep-1on1/SKILL.md)** — 3-5 agenda topics from open action items, work signals,
-  goal health, and recency gaps. At least half the topics are the report's, phrased as open
-  questions; no status topics. Writes the topics to the meeting.
+  goal health, and recency gaps. At least half the topics are the report's, as open questions; no
+  status topics. Writes the topics to the meeting. A report prepping with their own manager is
+  P1 at its best.
 - **[give-feedback](./give-feedback/SKILL.md)** — feedback in SBI shape: dated situation,
-  observable behavior, concrete impact, plus an intent question when it is corrective. Routes
-  anything older than two weeks to a 1-on-1 conversation instead.
-- **[request-feedback](./request-feedback/SKILL.md)** — peer input from the right 3-5
-  collaborators, including one who sees the person differently, with questions that force a
-  situation-and-effect answer rather than a rating.
+  observable behavior, concrete impact, plus an intent question when it is corrective. Works
+  down, sideways, and up; routes anything older than two weeks to a conversation instead.
 - **[give-recognition](./give-recognition/SKILL.md)** — praise that names the specific
-  contribution and what it made possible, matched to the person's public-or-private preference,
-  with a one-line equity check across the team.
-- **[onboard-direct-report](./onboard-direct-report/SKILL.md)** — capture role and what they are
-  new to, draft a first 1-on-1 that is about the person rather than the work, and lay in day-7,
-  day-30, and day-60 topics.
-- **[review-prep](./review-prep/SKILL.md)** — a dated evidence pack per report, in SBI shape,
-  grouped by review dimension, with an explicit gaps section and an equity check on how thick each
-  report's pack is. Does not write the review.
+  contribution and what it made possible, matched to the person's public-or-private preference.
+  The equity glance is the manager's step alone.
+- **[create-goal](./create-goal/SKILL.md)** — a goal with a measurable outcome and 1-3 key
+  results someone could argue about at the deadline. The owner drafts, the manager shapes; the
+  active-goal count is checked before anything is added.
+- **[goal-checkin](./goal-checkin/SKILL.md)** — progress in the owner's voice: what moved, the
+  numbers, whether the status still tells the truth. Never posted in someone else's name — a
+  manager asking about a report's goal gets a 1-on-1 topic instead.
+- **[interview-me](./interview-me/SKILL.md)** — user-invoked (`/interview-me`). A short interview
+  about one direct report covering exactly what no call can answer: preferences, aspirations, the
+  new-to list, the manager's own memory of recognition. A new report is the first interview,
+  with day-7/30/60 check-in topics included.
