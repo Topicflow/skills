@@ -103,8 +103,7 @@ proxy for work**.
 **With no events** this skill has nothing to detect on. Say so once and stop. It is one of only two
 skills in the library that stop rather than narrow.
 
-**Never repeat a ping.** Without a durable ledger
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)), dedupe within the run and stay conservative
+**Never repeat a ping.** Without a durable ledger, dedupe within the run and stay conservative
 across runs: prefer the single oldest item over three medium ones.
 
 ## Gate — routine mode

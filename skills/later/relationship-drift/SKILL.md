@@ -89,11 +89,10 @@ miss is always "unknown", never a confirmed gap.
 **Where a calendar covers what this call misses**, use it for cadence and cancellations and say which
 source a given line came from.
 
-**Be conservative about repeat pings.** Without a durable ledger
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)), cooldowns cannot be enforced across runs,
-so ping only on the strongest signal — consecutive cancels, or a gap at least twice the threshold.
-History unreadable → report nothing and say the check could not run. Nothing schedules a meeting
-under any binding; "schedule it" is a request to the manager.
+**Be conservative about repeat pings.** Without a durable ledger, cooldowns cannot be enforced
+across runs, so ping only on the strongest signal — consecutive cancels, or a gap at least twice the
+threshold. History unreadable → report nothing and say the check could not run. Nothing schedules a
+meeting under any binding; "schedule it" is a request to the manager.
 
 ## Gate — routine mode
 

@@ -76,7 +76,7 @@ it.** Withheld conclusions for every source:
   read per report over the lookback window, scoped to that person.
 - The date of the last recognition — **and there is no call for it.** `list_recognitions` requires
   the OAuth scope `recognitions:read`, which the server does not offer, so the tool never appears to
-  a client ([TF-1596](https://linear.app/topicflow/issue/TF-1596)).
+  a client.
 - The confirmed roster decides who is in scope. A person missing from it can never be found
   overlooked.
 

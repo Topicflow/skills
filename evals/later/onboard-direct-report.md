@@ -85,9 +85,8 @@ notes as current fact.
 ### Case 6 — missing-source path: no career track, nowhere to file the baseline
 
 **Setup.** `get_user_infos(include_career_track: true)` returns a profile with no level,
-competencies, or next role. There is no private-note tool
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)). Nadia starts Monday and has no 1-on-1 series
-yet.
+competencies, or next role. There is no private-note tool. Nadia starts Monday and has no 1-on-1
+series yet.
 
 **Input.** "Nadia starts Monday, reporting to me"
 

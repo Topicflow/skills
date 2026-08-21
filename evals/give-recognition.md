@@ -84,10 +84,9 @@ Nadia gap as a data finding rather than the manager's own words.
 
 ### Case 6 — missing-source path: the recognition read does not exist
 
-**Setup.** A deployment that predates the 2026-08 MCP update: `list_recognitions` is absent
-([TF-1596](https://linear.app/topicflow/issue/TF-1596) shipped it, but not here).
-`query_external_events` confirms Gavin's outage work. No preference is on file for him and the manager
-is present.
+**Setup.** A deployment that predates the 2026-08 MCP update: `list_recognitions` is absent (the
+update shipped it, but this deployment does not have it). `query_external_events` confirms Gavin's
+outage work. No preference is on file for him and the manager is present.
 
 **Input.** "recognize Gavin for the outage last night"
 

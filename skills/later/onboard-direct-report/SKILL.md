@@ -93,7 +93,7 @@ week. Create it only if the manager asks, with the **report** as owner.
   role looks like. That is what makes the day-60 conversation concrete rather than generic.
 - `add_meeting_topics(meeting_id, topics)` — puts day-7, day-30 and day-60 topics on real dates
   instead of in a message the manager loses.
-- The baseline itself has nowhere to live yet (TF-1595), so it is handed back — see `save-private-note`.
+- The baseline itself has nowhere to live yet, so it is handed back — see `save-private-note`.
 
 **Reuse the company's own material where it exists.** An onboarding checklist or a career ladder
 already written is better than a generic one from this skill. Read it; do not invent a parallel

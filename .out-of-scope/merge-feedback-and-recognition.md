@@ -11,7 +11,7 @@ They differ structurally, not cosmetically. Different privacy defaults: correcti
 private-first (P7); recognition follows the person's public-or-private preference (P9).
 Different rule sets: SBI shape (P5–P7) versus specificity and equity (P8–P10). And different
 tool capabilities: in Topicflow feedback is readable (`list_feedback`) while recognition
-currently is not (TF-1596) — merging them would have hidden exactly the gap the withheld
+currently is not — merging them would have hidden exactly the gap the withheld
 conclusions exist to expose. `list_feedback` was verified live to not carry recognitions.
 
 ## What we do instead

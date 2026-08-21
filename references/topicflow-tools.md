@@ -134,11 +134,10 @@ per change, but one approval from the manager covers the batch they approved.
 
 ## Gaps and fallbacks
 
-**Shipping in the 2026-08 MCP update** ([TF-1595](https://linear.app/topicflow/issue/TF-1595),
-with [TF-1596](https://linear.app/topicflow/issue/TF-1596) folded in): **private notes — read,
-create, and delete** — and the **recognition read**. The update does **not** ship AI-memory
-access, and none is planned: what a skill knows about a person is what the private notes hold.
-Deployments that predate the update lack these tools; the fallbacks below stay for them.
+**Shipping in the 2026-08 MCP update:** private notes — **read, create, and delete** — and the
+**recognition read**. The update does **not** ship AI-memory access, and none is planned: what a
+skill knows about a person is what the private notes hold. Deployments that predate the update lack
+these tools; the fallbacks below stay for them.
 
 **Private notes.** Scoped to the current user. The write is `save_private_note`; take the read
 and delete names from the live tool list once the update is merged — never guess a tool name.

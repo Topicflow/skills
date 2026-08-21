@@ -90,11 +90,10 @@ visible to the recipient only rather than a broadcast recognition.
 - The public-or-private preference lives in private notes: where the notes read exists, look it
   up; where it does not, or nothing is on file, ask once and save the answer (P9).
 
-**Withheld.** `list_recognitions` ships in the 2026-08 MCP update
-([TF-1596](https://linear.app/topicflow/issue/TF-1596)). Where it is absent, or an empty result
-cannot be verified as real history: **no equity line and no drought claim from data, for
-anyone** — the distribution glance runs on the manager's own memory, and the output says so.
-With a verified read, dates are citable and a measured gap is a legitimate one-line note.
+**Withheld.** `list_recognitions` ships in the 2026-08 MCP update. Where it is absent, or an empty
+result cannot be verified as real history: **no equity line and no drought claim from data, for
+anyone** — the distribution glance runs on the manager's own memory, and the output says so. With a
+verified read, dates are citable and a measured gap is a legitimate one-line note.
 
 **No preference on file and the user cannot be asked → draft private and say why.** Never
 broadcast on a guess (P9).
@@ -108,9 +107,8 @@ sentences were always the whole product.
 ## Gate
 
 Not applicable — this skill only runs in chat today. The weekly equity detector
-(`skills/later/recognition-scan`) is unblocked by the 2026-08 recognition read
-([TF-1596](https://linear.app/topicflow/issue/TF-1596)) and waits only on a scheduler; when
-reactivated, it hands its findings here to draft.
+(`skills/later/recognition-scan`) is unblocked by the 2026-08 recognition read and waits only on a
+scheduler; when reactivated, it hands its findings here to draft.
 
 Thresholds (tunable): `timeliness_weeks: 3`, `equity_note_after_repeats: 2`.
 
