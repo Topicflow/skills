@@ -236,9 +236,16 @@ how to add a skill and what the checker enforces. Ideas already considered and d
 [.out-of-scope/](./.out-of-scope); deferred ones live in
 [TF-1599](https://linear.app/topicflow/issue/TF-1599).
 
+## Versioning
+
+The canonical library version is kept in [VERSION](./VERSION). It follows Semantic Versioning,
+matches the Claude plugin manifest, and is checked by `scripts/check-version.sh`. Release notes
+live in [CHANGELOG.md](./CHANGELOG.md); publish a matching Git tag such as `v0.1.0` for each
+release.
+
 ## Status
 
-Version 0.2.0 — nine installed skills: five core workflows that work from either chair, a guided
+Version 0.1.0 — nine installed skills: five core workflows that work from either chair, a guided
 direct-report interview, durable private context, and two manager-facing entry points. The focused
 workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
 skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.

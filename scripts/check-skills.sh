@@ -192,6 +192,7 @@ for f in references/management-rules.md references/library-conventions.md \
          references/interaction-controls.md references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
   [ -f "$REPO/$f" ] || err "missing $f"
 done
+"$REPO/scripts/check-version.sh" || err "version surfaces are inconsistent"
 
 # Every eval file should correspond to a skill.
 while IFS= read -r eval_md; do
