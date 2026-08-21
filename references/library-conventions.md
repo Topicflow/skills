@@ -3,39 +3,69 @@
 Eight rules. They apply to every skill in this library, without exception.
 A skill that breaks one is a bug, not a variation.
 
-## Two callers, one catalog
+## Two callers, two chairs, one catalog
 
 Every skill has exactly one Method, and two callers can run it:
 
-- **Chat mode** — a manager talks to an agent (Claude app, Claude Code, ChatGPT/Codex, any MCP client). The manager is present and can answer questions.
-- **Routine mode** — the Topicflow engine runs the skill on a schedule. Nobody is present. The skill must decide on its own whether the manager is worth interrupting.
+- **Chat mode** — someone talks to an agent (Claude app, Claude Code, ChatGPT/Codex, any MCP client). The user is present and can answer questions.
+- **Routine mode** — the Topicflow engine runs the skill on a schedule. Nobody is present. The skill must decide on its own whether the user is worth interrupting.
 
 Write the Method once, tool-agnostic. Chat mode and routine mode differ only in the
 Gate section and in whether questions may be asked.
 
+The user sits in one of **two chairs**: a manager working on their team, or a direct report
+working on their own 1-on-1s, feedback, recognition, and goals. The core skills serve both. A
+skill resolves the chair from what the user says and what the data shows (whose meeting, whose
+goal), asks once when it is ambiguous, and says in its body which steps are chair-specific —
+the equity glance is the manager's alone; posting a goal check-in is the owner's.
+
+And two **invocation types**: most skills are *model-invoked* — the agent picks them up from
+normal conversation, so their descriptions carry trigger phrasings. A few are *user-invoked*
+(`disable-model-invocation: true` in frontmatter, `allow_implicit_invocation: false` in
+`agents/openai.yaml`): the user types the name, so their descriptions are one human-facing
+line with no trigger list. Reserve that type for an entry point that must never begin from normal
+conversation; deliberate workflows instead use an explicit-request trigger so the router can
+start them after the manager chooses them.
+
+An explicit selection through an installed router is also a manager request. A skill that must be
+startable from `ask-topicflow` cannot use `disable-model-invocation: true`; give it a `Use when`
+description that requires a direct request or router selection, and guard against casual
+invocation in its Method and evals.
+
 ## The eight rules
 
-**1. Format.** One directory per skill. Kebab-case name. `SKILL.md` with frontmatter
-(`name`, `description` — the description carries the "Use when …" triggers). Body around
-150 lines, hard ceiling 165 — prose here is wrapped at 95 columns, which costs about twice
-the lines of unwrapped text, so the checker warns at 150 and fails at 165. One worked
-example at the end. `agents/openai.yaml` for Codex / ChatGPT harnesses.
+**1. Format.** One directory per skill. Kebab-case name. `SKILL.md` with frontmatter: `name`,
+`description`, and — only for user-invoked skills — `disable-model-invocation: true`. A
+model-invoked description carries the "Use when …" triggers; a user-invoked description is one
+human-facing line. Body around 150 lines, hard ceiling 165 — prose here is wrapped at 95
+columns, which costs about twice the lines of unwrapped text, so the checker warns at 150 and
+fails at 165. One worked example at the end. `agents/openai.yaml` for Codex / ChatGPT harnesses.
+A skill may add one support file next to `SKILL.md` (like prep-1on1's `questions.md`) when the
+body budget cannot hold reference material — linked from the body, loaded on demand.
 
-**2. Two-part body, and no skill names a backend.** *Method* first — the management
-practice, tool-agnostic, so it survives a tool rename. *Sources* second — which of the eight
-capabilities in [source-map.md](source-map.md) the skill needs, what each one buys it, and
-which conclusions are withheld when one is thin or absent. **A SKILL.md must not contain a
-backend tool name.** Capabilities are bound to tools one at a time in the binding record;
-skills execute the binding. That is what lets a manager keep goals in one tool and private
-notes in another, and lets a tool nobody here has heard of work at all. Adapters and the
-recipe for an unknown backend: [adapters.md](adapters.md).
+**2. Two-part body: the practice, then the calls.** *Method* first — the management practice,
+written so it reads correctly whatever tool serves it. *Sources* second — **the actual Topicflow
+calls the skill makes**, named directly, plus the conclusions it withholds when a call fails or
+returns empty. One hop, traceable: you read the skill and you know what it does.
 
-**3. Write-back through the C6 binding.** Anything durable learned during a run — from the
-manager's words or from a tool — is appended wherever C6 points, whatever that is.
-`setup-sources` records the destination, the calls, and whether the place is private, so
-none of it is re-decided per run. This holds even when the run ends in silence: a finding
-nobody was pinged about is still worth keeping for review time. Where C6 cannot be written,
-produce the note text and say plainly it was not filed (see the `save-context` skill).
+**Topicflow is a prerequisite, not an optional source.** When no Topicflow MCP tool is available,
+the skill stops and prompts the person to connect it through the portable setup flow in
+`topicflow-tools.md`. It does not produce a local-only, simulated, or partial workflow.
+
+The eight kinds of data, each with its call and its withheld conclusions:
+[data-sources.md](data-sources.md). Full parameters and gotchas:
+[topicflow-tools.md](topicflow-tools.md).
+
+**The Method must not depend on a tool name.** A different tool can serve any of the eight; the
+practice does not change, only the call. Keep tool names in Sources so swapping one touches one
+section.
+
+**3. Write-back to private notes.** Anything durable learned during a run — from the manager's
+words or from a tool — gets kept. This holds even when the run ends in silence: a finding
+nobody was pinged about is still worth keeping for review time. The private-note tools ship in the
+2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); where a deployment
+predates it, that means producing the note text and saying plainly it was not filed. **Meeting notes are not a fallback** — they are
+shared with the report. See the `save-private-note` skill.
 
 **4. Confirm once.** Every Topicflow write tool is a two-step: the write tool returns a
 *preview* plus a `pending_id`, and `confirm_creation(pending_id)` commits it. Show the
@@ -53,11 +83,14 @@ no "nothing to report" message. Gate thresholds live in the skill body as named,
 tunable defaults, so a manager can change 4 weeks to 6 without editing logic.
 
 **7. Output contract.** finding → why it matters → proposed action(s). A skill never ends
-with raw data, and never ends without an action the manager can take in one click or one
-sentence.
+with raw data or an inert handoff: it always ends with an action the manager can take in one click
+or one sentence. Use the [portable choice controls](interaction-controls.md): call the host's
+structured prompt when it exists; otherwise use a numbered, replyable question. Never present
+bracketed text as a button or tell the manager to type another command. A “yes” starts a selected
+skill on the next turn; its own preview and approval rules still apply.
 
 **8. Practice conformance.** Every skill operationalizes numbered rules from
-[management-practices.md](management-practices.md) and names them. Before showing a
+[management-rules.md](management-rules.md) and names them. Before showing a
 draft, the skill checks it against those rules and fixes it — a feedback draft with no
 Impact, an agenda made only of status topics, or a "great job!" recognition never reaches
 the manager.
@@ -72,37 +105,41 @@ the manager.
   manager's own notes; shared surfaces get behaviour and impact.
 - Never asks more than 3 questions before producing a draft. A rough draft the manager
   edits beats an interrogation.
-- Never names a backend. A skill that mentions a specific tool has hardcoded a routing
-  decision that belongs in the binding, and it will be wrong for the next manager.
-- Never re-decides a binding mid-run. If it looks wrong, say so and point at
-  `setup-sources`; do not silently read from somewhere else.
+- Never names a tool inside its Method. Tool names live in Sources, so the practice reads
+  correctly whatever serves it and swapping one touches one section.
+- Never invents a tool or a parameter. Where nothing serves a job, the job is unbound, and
+  the withheld conclusion applies exactly as written.
 
 ## Degrading gracefully
 
-Tools are missing or unauthorized more often than you would like, and most managers using
-this library will not have every capability. When a source is unavailable: continue with
-what is available, **say which capability was missing in one line**, and lower the
-confidence of the affected finding — never fail the whole run, never silently pretend the
-gap is a negative result ("no recognition found" is different from "recognition history
-unreadable"). The manager should never have to guess how much the skill could actually see.
+Calls fail, return empty, or are missing entirely more often than you would like — recognition
+and private notes only gained their tools in the 2026-08 MCP update, and older deployments lack
+them. When that happens: continue with what is available, **say what
+was missing in one line**, and lower the confidence of the affected finding — never fail the whole
+run, never silently pretend the gap is a negative result ("no recognition found" is different from
+"recognition history unreadable"). The manager should never have to guess how much the skill could
+actually see.
 
-Capability contracts and the withheld conclusions each one carries:
-[source-map.md](source-map.md). Known adapters and how to bind a new backend:
-[adapters.md](adapters.md). Topicflow detail and its gaps:
+The eight kinds of data, each with its call and the conclusions it withholds:
+[data-sources.md](data-sources.md). Full parameters and gaps:
 [topicflow-tools.md](topicflow-tools.md).
 
-Two skills are the exception to "degrade, don't stop": `stuck-work` and `recognition-scan`
-without work signals have nothing to detect on, and should say so once and stay quiet.
+A detector without its detecting source has nothing to run on and should say so once and stay
+quiet rather than narrow — which is one reason the detectors live in `skills/later/` until the
+sources and the scheduler they need exist.
 
 ## Adding a skill
 
 1. Name the Oxygen behaviour it serves (P17). If you cannot, do not add it.
-2. Check the catalog for an existing skill with the same job. One skill per job — extend
-   the existing one instead of adding a near-duplicate.
-3. Write the Method before touching any tool names.
-4. Map it to the capabilities in [source-map.md](source-map.md): what each one buys the
-   skill, and which conclusions are withheld without it. Do not name a tool.
-5. Add 5 eval cases in `evals/<skill>.md`: golden path, silence path, graceful-fail path,
-   practice-conformance path, and portability path (it works without Topicflow).
-6. Register it in `.claude-plugin/plugin.json`, the category README, and the root README.
-7. Run `scripts/check-skills.sh`.
+2. Check the catalog for an existing skill with the same job — including `skills/later/`. One
+   skill per job — extend or reactivate instead of adding a near-duplicate.
+3. Decide the invocation type: model-invoked with triggers, or user-invoked
+   (`disable-model-invocation: true`) when the skill starting itself would be an interruption.
+4. Write the Method before touching any tool names. Say which steps are chair-specific.
+5. Write Sources: the calls it makes, from [data-sources.md](data-sources.md), and the
+   conclusion it withholds when each one fails or returns empty.
+6. Add 5 eval cases in `evals/<skill>.md`: golden path, silence path, graceful-fail path,
+   practice-conformance path, and a **missing-source path** — one of the eight is unavailable,
+   and the skill narrows honestly instead of guessing.
+7. Register it in `.claude-plugin/plugin.json`, the category README, and the root README.
+8. Run `scripts/check-skills.sh`.

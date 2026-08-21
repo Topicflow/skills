@@ -1,7 +1,7 @@
 {
   "name": "manager-skills",
   "version": "0.1.0",
-  "description": "Agent skills for people managers — 1-on-1 prep, SBI feedback, recognition equity, goal health, review evidence. Grounded in management research. Works with Topicflow, Notion, an issue tracker, or nothing but the conversation.",
+  "description": "Agent skills for people managers and their direct reports — 1-on-1 prep, SBI feedback, recognition, goals and check-ins. Grounded in management research, built on Topicflow, and honest about what it cannot see.",
   "author": {
     "name": "Topicflow",
     "url": "https://www.topicflow.com"
@@ -20,19 +20,14 @@
     "topicflow"
   ],
   "skills": [
-    "./skills/foundations/setup-sources",
-    "./skills/foundations/management-practices",
-    "./skills/foundations/save-context",
+    "./skills/foundations/save-private-note",
+    "./skills/foundations/ask-topicflow",
+    "./skills/foundations/find-management-opportunities",
     "./skills/conversations/prep-1on1",
     "./skills/conversations/give-feedback",
-    "./skills/conversations/request-feedback",
     "./skills/conversations/give-recognition",
-    "./skills/conversations/onboard-direct-report",
-    "./skills/conversations/review-prep",
-    "./skills/signals/recognition-scan",
-    "./skills/signals/relationship-drift",
-    "./skills/signals/stuck-work",
-    "./skills/signals/goal-checkin",
-    "./skills/signals/weekly-brief"
+    "./skills/conversations/create-goal",
+    "./skills/conversations/goal-checkin",
+    "./skills/conversations/direct-report-interview"
   ]
 }

@@ -15,13 +15,13 @@ PLUGIN_JSON="$REPO/.claude-plugin/plugin.json"
 TARGET_BODY_LINES=150
 MAX_BODY_LINES=165
 
-# Reference-style skills: no Method/Sources/Gate/Output, no eval cases. They hold
-# vocabulary and checks for other skills rather than running a process.
-REFERENCE_SKILLS="management-practices"
+# Reference-style skills: no Method/Sources/Gate/Output, no eval cases. The current catalog has
+# none; the management rules live in references/ rather than as a user-facing skill.
+REFERENCE_SKILLS=""
 
-# save-context IS the write-back destination for every other skill, so requiring a
+# save-private-note IS the write-back destination for every other skill, so requiring a
 # '## Write-back' section in it would be circular.
-NO_WRITEBACK_SECTION="save-context"
+NO_WRITEBACK_SECTION="save-private-note"
 
 errors=0
 warnings=0
@@ -68,10 +68,25 @@ while IFS= read -r skill_md; do
     err "frontmatter name '$fm_name' does not match directory '$name'"
   fi
 
-  case "$fm_desc" in
-    *"Use when"*|*"use when"*) ;;
-    *) err "description carries no 'Use when …' trigger (harnesses match on this)" ;;
-  esac
+  # Model-invoked skills need trigger phrasings; user-invoked skills
+  # (disable-model-invocation: true) carry a human-facing one-liner instead,
+  # and their openai.yaml must also opt out of implicit invocation.
+  if printf '%s\n' "$fm" | grep -q '^disable-model-invocation:[[:space:]]*true'; then
+    case "$fm_desc" in
+      *"Use when"*|*"use when"*)
+        warn "user-invoked skill carries a 'Use when' trigger list (description should be one human-facing line)" ;;
+      *) ;;
+    esac
+    if [ -f "$dir/agents/openai.yaml" ] && \
+       ! grep -q 'allow_implicit_invocation:[[:space:]]*false' "$dir/agents/openai.yaml"; then
+      err "user-invoked skill's openai.yaml lacks 'allow_implicit_invocation: false'"
+    fi
+  else
+    case "$fm_desc" in
+      *"Use when"*|*"use when"*) ;;
+      *) err "description carries no 'Use when …' trigger (harnesses match on this)" ;;
+    esac
+  fi
 
   # Unknown frontmatter keys are not portable across harnesses.
   while IFS= read -r key; do
@@ -112,20 +127,38 @@ while IFS= read -r skill_md; do
   if grep -q '^|' "$skill_md"; then
     err "contains a markdown table; output must survive Slack mrkdwn (convention 5)"
   fi
-
-  # --- backend neutrality (convention 2) ---------------------------------
-  # A skill declares capabilities and executes the binding; routing decisions live in
-  # the binding record, never in a SKILL.md. Two checks:
-  #   1. the Sources section points at the capability contracts
-  #   2. no backend tool name appears anywhere in the body
-  # Neither can verify that the capability reasoning is *correct* — that is review.
-  if grep -q '^## Sources' "$skill_md" && ! grep -q 'source-map.md' "$skill_md"; then
-    err "Sources does not reference source-map.md (declare capabilities, not backends)"
+  output_body="$(awk '/^## Output/{f=1;next} /^## Worked example/{f=0} f' "$skill_md")"
+  if ! printf '%s\n' "$output_body" | grep -q 'interaction-controls.md'; then
+    err "Output does not link the portable interaction-controls.md contract"
+  fi
+  if printf '%s\n' "$output_body" | grep -qi 'not a choice'; then
+    err "Output permits a non-interactive ending"
+  fi
+  if grep -q '\`\[' "$skill_md"; then
+    err "contains a bracketed pseudo-button; use the portable choice controls instead"
   fi
 
-  backend_tools='notion-[a-z-]+|slack_[a-z_]+|list_meetings|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_my_review_tasks|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
-  if named="$(grep -oiE "$backend_tools" "$skill_md" | sort -u | tr '\n' ' ')"; [ -n "$named" ]; then
-    err "names backend tools ($named) — routing belongs in the binding, not the skill"
+  # --- practice in Method, calls in Sources (convention 2) ---------------
+  # Skills name Topicflow calls directly — one hop, traceable. But the *practice*
+  # must not depend on a tool name, so that swapping a source touches one section.
+  # Two checks:
+  #   1. the Sources section points at the data-source reference
+  #   2. no tool name appears inside Method
+  # Neither can verify the calls are the *right* ones — that is review.
+  if grep -q '^## Sources' "$skill_md" && ! grep -q 'data-sources.md' "$skill_md"; then
+    err "Sources does not reference data-sources.md (name the calls and what they withhold)"
+  fi
+  if grep -q '^## Sources' "$skill_md" && ! grep -q 'topicflow-tools.md' "$skill_md"; then
+    err "Sources does not reference topicflow-tools.md (include the MCP connection contract)"
+  fi
+  if ! grep -q '\*\*Topicflow first\.\*\*' "$skill_md"; then
+    err "does not require Topicflow MCP setup before work"
+  fi
+
+  tool_names='notion-[a-z-]+|slack_[a-z_]+|list_meetings|list_recognitions|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_my_review_tasks|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
+  method_body="$(awk '/^## Method/{f=1;next} /^## /{f=0} f' "$skill_md")"
+  if named="$(printf '%s\n' "$method_body" | grep -oiE "$tool_names" | sort -u | tr '\n' ' ')"; [ -n "$named" ]; then
+    err "Method names tools ($named) — the practice goes in Method, the calls in Sources"
   fi
 
   # --- companion files ---------------------------------------------------
@@ -133,8 +166,8 @@ while IFS= read -r skill_md; do
 
   if ! is_reference_skill "$name"; then
     if [ -f "$REPO/evals/$name.md" ]; then
-      grep -qi 'portability' "$REPO/evals/$name.md" \
-        || err "evals/$name.md has no portability case (must run without Topicflow)"
+      grep -qiE 'missing.source' "$REPO/evals/$name.md" \
+        || err "evals/$name.md has no missing-source case (a source is unavailable)"
     else
       err "missing evals/$name.md (5 cases required)"
     fi
@@ -151,14 +184,15 @@ while IFS= read -r skill_md; do
   if [ "$skill_errors" -eq 0 ]; then
     printf '  ok: %s (%s body lines)\n' "$name" "$body_lines"
   fi
-done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' | sort)
+done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -path '*/later/*' | sort)
 
 # --- repo-level checks ---------------------------------------------------
 printf '\n--- repo ---\n'
-for f in references/management-practices.md references/library-conventions.md \
-         references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
+for f in references/management-rules.md references/library-conventions.md \
+         references/interaction-controls.md references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
   [ -f "$REPO/$f" ] || err "missing $f"
 done
+"$REPO/scripts/check-version.sh" || err "version surfaces are inconsistent"
 
 # Every eval file should correspond to a skill.
 while IFS= read -r eval_md; do

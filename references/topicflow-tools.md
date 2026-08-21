@@ -6,6 +6,22 @@ file is where tool detail lives so a rename touches one file.
 Tool names below are unprefixed. In an MCP client they appear namespaced (for example
 `mcp__claude_ai_Topicflow__list_meetings`). Match on the suffix.
 
+## Connect Topicflow before running a skill
+
+If no Topicflow tool is exposed, stop before drafting, advising, or writing. Say: “Topicflow is
+not connected, so I cannot run this skill yet.” Then use the
+[portable choice controls](interaction-controls.md) to offer **Show setup steps** and **Not now**.
+
+For setup, tell the user to add this MCP server URL to their agent client, then complete the
+Topicflow sign-in/authorization it opens:
+
+```text
+https://app.topicflow.com/mcp
+```
+
+After that, ask them to retry the same skill. Do not invent a no-Topicflow fallback or claim that
+the server is connected until a Topicflow tool is actually exposed.
+
 ## The write pattern — preview, then confirm
 
 Every write tool is a **preview**. It does not change anything. It returns a draft plus an
@@ -33,7 +49,7 @@ per change, but one approval from the manager covers the batch they approved.
   everywhere else.
   **The `reports` array is not a trustworthy roster.** Observed in a live org:
   it returned a duplicate account with the same name as the manager themselves. Treat it as
-  a hint to confirm, never as the roster — which is what C1's contract already requires.
+  a hint to confirm, never as the roster. Always ask the manager and confirm once.
 - **`list_meetings(is_oneonone?, title?, status?, limit?, order?, meeting_datetime_start?, meeting_datetime_end?, with_notes_and_transcript?)`**
   — the authenticated manager's meetings. `order: "-start_datetime"` for most recent first,
   `"start_datetime"` for upcoming.
@@ -49,6 +65,8 @@ per change, but one approval from the manager covers the batch they approved.
   returns topics, agendas, and notes** — this is where open action items and past topics
   live, and it is the substitute for a dedicated action-item tool. The payload is large:
   always pair it with a date filter and a small `limit`.
+  A lone topic titled **`New Topic`** with no notes is Topicflow's blank default, so treat it as
+  **no agenda**, not as a prepared topic or a topic with no follow-through.
   **`meeting_id` and `topic_id` for any write come from here.**
 - **`list_goals(owners?, contributors?, status?, visibility?, due_date_start?, due_date_end?, search_term?, limit?, order?)`**
   — returns **visible open goals**; defaults to the current user's own. Pass `owners:
@@ -66,7 +84,7 @@ per change, but one approval from the manager covers the batch they approved.
   — review cycles. `current_only: true` for what is running now, `state: "published"` for
   launched cycles.
 - **`list_my_review_tasks(current_only?, include_completed?, program_id?, program_title?)`**
-  — review work assigned to the manager. The trigger for `review-prep`.
+  — review work assigned to the manager. The trigger for `review-prep` (parked in `skills/later/`).
 - **`query_external_events(start_datetime, end_datetime, target?, sources?)`** — work
   signals from connected tools (GitHub, Linear, and others). **Both datetimes are
   required**, ISO 8601 UTC (`YYYY-MM-DDTHH:MM:SSZ`). `target` defaults to the current
@@ -82,9 +100,10 @@ per change, but one approval from the manager covers the batch they approved.
 - **`edit_meeting_topic(topic_id, title)`** — retitle only.
 - **`edit_meeting_topic_notes(meeting_id, topic_id, text, operation?, notes_type?)`** —
   `operation` defaults to `append`; use `replace` only when the manager asks to overwrite.
-  `notes_type` defaults to `auto` (individual notes on formal 1-on-1s when active,
-  otherwise shared). **Shared notes are visible to the report. Never put a manager-private
-  observation in shared notes.**
+  `notes_type` defaults to `auto`. **Treat every value as shared: 1-on-1 meeting notes are
+  visible to the other participant.** This tool writes to the meeting, and the meeting belongs to
+  both people in it. Never put a manager-private observation here — that is what private notes
+  are for.
 - **`create_feedback(title, description, recipient_*?, sender_*?, recipients_can_view?, recipients_managers_can_view?, admins_can_view?, is_draft?)`**
   — two modes. *Giving* feedback: set `recipient_*` to the person it is about.
   *Requesting* feedback: set `sender_*` to the person you are asking to **write** it and
@@ -96,7 +115,13 @@ per change, but one approval from the manager covers the batch they approved.
   also accepts a team name. Never set the recipient to the current user.
 - **`create_goal(title, scope, key_results[], owner_*?, due_date?, state?, visibility?)`** —
   `key_results` is required and must be measurable (P11). `owner_*` defaults to the current
-  user, so **pass the report's ID** when the goal is theirs.
+  user, so **pass the report's ID** when the goal is theirs. A correctly configured quantitative
+  KR needs a real start value, end value, unit, and direction; a goal with KRs needs the progress
+  type **Average Progress of Key Results & Aligned Goals**. Check the live tool schema before
+  creating: this currently documented signature exposes only `key_results[]` strings, so it
+  cannot set those fields. **Do not invent extra parameters, use `0/100` as a universal default,
+  or claim those settings were applied.** Hand the specified draft back for manual configuration
+  until the MCP exposes the needed fields.
 - **`edit_goal(goal_id, title?, status?, state?, visibility?, scope?, owner_*?, key_results[{op, id?, title?}]?)`**
   — `key_results` takes `op: "add" | "edit" | "remove"`. `state`: 0 draft, 1 open, 2 closed
   (closing sets the completion date). `owner_*` **replaces all owners** — be careful.
@@ -109,59 +134,53 @@ per change, but one approval from the manager covers the batch they approved.
 
 ## Gaps and fallbacks
 
-Four tools this library wants and does not have. Build order matters: (1) blocks a
-library-wide rule, the rest degrade.
+**Shipping in the 2026-08 MCP update** ([TF-1595](https://linear.app/topicflow/issue/TF-1595),
+with [TF-1596](https://linear.app/topicflow/issue/TF-1596) folded in): **private notes — read,
+create, and delete** — and the **recognition read**. The update does **not** ship AI-memory
+access, and none is planned: what a skill knows about a person is what the private notes hold.
+Deployments that predate the update lack these tools; the fallbacks below stay for them.
 
-**1. `save_private_note(person, text)` — P0.** Blocks library convention 3 (write-back).
-**In dev: [TF-1595](https://linear.app/topicflow/issue/TF-1595).** *Fallback until it lands:*
-produce the note text in third person and ask the manager to keep it. Where the manager confirms
-that individual 1-on-1 notes are private to them in their deployment,
-`edit_meeting_topic_notes(notes_type: "individual")` on a standing "Context" topic works —
-**ask before assuming**, because shared notes are visible to the report.
+**Private notes.** Scoped to the current user. The write is `save_private_note`; take the read
+and delete names from the live tool list once the update is merged — never guess a tool name.
+*Fallback where the tools are absent:* produce the note text in third person and hand it to the
+manager to keep. **There is no second option.** Meeting notes are shared with the other
+participant, so they are not a private store, and a manager-private observation must never be
+written there.
 
-**2. `get_person_context(person, since)`.** A curated synthesis: role, current focus,
+**`list_recognitions`.** Was registered but scope-gated behind `recognitions:read`, so it never
+appeared to any client; the update ships the scope. Recognition is **not** carried by
+`list_feedback` — a live check confirmed it. *Where absent:* recognition recency is unreadable —
+no drought claim, no equity claim; ask the manager instead. **The general lesson outlives the
+fix:** a scope-gated tool is invisible, and "not there", "returned nothing", and "nothing ever
+happened" look identical from a client. So a drought is never claimed on an unverified empty,
+even with the read live — a record nobody has written to yet has no history to measure.
+
+Two tools remain wanted and missing:
+
+**1. `get_person_context(person, since)`.** A curated synthesis: role, current focus,
 recent work, open items. *Fallback:* compose it — `get_user_infos` +
 `query_external_events` + `list_goals(owners=id)` + `list_meetings(is_oneonone=true,
 with_notes_and_transcript=true, limit=2-3)`. Four calls instead of one; resolve the ID
 first so all four hit the right person.
 
-**3. `read_ai_memory(person?)`.** Durable observations and facts. **Also in
-[TF-1595](https://linear.app/topicflow/issue/TF-1595)**, which opens up memory and profile notes
-alongside note saving. *Fallback until it lands:* past 1-on-1 topic notes via
-`list_meetings(with_notes_and_transcript=true)`, plus asking the manager once. Without it,
-"unknown" and "not true" are indistinguishable — so for preference questions (P9), ask rather
-than guess, and never report an absence as a fact.
+When the update reaches a deployment, the skills that shed the heaviest workarounds are
+`save-private-note` (the fallback ladder collapses to one call), `give-recognition` (preference
+looked up from notes instead of asked every time), and `direct-report-interview` (its answers get a
+durable home, and it stops re-asking what a note already holds). It also unblocks the parked
+`recognition-scan` — evidence at last — and gives the other detectors a note ledger that makes
+cross-run cooldowns enforceable.
 
-When TF-1595 ships, the skills that carry the heaviest workarounds are `save-context` (the whole
-fallback ladder collapses to one call), `relationship-drift` (a real ping ledger, so the
-per-month cooldown becomes enforceable across runs), `stuck-work` (same, per item), and
-`give-recognition` (preference lookup instead of a private-by-default guess).
-
-**4. `list_action_items(person)`.** Open action items across 1-on-1s. *Mostly covered:*
+**2. `list_action_items(person)`.** Open action items across 1-on-1s. *Mostly covered:*
 `list_meetings(with_notes_and_transcript=true)` returns topics and notes, so action items
 are readable from the last two or three meetings — that is what `prep-1on1` does. A
 dedicated tool would remove the keyword-scanning and the recency window.
 
 **Also missing, and worth knowing:**
 
-- **No completed-goal history.** `list_goals` returns open goals. `review-prep` cannot
-  prove "goals hit last quarter" from the API alone: list what is open with status, then
-  ask the manager to confirm what closed, and mark it as an evidence gap rather than
-  reporting zero.
-- **`list_recognitions` exists but is currently unreachable.** It is registered in the tool
-  registry and requires the OAuth scope `recognitions:read`, which is missing from the
-  server's supported scopes — so no client can hold it, and the tool never appears in
-  `tools/list`. From a client the effect is that recognitions can be **created and edited but
-  not read**. Tracked in [TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
-  [TF-1595](https://linear.app/topicflow/issue/TF-1595).
-  Recognition is **not** carried by `list_feedback` — a live check found feedback
-  and feedback requests there and no recognitions, which is consistent with them living
-  behind their own tool. Until the scope ships, treat recognition recency as unreadable and
-  say so, rather than pinging on a false drought.
-  **The general lesson, worth keeping after this is fixed:** a tool that is scope-gated is
-  invisible, and from the client side "the tool is not there", "the tool returned nothing",
-  and "nothing has ever happened" look identical. That is why the C5 contract withholds the
-  drought conclusion on an unverified empty result rather than trusting it.
+- **No completed-goal history.** `list_goals` returns open goals. Nothing can prove "goals hit
+  last quarter" from the API alone: list what is open with status, then ask the user what
+  closed, and mark it as an evidence gap rather than reporting zero. `create-goal` also cannot
+  tell a missing goal from a closed one — it asks.
 - **No calendar write.** Nothing here schedules, reschedules, or cancels a meeting. A
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.

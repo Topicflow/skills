@@ -1,23 +1,28 @@
-# Skills For People Managers
+# Skills for managers and their direct reports
 
-Agent skills for the human half of the job: 1-on-1s, feedback, recognition, goals, careers,
-reviews.
+Agent skills for the human half of work: 1-on-1s, feedback, recognition, goals.
 
 Management advice is abundant and almost never applied, because applying it means remembering the
 right practice at the exact moment you are busy. These skills close that gap. Each one encodes a
-specific practice from management research — SBI feedback, the report's agenda, recognition equity,
-goal staleness — and produces a draft you can send in one click.
+specific practice from management research — SBI feedback, the report's agenda, measurable goals —
+and produces something you can send in one click, written into **Topicflow** where it counts at
+review time.
 
-They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. And they run on
-whatever you already use, **one kind of data at a time**: goals in Notion, private notes in Todoist,
-tickets in Linear, 1-on-1s in a calendar, and nothing at all for recognition is an ordinary setup
-here, not a compromise.
+They work from **either chair**. A manager preps a 1-on-1 with a report; a report preps the same
+meeting with their manager — and that second case is the practice at its best, because the meeting
+belongs to the report. Feedback travels down, sideways, and up. A goal check-in is best posted by
+the goal's own owner. The rules do not care about the org chart; only a few steps are
+manager-specific, and the skills say which.
 
-No skill in this library names a tool. Each declares the *capabilities* it needs — roster, 1-on-1
-history, work signals, goals, feedback record, notes, delivery, agendas — and
-[`setup-sources`](./skills/foundations/setup-sources/SKILL.md) binds each one to whichever tool you
-keep it in. Moving something later changes one row, not fourteen skills. A tool nobody here has
-heard of works too: there is a [recipe](./references/adapters.md) for binding one.
+They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. Each skill names
+the Topicflow calls it makes — read a skill and you know exactly what it does, in one hop.
+
+Eight kinds of data sit underneath: **people, meetings, meeting agenda, work, goals, feedback,
+recognition, private notes.** Each one names the call that serves it and, more importantly, **the
+claim a skill must stop making when that call comes back empty**. Where a deployment cannot serve
+one — recognition and private notes only gained their tools in the 2026-08 MCP update — the
+skills say so out loud rather than guessing. See
+[references/data-sources.md](./references/data-sources.md).
 
 ## Quickstart
 
@@ -43,140 +48,181 @@ npx skills@latest add Topicflow/skills
 
 **ChatGPT / Codex and other Agent-Skills harnesses** — every skill ships an
 `agents/openai.yaml`, so the same directories install unchanged. Nothing in this library is
-model-specific: no Claude-only syntax, no GPT-only prompt tricks.
+model-specific.
 
-**Then run `/setup-sources` once.** It tests what is actually reachable, asks who reports to you and
-where each kind of data lives, and records a binding per capability. After that, tell it things like
-"put goals in Notion" or "keep private notes in Todoist" and it rebinds one row.
+**Connect Topicflow, then talk.** Add `https://app.topicflow.com/mcp` to your agent's MCP server
+settings and complete the Topicflow sign-in/authorization. If it is not connected, any skill will
+offer these setup steps instead of producing a partial result. Not sure what is here? Type
+`/ask-topicflow`.
 
-Some things worth knowing before you bind:
+Three things worth knowing before you start, so nothing is a surprise:
 
-- **Topicflow** is the fullest single source, and the only one that holds a feedback and recognition
-  record — which is exactly what the equity and drought checks measure.
-- **An issue tracker** is the best source for stalled work, whatever else you use. Staleness needs
-  real state history; a last-edited timestamp is not a substitute, and the skills refuse to treat it
-  as one.
-- **A note store** — a Notion page, a Todoist project, a text file — covers durable notes well. That
-  is currently *better* than the Topicflow path, which is still waiting on
-  [TF-1595](https://linear.app/topicflow/issue/TF-1595).
-- **A recognition record has no common equivalent.** Most setups cannot hold one, and without it
-  `recognition-scan` stays silent rather than inventing a drought. `setup-sources` offers to create
-  a simple log; it works from the day you start it.
-- **Nothing at all** is a valid setup. `give-feedback`, `give-recognition`, `management-practices`,
-  and the drafting half of `prep-1on1` work from the conversation alone. The draft was always the
-  valuable part.
+- **Recognition and private notes just gained their tools.** The 2026-08 Topicflow MCP update
+  ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
+  [TF-1596](https://linear.app/topicflow/issue/TF-1596)) ships the recognition read and
+  private-note read, create, and delete. On a workspace that predates the update, the skills fall
+  back honestly: nothing is ever claimed about recognition history, and "remember that about
+  Tony" ends with the sentence handed to you to keep.
+- **1-on-1 meeting notes are never used as a private store.** They are shared with the other
+  person, whatever the deployment — a private observation does not belong there.
+- **A bare agent still works.** `give-feedback`, `give-recognition`, and the drafting half of
+  every other skill run from the conversation alone. The draft was always the valuable part.
 
-> **If you copy a single skill directory** rather than installing the whole set, its links into
-> `references/` will not resolve. Each skill restates the rules it depends on inline, so it still
-> behaves correctly on its own — but take `references/` with you if you want the full practice text.
+## The catalog
+
+### [Conversations](./skills/conversations) — the core workflow
+
+- **[prep-1on1](./skills/conversations/prep-1on1/SKILL.md)** — 3-5 agenda topics from open action
+  items, work signals, goal health, and recency gaps, written to the meeting. Works from either
+  chair.
+- **[give-feedback](./skills/conversations/give-feedback/SKILL.md)** — dated situation, observable
+  behavior, concrete impact, an intent question when corrective. To a report, a peer, or your
+  manager.
+- **[give-recognition](./skills/conversations/give-recognition/SKILL.md)** — the specific
+  contribution and what it made possible, matched to the person's public-or-private preference.
+- **[create-goal](./skills/conversations/create-goal/SKILL.md)** — a goal with a measurable
+  outcome. The owner drafts, the manager shapes; never a fourth goal stacked silently on three.
+- **[goal-checkin](./skills/conversations/goal-checkin/SKILL.md)** — progress in the owner's
+  voice: what moved, the numbers, whether the status still tells the truth. Never posted in
+  someone else's name.
+- **[direct-report-interview](./skills/conversations/direct-report-interview/SKILL.md)** — a
+  guided interview with the manager about one direct report, started directly or after selecting
+  it in Ask Topicflow. It fills the important human gaps and turns them into concrete support. A
+  new report gets day-7/30/60 topics too.
+
+### [Foundations](./skills/foundations) — what the others lean on
+
+- **[save-private-note](./skills/foundations/save-private-note/SKILL.md)** — catch the durable
+  fact the moment it is said ("she hates public praise") and restate it in one third-person
+  sentence. Filing needs the 2026-08 MCP update
+  ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); on older workspaces it hands you the
+  sentence.
+- **[ask-topicflow](./skills/foundations/ask-topicflow/SKILL.md)** — user-invoked
+  (`/ask-topicflow`). Ask a management question, review the current thread, choose the right
+  focused skill, or check what the account can see.
+- **[find-management-opportunities](./skills/foundations/find-management-opportunities/SKILL.md)**
+  — a deliberate manager review of the named direct reports, started directly or after selecting
+  it in Ask Topicflow: the few next actions that would help them most.
+
+### [Parked](./skills/later) — written, waiting on infrastructure
+
+Seven more skills — team detectors (stuck work, relationship drift, recognition equity, a weekly
+brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. The
+main thing they wait on is a scheduler for routine runs; the recognition read they also needed
+ships in the 2026-08 MCP update.
+[skills/later/README.md](./skills/later/README.md) says what unblocks each one;
+the backlog lives in [TF-1599](https://linear.app/topicflow/issue/TF-1599).
 
 ## How to use them
 
-Talk normally. Every skill is model-invoked, so you do not memorize slash commands:
+Talk normally. The core skills are model-invoked — no slash commands to memorize:
 
 > "prep my 1:1 with Tony tomorrow"
+> "prep my 1:1 with my manager"
 > "I need to give Priya feedback about the docs"
-> "who on my team hasn't had recognition lately?"
-> "Q3 reviews are open, get me started on Tony"
+> "update my goal — the migration is at 60%"
+> "set my goals for Q4"
 
-Or type the name directly (`/prep-1on1`) if you prefer.
+`/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
+selects it. The two deliberate manager workflows can also be started directly: run a guided
+interview about one person with `/direct-report-interview`; step back across named reports with
+`/find-management-opportunities`.
+
+When a skill needs a choice, Claude Code uses its native picker when it is available. Everywhere
+else, the same choice is a numbered question you can answer in plain language — there is no second
+slash command to memorize and no pretend text button to click.
 
 ## What makes these different
 
-**They refuse to be a digest.** Most management tooling reports that the week happened. Five of
-these skills run on a schedule and are built to stay silent: each ends in a gate —
-`worth_attention: yes/no` — and "you have a 1-on-1 tomorrow" never qualifies as a finding. There is
-exactly one digest in the library, it is opt-in, and it sends nothing when nothing is actionable.
-
 **They enforce the practice, not just mention it.** A feedback draft with no Impact is not shown
 with a caveat; it is fixed first, or two questions get asked. A "great job!" recognition never
-reaches you. An agenda made entirely of status topics is rewritten before you see it. The rules are
-numbered P1-P17 in [references/management-practices.md](./references/management-practices.md), each
-one written as a pass/fail check.
+reaches you. An agenda made entirely of status topics is rewritten before you see it. The rules
+are numbered P1-P17 in [references/management-rules.md](./references/management-rules.md), each
+written as a pass/fail check.
 
 **They are honest about what they cannot see.** A missing source produces "recognition history is
 unreadable", never a silent zero. The difference matters: an unverifiable absence is not evidence,
 and a skill that pretends otherwise will eventually tell you a well-supported colleague has been
-neglected for six weeks. Every skill names the capability it was missing, in one line, in its own
-output — you never have to guess how much it could actually see.
+neglected for six weeks. Every skill names what it could not see, in one line, in its own output.
 
-**They keep ownership where it belongs.** Goal check-ins are not posted on someone's behalf. Stuck
-work asks what is in the way rather than demanding a status. Peer-review writers are proposed, never
-chosen for you. The manager decides; the skill prepares.
+**They keep ownership where it belongs.** A goal check-in is the owner's voice — a manager asking
+to update a report's goal gets a 1-on-1 topic, not a ghost-written check-in. The report drafts
+the goal; the manager shapes it. The person decides; the skill prepares.
 
-**Two callers, one catalog.** Every skill has one Method that a manager can run in a chat and the
-Topicflow engine can run on a schedule. They differ only in the gate.
+**Focused actions end in Topicflow.** Topics land on the real meeting, feedback and recognition
+are sent through the record, check-ins carry real numbers. The two advisory entry points choose
+the next action; they never write on their own. What you do today is what the review can cite in
+six months.
 
-## The catalog
+## The seventeen rules
 
-### [Foundations](./skills/foundations) — install first
+This is the actual content of the library. Every skill cites the rules it enforces, checks its
+own draft against them before you see it, and every eval asserts conformance. Each rule is
+written so an output either passes or fails. Full text, with the research behind each one:
+[references/management-rules.md](./references/management-rules.md).
 
-- **[setup-sources](./skills/foundations/setup-sources/SKILL.md)** — bind each kind of data to
-  whichever tool you keep it in, then say plainly what works, what works with less, and what does
-  not work at all. Also how you move one thing to a new tool later.
-- **[management-practices](./skills/foundations/management-practices/SKILL.md)** — the seventeen
-  rules as pass/fail checks. Every other skill runs them on its own drafts.
-- **[save-context](./skills/foundations/save-context/SKILL.md)** — catch the durable fact the moment
-  it is said ("she hates public praise", "he's never run a migration"), restate it in one
-  third-person sentence, file it.
+**1-on-1 meetings** — *Rogelberg,* Glad We Met*; GitLab handbook*
 
-### [Conversations](./skills/conversations) — things you say or send
+- **P1** The 1-on-1 belongs to the report. At least half the agenda is their topics, as open questions.
+- **P2** Weekly and short beats monthly and long. Never cancel — reschedule.
+- **P3** Status does not belong in the 1-on-1. Prefer blockers, growth, and the relationship.
+- **P4** Close the loop. Every 1-on-1 ends with action items and owners; the next prep starts there.
 
-- **[prep-1on1](./skills/conversations/prep-1on1/SKILL.md)** — 3-5 topics from open action items,
-  work signals, goal health, and recency gaps. Half of them the report's, as open questions. No
-  status.
-- **[give-feedback](./skills/conversations/give-feedback/SKILL.md)** — dated situation, observable
-  behavior, concrete impact, and an intent question when it is corrective. Anything over two weeks
-  old becomes a conversation instead.
-- **[request-feedback](./skills/conversations/request-feedback/SKILL.md)** — the right 3-5 writers,
-  including one who will see something the others miss, asked questions that produce situations
-  rather than ratings.
-- **[give-recognition](./skills/conversations/give-recognition/SKILL.md)** — the specific
-  contribution and what it made possible, matched to their public-or-private preference, with a
-  one-line equity check.
-- **[onboard-direct-report](./skills/conversations/onboard-direct-report/SKILL.md)** — baseline what
-  they are new to, a first 1-on-1 about the person rather than the work, and day-7/30/60 topics
-  already dated.
-- **[review-prep](./skills/conversations/review-prep/SKILL.md)** — a dated evidence pack per report
-  with an explicit gaps section, plus the most useful sentence in any review prep: which report's
-  evidence is thin because of where your attention went.
+**Feedback** — *Center for Creative Leadership (SBI/SBII); Kim Scott,* Radical Candor
 
-### [Signals](./skills/signals) — detectors that mostly stay quiet
+- **P5** SBI shape is mandatory: dated Situation, observable Behavior, concrete Impact. Corrective feedback adds an intent question before judging.
+- **P6** Timely. Under about two weeks old, or it becomes a pattern conversation instead.
+- **P7** Care personally, challenge directly. Never soften into vagueness, never criticize the person. Corrective feedback is private-first.
 
-- **[recognition-scan](./skills/signals/recognition-scan/SKILL.md)** — weekly. A real win plus a
-  4-week drought, or silence.
-- **[relationship-drift](./skills/signals/relationship-drift/SKILL.md)** — weekly. Dates only:
-  weeks since the last 1-on-1, consecutive cancellations, weeks since career came up.
-- **[stuck-work](./skills/signals/stuck-work/SKILL.md)** — daily. Who needs help, never who is
-  slow. Checks whether you are the blocker first.
-- **[goal-checkin](./skills/signals/goal-checkin/SKILL.md)** — monthly. Stale, off track,
-  unmeasurable, or too many.
-- **[weekly-brief](./skills/signals/weekly-brief/SKILL.md)** — Monday, opt-in. One line per report,
-  every line ending in an action, nothing sent when nothing is actionable.
+**Recognition** — *Gallup / Workhuman*
+
+- **P8** Specific and timely. Name the exact contribution and why it mattered. "Great job!" fails.
+- **P9** Personalized. Respect their public-or-private preference; ask once, then remember.
+- **P10** Equitable. Check distribution across everyone. A four-week drought is an equity problem, not a nudge.
+
+**Goals** — *Locke & Latham; Grove,* High Output Management
+
+- **P11** Specific and challenging, with a measurable outcome. The report drafts; the manager shapes.
+- **P12** Few and alive. About three active goals per person; no check-in in six weeks is stale by definition.
+
+**Career** — *Russ Laraway, Career Conversations*
+
+- **P13** Career is a separate conversation from performance. Life story, then dreams, then a plan.
+- **P14** The plan has owners and dates, and at least one action item belongs to the *manager*.
+
+**Coaching and delegation** — *Project Oxygen; Michael Bungay Stanier,* The Coaching Habit
+
+- **P15** Questions before advice. Check-ins on stuck work offer help; they never take over.
+- **P16** Match delegation to what they are new to. New → structure. Proven → outcomes only.
+
+**North star** — *Google Project Oxygen*
+
+- **P17** Every skill serves one of the ten Oxygen behaviors. If you cannot name it, the skill does not go in.
 
 ## Where the practice comes from
 
 Every rule is traceable. Google's Project Oxygen for what managers are for; Rogelberg's *Glad We
 Met* for 1-on-1s; the Center for Creative Leadership's SBI/SBII for feedback; Kim Scott's *Radical
-Candor* for how to say it; Gallup and Workhuman for recognition; Locke & Latham and Grove for goals;
-Russ Laraway for career conversations; Michael Bungay Stanier for coaching questions. Full list with
-URLs: [references/management-practices.md](./references/management-practices.md).
+Candor* for how to say it; Gallup and Workhuman for recognition; Locke & Latham and Grove for
+goals; Russ Laraway for career conversations; Michael Bungay Stanier for coaching questions. Full
+list with URLs: [references/management-rules.md](./references/management-rules.md).
 
-The test for adding a skill is P17: name the Oxygen behavior it serves. If you cannot, it does not
-go in.
+The test for adding a skill is P17: name the Oxygen behavior it serves. If you cannot, it does
+not go in.
 
 ## Repo layout
 
 ```
 references/
-  management-practices.md   the seventeen rules, with sources
-  library-conventions.md    the eight rules every skill follows
-  source-map.md             the eight capabilities, their contracts, the binding record
-  adapters.md               known backends, and the recipe for binding an unknown one
-  topicflow-tools.md        Topicflow's detail, as one adapter among others
+  management-rules.md       the seventeen rules, with sources
+  library-conventions.md    the rules every skill follows
+  data-sources.md           the eight kinds of data, the call for each, what it withholds
+  topicflow-tools.md        full parameters, the write pattern, and the missing tools
 skills/
-  foundations/  conversations/  signals/
-evals/                      4 cases per skill: golden, silence, graceful-fail, conformance
+  conversations/  foundations/     the nine installed skills
+  later/                           parked skills, not installed
+evals/                      5 cases per skill; evals/later/ mirrors skills/later/
+.out-of-scope/              designs we considered and rejected, with reasons
 scripts/
   check-skills.sh           conformance check — run before committing
   link-skills.sh            dev-only: symlink skills into your local agent
@@ -184,20 +230,29 @@ scripts/
 
 ## Contributing
 
-Read [references/library-conventions.md](./references/library-conventions.md) first — eight rules,
-and a skill that breaks one is a bug rather than a variation. Then
-[CLAUDE.md](./CLAUDE.md) for how to add a skill and what the checker enforces.
+Read [references/library-conventions.md](./references/library-conventions.md) first — a skill
+that breaks one of its rules is a bug rather than a variation. Then [CLAUDE.md](./CLAUDE.md) for
+how to add a skill and what the checker enforces. Ideas already considered and declined are in
+[.out-of-scope/](./.out-of-scope); deferred ones live in
+[TF-1599](https://linear.app/topicflow/issue/TF-1599).
+
+## Versioning
+
+The canonical library version is kept in [VERSION](./VERSION). It follows Semantic Versioning,
+matches the Claude plugin manifest, and is checked by `scripts/check-version.sh`. Release notes
+live in [CHANGELOG.md](./CHANGELOG.md); publish a matching Git tag such as `v0.1.0` for each
+release.
 
 ## Status
 
-Version 0.1.0. The library is complete as method; four Topicflow tools it wants do not exist yet,
-and every skill degrades explicitly without them.
+Version 0.1.0 — nine installed skills: five core workflows that work from either chair, a guided
+direct-report interview, durable private context, and two manager-facing entry points. The focused
+workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
+skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
 
-The two that matter most — `save_private_note` and AI-memory access — are in dev in
-[TF-1595](https://linear.app/topicflow/issue/TF-1595). Until that ships, "remember this about
-Tony" ends with the agent handing you the sentence to keep rather than filing it, and the
-per-person ping cooldowns in the signal skills cannot be enforced across runs, so those skills
-deliberately stay quieter than their thresholds allow. Full list, with the fallback each skill
-uses today: [references/topicflow-tools.md](./references/topicflow-tools.md).
+The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)) ships the
+dependencies that mattered most: private-note read, create, and delete, plus the recognition
+read. The skills keep their fallbacks for deployments that predate it. Full list, with the
+fallback each one uses: [references/topicflow-tools.md](./references/topicflow-tools.md).
 
 MIT licensed. Use them, fork them, make them yours.

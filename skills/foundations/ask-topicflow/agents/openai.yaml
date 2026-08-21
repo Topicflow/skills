@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ask Topicflow"
+  short_description: "Which skill, how it runs, what it can see"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Create Goal"
+  short_description: "A goal with a measurable outcome, owner first"
