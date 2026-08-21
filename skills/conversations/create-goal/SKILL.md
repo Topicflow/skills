@@ -22,6 +22,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
 - **Every key result has a number or an unambiguous done-state** (P11). A goal with no measure is
   not created — sharpen it first or do not send it.
 - **Every quantitative key result has its real scale.** Set the current baseline and target in the

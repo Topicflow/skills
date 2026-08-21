@@ -1,7 +1,6 @@
 ---
 name: find-management-opportunities
-description: Find the few highest-value next actions to better support your direct reports.
-disable-model-invocation: true
+description: Find the few highest-value next actions to better support your direct reports. Use when a manager explicitly asks for this review or selects it through ask-topicflow.
 ---
 
 # Find management opportunities
@@ -11,9 +10,10 @@ reports most right now?" It looks across the people the manager names, finds evi
 opportunities in coaching, relationship, recognition, feedback, goals, and 1-on-1s, then gives
 the top few actions. It is not a performance ranking, a status digest, or an automatic team scan.
 
-This skill is user-invoked (`/find-management-opportunities`). It serves *is a good coach*, *cares
-about success and well-being*, and *is productive and results-oriented* (P17). It applies P1-P4,
-P8-P16 as relevant to each opportunity. Rules:
+This skill starts when a manager explicitly requests it (`/find-management-opportunities`) or
+selects it through `ask-topicflow`. It serves *is a good coach*, *cares about success and
+well-being*, and *is productive and results-oriented* (P17). It applies P1-P4, P8-P16 as
+relevant to each opportunity. Rules:
 [management-rules.md](../../../references/management-rules.md).
 
 ## When to use
@@ -26,6 +26,7 @@ P8-P16 as relevant to each opportunity. Rules:
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **Scope is named people, not an inferred org chart.** Ask the manager to confirm the direct
   reports in scope once. Never call a partial list "the team."
 - **Find opportunities, not scores.** Never compare, rank, or label people. An opportunity is an
@@ -114,8 +115,7 @@ offered for recognition. Unknown private context leads only to an offer to refre
 
 ## Gate
 
-Not applicable — user-invoked. This is a deliberate manager review, not a routine that should
-interrupt people.
+Not applicable — this is an explicit manager review, not a routine that should interrupt people.
 
 Thresholds (tunable): `max_opportunities: 3`, `work_lookback_days: 14`,
 `goal_checkin_stale_weeks: 6`, `feedback_timeliness_days: 14`.

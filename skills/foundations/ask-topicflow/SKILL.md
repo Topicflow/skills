@@ -12,7 +12,8 @@ thread and the management guidance to give a clear answer, then offers the one f
 can turn that answer into a draft or action.
 
 This skill is user-invoked (`/ask-topicflow`). It can review and advise on the current thread,
-but it does not secretly start another skill or write anything.
+but it starts another skill only after the manager explicitly selects it. It does not write
+anything itself.
 
 Serves *communicates well* and *is a good coach* (P17). It applies the relevant rules before
 giving advice. Rules: [management-rules.md](../../../references/management-rules.md).
@@ -27,13 +28,15 @@ giving advice. Rules: [management-rules.md](../../../references/management-rules
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **Use the thread the user gave you.** A review points to the specific sentence, choice, or
   missing question that matters. Do not answer a live conversation as a generic lecture.
 - **Answer from the references.** Give the plain-language practice and one concrete next move.
   Name P-rules only if the user asks for the source; rule numbers are not a user interface.
-- **Advise, then ask.** Name the one focused skill that fits and say why. Ask whether to start
-  its concrete action now; do not tell the manager to type or run another command. Do not draft,
-  send, or write on behalf of that skill until the manager says yes.
+- **Advise, ask, then launch.** Name the one focused skill that fits and say why. Ask whether to
+  start its concrete action now; do not tell the manager to type or run another command. The
+  manager selecting it is explicit consent: invoke that installed skill on the next turn. Do not
+  draft, send, or write on behalf of it before they choose it.
 - **Be plain about the limits.** The recognition read and the private-note tools ship in the
   2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
   [TF-1596](https://linear.app/topicflow/issue/TF-1596)); deployments that predate it lack both,
@@ -63,7 +66,9 @@ first response to a report's problem becomes one open question before any soluti
 - Step back and choose the top actions across direct reports → `find-management-opportunities`
 
 Name one. When two could fit, say the one-line difference and let the manager choose through the
-portable choice controls. Never make the manager translate the recommendation into a command.
+portable choice controls. The map is a guide, not a boundary: any other installed skill can be
+started after the manager explicitly selects it. Never make the manager translate the
+recommendation into a command.
 
 **4. Answer a practice question.** Find the relevant rules, answer in plain language with one
 concrete example, and offer the skill that applies it. "How do I run a good 1-on-1?" becomes the
@@ -105,6 +110,7 @@ Nothing. This skill learns about the library, not about people.
 
 The answer in a few short lines, then one clear choice. Ask whether to start the recommended
 action now through the [portable choice controls](../../../references/interaction-controls.md).
+On selection, invoke that installed skill on the next turn; do not ask for a typed slash command.
 
 ## Worked example
 
@@ -120,7 +126,8 @@ the right move?
 > A direct report interview can clarify what Sam is new to and what support he wants. It will turn
 > that into a manager commitment and a 1-on-1 topic.
 >
-> Offer a choice: start that interview about Sam now, or not now.
+> Use the portable choice controls to offer: start that interview about Sam now, or not now. If
+> the manager chooses it, start the interview in the next turn.
 
 Note what the skill did not do: it did not write the next 1-on-1 topic or invent a plan for Sam.
 Those belong to the focused skill, with its own checks.

@@ -50,8 +50,10 @@ npx skills@latest add Topicflow/skills
 `agents/openai.yaml`, so the same directories install unchanged. Nothing in this library is
 model-specific.
 
-**Then just talk.** There is no setup step: Topicflow is the only source, so there is nothing to
-configure. Not sure what is here? Type `/ask-topicflow`.
+**Connect Topicflow, then talk.** Add `https://app.topicflow.com/mcp` to your agent's MCP server
+settings and complete the Topicflow sign-in/authorization. If it is not connected, any skill will
+offer these setup steps instead of producing a partial result. Not sure what is here? Type
+`/ask-topicflow`.
 
 Three things worth knowing before you start, so nothing is a surprise:
 
@@ -83,10 +85,10 @@ Three things worth knowing before you start, so nothing is a surprise:
 - **[goal-checkin](./skills/conversations/goal-checkin/SKILL.md)** — progress in the owner's
   voice: what moved, the numbers, whether the status still tells the truth. Never posted in
   someone else's name.
-- **[direct-report-interview](./skills/conversations/direct-report-interview/SKILL.md)** —
-  user-invoked (`/direct-report-interview`). A guided interview helps a manager understand one
-  direct report, fill the important human gaps, and turn them into concrete support. A new report
-  gets day-7/30/60 topics too.
+- **[direct-report-interview](./skills/conversations/direct-report-interview/SKILL.md)** — a
+  guided interview with the manager about one direct report, started directly or after selecting
+  it in Ask Topicflow. It fills the important human gaps and turns them into concrete support. A
+  new report gets day-7/30/60 topics too.
 
 ### [Foundations](./skills/foundations) — what the others lean on
 
@@ -99,8 +101,8 @@ Three things worth knowing before you start, so nothing is a surprise:
   (`/ask-topicflow`). Ask a management question, review the current thread, choose the right
   focused skill, or check what the account can see.
 - **[find-management-opportunities](./skills/foundations/find-management-opportunities/SKILL.md)**
-  — user-invoked (`/find-management-opportunities`). A deliberate manager review of the named
-  direct reports: the few next actions that would help them most.
+  — a deliberate manager review of the named direct reports, started directly or after selecting
+  it in Ask Topicflow: the few next actions that would help them most.
 
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
@@ -121,9 +123,9 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "update my goal — the migration is at 60%"
 > "set my goals for Q4"
 
-Three skills are user-invoked because they should start only when the manager asks: ask a question
-or review the current thread with `/ask-topicflow`; run a guided interview about one person with
-`/direct-report-interview`; step back across named reports with
+`/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
+selects it. The two deliberate manager workflows can also be started directly: run a guided
+interview about one person with `/direct-report-interview`; step back across named reports with
 `/find-management-opportunities`.
 
 When a skill needs a choice, Claude Code uses its native picker when it is available. Everywhere

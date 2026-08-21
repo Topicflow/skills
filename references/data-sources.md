@@ -7,6 +7,13 @@ one: it is the difference between "I don't know" and a false statement about a r
 Full parameters, the write pattern, and every known gotcha: [topicflow-tools.md](topicflow-tools.md).
 A skill names these calls directly — one hop, traceable, no indirection.
 
+## Topicflow connection is required
+
+Every installed skill requires the Topicflow MCP. Before doing any work, check that at least one
+Topicflow tool is exposed. If none is available, stop and follow the connection prompt in
+[topicflow-tools.md](topicflow-tools.md). Do not offer a local-only or partial version of the
+skill: the person needs to connect Topicflow first.
+
 **The reads default to the current user.** That makes the direct report's chair the simple path —
 their own meetings, goals, and work need no IDs at all. A manager looking at a report passes the
 report's ID, and the sections below say where that matters.

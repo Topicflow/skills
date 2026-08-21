@@ -94,6 +94,8 @@ quiet on its own second run) move to `evals/later/` with their skills, and come 
 
 Beyond the P-rules, these apply to every case and any of them failing fails the case:
 
+- If no Topicflow MCP tool is exposed, the skill stops and uses the portable choice controls to
+  offer Topicflow setup; it never produces a partial local-only workflow.
 - No markdown tables in output (convention 5).
 - Third person about people, plain text, short sentences (convention 5).
 - finding → why it matters → action; never raw data, never a dead end (convention 7).

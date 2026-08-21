@@ -25,6 +25,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
 - Name the **specific contribution** and **why it mattered**. Generic praise is not sent (P8).
 - Close to the event. Past ~3 weeks, recognition reads as an audit finding — say so and offer
   to mark it in person instead.

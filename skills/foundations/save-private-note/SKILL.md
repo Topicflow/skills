@@ -27,6 +27,7 @@ task-relevant maturity). Rules: [management-rules.md](../../../references/manage
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - One fact, one sentence, third person, dated.
 - Never save without being sure it is durable. Durable means still true and still useful in
   three months.
@@ -74,7 +75,8 @@ Then return to whatever the manager was doing.
 ([TF-1595](https://linear.app/topicflow/issue/TF-1595)). The write is `save_private_note`; take
 the read and delete names from the live tool list — never guess a name. There is no AI-memory
 layer: what the notes hold is all this skill knows. Withheld conclusions:
-[data-sources.md](../../../references/data-sources.md).
+[data-sources.md](../../../references/data-sources.md). Connection and write details:
+[topicflow-tools.md](../../../references/topicflow-tools.md).
 
 **Where the update has not reached the deployment, there is only one option.** Produce the
 sentence in third person and hand it to the manager to keep. Do not look for somewhere else to

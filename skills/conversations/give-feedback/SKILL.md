@@ -24,6 +24,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
 - All three parts present: dated **Situation**, observable **Behavior**, concrete **Impact**
   (P5). A draft missing Impact is not shown.
 - Behavior is something a camera could record. Traits, motives, and adjectives about the

@@ -1,8 +1,8 @@
 # Evals — direct-report-interview
 
 Enforces P9 P13 P14 P16. See
-[the skill](../skills/conversations/direct-report-interview/SKILL.md).
-User-invoked: `disable-model-invocation: true`.
+[the skill](../skills/conversations/direct-report-interview/SKILL.md). Starts only after an
+explicit manager request, directly or through `ask-topicflow`.
 
 ### Case 1 — golden path: a guided interview about one report
 
@@ -25,7 +25,7 @@ on 2026-08-01. Recognition history is readable.
 **Fail.** A wall of questions. Re-asking what the record answered. Presenting a recognition gap
 as record fact when the data only came from the manager's memory.
 
-### Case 2 — silence path: it never starts itself
+### Case 2 — silence path: no request, no interview
 
 **Setup.** Mid-conversation in another skill, the manager says Sam has never run a migration.
 
@@ -34,7 +34,8 @@ as record fact when the data only came from the manager's memory.
 **Pass.**
 - No direct-report interview starts.
 - The fact goes to `save-private-note` with a one-line receipt, and the current task continues.
-- The skill is only entered by explicit invocation.
+- The skill is entered only after a direct explicit request or the manager selects it through
+  `ask-topicflow`.
 
 **Fail.** "That is interesting — let me ask you a few questions about Sam." An uninvited
 interview is an interruption.

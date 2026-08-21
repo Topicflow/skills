@@ -1,7 +1,6 @@
 ---
 name: direct-report-interview
-description: A guided interview with a manager about one direct report, to understand and support them better.
-disable-model-invocation: true
+description: Interview a manager about one direct report to understand and support them better. Use when the manager explicitly asks or selects it through ask-topicflow.
 ---
 
 # Direct report interview
@@ -11,9 +10,10 @@ report better. It checks what Topicflow already knows, asks the manager only for
 that is missing, and ends with a few concrete next steps. The manager is the interviewee; the
 report is never interviewed by this skill. It is not a performance assessment.
 
-This skill is user-invoked (`/direct-report-interview`). It serves *cares about success and
-well-being* and *supports career development* (P17). It enforces P9 (preferences), P13
-(aspirations), P14 (a manager-owned action), and P16 (maturity by task).
+This skill starts when a manager explicitly requests it (`/direct-report-interview`) or selects it
+through `ask-topicflow`. It serves *cares about success and well-being* and *supports career
+development* (P17). It enforces P9 (preferences), P13 (aspirations), P14 (a manager-owned
+action), and P16 (maturity by task).
 Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## When to use
@@ -27,6 +27,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
 - **State the goal first.** Say this is a short refresh about one direct report, ending in a plan
   to support them better. Never make the manager guess why questions are being asked.
 - **Look up first, ask second.** Do not ask for goals, recent topics, or feedback that the record
@@ -101,7 +102,7 @@ write means facts are handed back, never placed in a shared meeting note.
 
 ## Gate
 
-Not applicable — this is a user-invoked conversation with a manager present.
+Not applicable — this is an explicit conversation with a manager present.
 
 Thresholds (tunable): `max_questions_before_next_step: 3`, `refresh_interval_weeks: 6`,
 `onboarding_checkins_days: [7, 30, 60]`.

@@ -148,6 +148,12 @@ while IFS= read -r skill_md; do
   if grep -q '^## Sources' "$skill_md" && ! grep -q 'data-sources.md' "$skill_md"; then
     err "Sources does not reference data-sources.md (name the calls and what they withhold)"
   fi
+  if grep -q '^## Sources' "$skill_md" && ! grep -q 'topicflow-tools.md' "$skill_md"; then
+    err "Sources does not reference topicflow-tools.md (include the MCP connection contract)"
+  fi
+  if ! grep -q '\*\*Topicflow first\.\*\*' "$skill_md"; then
+    err "does not require Topicflow MCP setup before work"
+  fi
 
   tool_names='notion-[a-z-]+|slack_[a-z_]+|list_meetings|list_recognitions|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_my_review_tasks|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
   method_body="$(awk '/^## Method/{f=1;next} /^## /{f=0} f' "$skill_md")"

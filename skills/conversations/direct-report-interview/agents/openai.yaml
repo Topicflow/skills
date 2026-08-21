@@ -2,4 +2,4 @@ interface:
   display_name: "Direct Report Interview"
   short_description: "Interview a manager about one report"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

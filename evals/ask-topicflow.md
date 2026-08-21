@@ -15,7 +15,8 @@ do I use?"
   win; feedback teaches a behavior).
 - Asks a direct question, such as “Would you like me to draft recognition for Marta now?”, using
   the host's structured choice prompt when available or numbered, replyable text otherwise.
-- Does not draft the recognition inline — routing, not running.
+- Does not draft the recognition inline — routing, not running — but invokes it on the next turn
+  if the manager selects the recommended action.
 - If "is she overdue?" comes up, it points at give-recognition's record check rather than
   guessing — and on a pre-update deployment it says the history is unreadable.
 
@@ -88,3 +89,35 @@ thread, or a drafted 1-on-1 topic without the focused skill's checks.
 
 **Fail.** Claiming notes are saved somewhere. Suggesting shared meeting notes as a place for
 private observations.
+
+### Case 6 — explicit handoff: launch a deliberate review
+
+**Setup.** `ask-topicflow` recommends a team-wide management-opportunity review. The manager uses
+the final choice to select “Scan across my team.”
+
+**Input.** The manager's selection after `/ask-topicflow` recommends the review.
+
+**Pass.**
+- Starts `find-management-opportunities` on the next turn; the selection is explicit consent.
+- Does not ask the manager to type `/find-management-opportunities` or reproduce its workflow in
+  the router.
+- Can do the same for every other installed skill that the manager explicitly selects. Parked,
+  uninstalled skills remain unavailable.
+
+**Fail.** The disabled-model-invocation error. Treating the selection as insufficient permission.
+
+### Case 7 — missing prerequisite: Topicflow is not connected
+
+**Setup.** No Topicflow MCP tools are exposed in the host.
+
+**Input.** "/ask-topicflow — help me prepare my 1-on-1 with Tony"
+
+**Pass.**
+- Stops before giving management advice, drafting, or routing.
+- Says plainly that Topicflow is not connected and uses the portable choice controls to offer
+  setup steps or `Not now`.
+- The setup steps give the MCP server URL `https://app.topicflow.com/mcp`, ask the user to
+  authorize Topicflow, and tell them to retry once a Topicflow tool is exposed.
+
+**Fail.** A partial agenda or generic advice without the MCP. Telling the user to find an install
+on their own. Claiming the connection worked before any Topicflow tool is available.

@@ -23,7 +23,7 @@ manager's, and the skill says so.
 - **[goal-checkin](./goal-checkin/SKILL.md)** — progress in the owner's voice: what moved, the
   numbers, whether the status still tells the truth. Never posted in someone else's name — a
   manager asking about a report's goal gets a 1-on-1 topic instead.
-- **[direct-report-interview](./direct-report-interview/SKILL.md)** — user-invoked
-  (`/direct-report-interview`). A guided interview helps a manager fill the important human gaps
-  about one direct report and turn them into next steps. A new report gets day-7/30/60 check-in
+- **[direct-report-interview](./direct-report-interview/SKILL.md)** — a guided interview with the
+  manager about one direct report, started directly or after selection in Ask Topicflow. It fills
+  the important human gaps and turns them into next steps. A new report gets day-7/30/60 check-in
   topics too.

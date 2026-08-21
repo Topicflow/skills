@@ -6,6 +6,22 @@ file is where tool detail lives so a rename touches one file.
 Tool names below are unprefixed. In an MCP client they appear namespaced (for example
 `mcp__claude_ai_Topicflow__list_meetings`). Match on the suffix.
 
+## Connect Topicflow before running a skill
+
+If no Topicflow tool is exposed, stop before drafting, advising, or writing. Say: “Topicflow is
+not connected, so I cannot run this skill yet.” Then use the
+[portable choice controls](interaction-controls.md) to offer **Show setup steps** and **Not now**.
+
+For setup, tell the user to add this MCP server URL to their agent client, then complete the
+Topicflow sign-in/authorization it opens:
+
+```text
+https://app.topicflow.com/mcp
+```
+
+After that, ask them to retry the same skill. Do not invent a no-Topicflow fallback or claim that
+the server is connected until a Topicflow tool is actually exposed.
+
 ## The write pattern — preview, then confirm
 
 Every write tool is a **preview**. It does not change anything. It returns a draft plus an

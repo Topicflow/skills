@@ -23,8 +23,14 @@ And two **invocation types**: most skills are *model-invoked* — the agent pick
 normal conversation, so their descriptions carry trigger phrasings. A few are *user-invoked*
 (`disable-model-invocation: true` in frontmatter, `allow_implicit_invocation: false` in
 `agents/openai.yaml`): the user types the name, so their descriptions are one human-facing
-line with no trigger list. User-invoked is for skills that would be an interruption if they
-started themselves — an interview, a guided tour.
+line with no trigger list. Reserve that type for an entry point that must never begin from normal
+conversation; deliberate workflows instead use an explicit-request trigger so the router can
+start them after the manager chooses them.
+
+An explicit selection through an installed router is also a manager request. A skill that must be
+startable from `ask-topicflow` cannot use `disable-model-invocation: true`; give it a `Use when`
+description that requires a direct request or router selection, and guard against casual
+invocation in its Method and evals.
 
 ## The eight rules
 
@@ -41,6 +47,10 @@ body budget cannot hold reference material — linked from the body, loaded on d
 written so it reads correctly whatever tool serves it. *Sources* second — **the actual Topicflow
 calls the skill makes**, named directly, plus the conclusions it withholds when a call fails or
 returns empty. One hop, traceable: you read the skill and you know what it does.
+
+**Topicflow is a prerequisite, not an optional source.** When no Topicflow MCP tool is available,
+the skill stops and prompts the person to connect it through the portable setup flow in
+`topicflow-tools.md`. It does not produce a local-only, simulated, or partial workflow.
 
 The eight kinds of data, each with its call and its withheld conclusions:
 [data-sources.md](data-sources.md). Full parameters and gotchas:

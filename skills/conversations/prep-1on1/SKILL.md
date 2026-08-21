@@ -13,7 +13,6 @@ that agenda — 3-5 questions across three lanes — from either chair.
 Serves *is a good coach* and *communicates well* (P17). Enforces P1 P2 P3 P4.
 Rules: [management-rules.md](../../../references/management-rules.md).
 Question bank, per lane and chair, with sources: [questions.md](questions.md).
-
 ## When to use
 
 - The manager asks to prep, or asks what to cover with someone on their team.
@@ -23,6 +22,7 @@ Question bank, per lane and chair, with sources: [questions.md](questions.md).
 
 ## Non-negotiables
 
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
 - **Three lanes, every agenda.** *The work* — blockers and decisions. *The person* — how they are
   actually doing. *The direction* — growth, career, feedback in both directions. The work lane
   never takes more than half the topics; the person and direction lanes get at least one topic

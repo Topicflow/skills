@@ -1,8 +1,8 @@
 # Evals — find-management-opportunities
 
 Enforces P1-P4 P8-P16 as relevant. See
-[the skill](../skills/foundations/find-management-opportunities/SKILL.md). User-invoked:
-`disable-model-invocation: true`.
+[the skill](../skills/foundations/find-management-opportunities/SKILL.md). Starts only after an
+explicit manager request, directly or through `ask-topicflow`.
 
 ### Case 1 — golden path: three useful actions across a named team
 

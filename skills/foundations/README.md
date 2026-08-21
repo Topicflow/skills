@@ -9,9 +9,9 @@ The entry points and durable context the focused skills lean on.
   the sentence back and never uses shared 1-on-1 notes as a substitute.
 - **[ask-topicflow](./ask-topicflow/SKILL.md)** — user-invoked (`/ask-topicflow`). Ask a management
   question, review the current thread, choose a focused skill, or check what the account can see.
-- **[find-management-opportunities](./find-management-opportunities/SKILL.md)** — user-invoked
-  (`/find-management-opportunities`). A manager's deliberate team review: the few next actions
-  that would most help the direct reports named in the review.
+- **[find-management-opportunities](./find-management-opportunities/SKILL.md)** — a deliberate
+  manager review of the named reports, started directly or after selection in Ask Topicflow: the
+  few next actions that would help them most.
 
 `save-private-note` can fire while other work is happening. The other two are intentional starting
 points: ask a question in the moment, or step back and decide where to focus.
