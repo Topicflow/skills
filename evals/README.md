@@ -75,10 +75,10 @@ later, cooldowns across runs, or a skill handing the manager the wrong thing at 
 Those need a walkthrough in order, in one session, on accumulating state:
 
 1. **Any skill → a later session.** The roster is asked, not looked up. Does a second session know
-   it, or ask again? Today it asks again — that is the cost of no durable store (TF-1595).
+   it, or ask again? Today it asks again — that is the cost of no durable store.
 2. **`save-private-note` → any later skill.** Mention a preference on day 1; ask for recognition on day 3.
-   Broken today on Topicflow alone (TF-1595) — each half passes on its own, which is why no per-skill
-   case catches it.
+   Broken today on Topicflow alone, before the private-note tools — each half passes on its own,
+   which is why no per-skill case catches it.
 3. **`prep-1on1` → the agenda → the next `prep-1on1`.** Does an open action item come back?
 4. **`direct-report-interview` (new report) → day 30 arriving.** Does anything surface the dated check-in
    topic, or did it land on a meeting that never got scheduled?

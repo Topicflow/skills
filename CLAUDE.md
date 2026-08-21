@@ -113,11 +113,10 @@ the Method is good management practice. That is what review is for.
 
 ## Common mistakes
 
-- **Inventing tools.** The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595))
-  ships private-note read/create/delete and the recognition read — take exact tool names from the
-  live tool list, never guess one. **There is no AI-memory access and none is planned: no skill or
-  doc refers to it.** Keep the fallback ladders rather than deleting them: self-hosted and older
-  deployments still hit them.
+- **Inventing tools.** The 2026-08 MCP update ships private-note read/create/delete and the
+  recognition read — take exact tool names from the live tool list, never guess one. **There is no
+  AI-memory access and none is planned: no skill or doc refers to it.** Keep the fallback ladders
+  rather than deleting them: self-hosted and older deployments still hit them.
 - **Letting a missing source become a negative finding.** "No recognition found" and "recognition
   history unreadable" are different claims, and conflating them produces false alarms about real
   people.

@@ -114,11 +114,9 @@ against a live response.
 
 ## 7. Recognition
 
-Write `create_recognition(title, recipient_id)` — `title` is the message, 2-4 sentences, plain
-text. Read `list_recognitions` — **shipping in the 2026-08 MCP update**
-([TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
-[TF-1595](https://linear.app/topicflow/issue/TF-1595)); deployments that predate it do not have
-the read.
+Write `create_recognition(title, recipient_id)` — `title` is the message, 2-4 sentences, plain text.
+Read `list_recognitions` — **shipping in the 2026-08 MCP update**; deployments that predate it do
+not have the read.
 
 *Withheld wherever the read is absent, errors, or returns an empty that cannot be verified as
 real history — and this is the strictest rule in the library:* **no drought finding and no
@@ -132,11 +130,10 @@ there is history before measuring a gap in it. With the read live, `recognition-
 
 ## 8. Private notes — what the manager knows and no system holds
 
-**Read, create, and delete ship in the 2026-08 MCP update**
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)). The write is `save_private_note`; take
-the read and delete names from the live tool list — never guess a tool name. There is **no
-AI-memory access**, and none is planned: what a skill knows about a person is what the notes
-hold, nothing more. Deployments that predate the update have none of the three.
+**Read, create, and delete ship in the 2026-08 MCP update.** The write is `save_private_note`; take
+the read and delete names from the live tool list — never guess a tool name. There is **no AI-memory
+access**, and none is planned: what a skill knows about a person is what the notes hold, nothing
+more. Deployments that predate the update have none of the three.
 
 Private notes belong to the manager alone. **1-on-1 meeting notes are not a substitute** — those are
 shared with the other participant, so a manager-private observation put there is an observation the

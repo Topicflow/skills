@@ -57,12 +57,10 @@ offer these setup steps instead of producing a partial result. Not sure what is 
 
 Three things worth knowing before you start, so nothing is a surprise:
 
-- **Recognition and private notes just gained their tools.** The 2026-08 Topicflow MCP update
-  ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
-  [TF-1596](https://linear.app/topicflow/issue/TF-1596)) ships the recognition read and
-  private-note read, create, and delete. On a workspace that predates the update, the skills fall
-  back honestly: nothing is ever claimed about recognition history, and "remember that about
-  Tony" ends with the sentence handed to you to keep.
+- **Recognition and private notes just gained their tools.** The 2026-08 Topicflow MCP update ships
+  the recognition read and private-note read, create, and delete. On a workspace that predates the
+  update, the skills fall back honestly: nothing is ever claimed about recognition history, and
+  "remember that about Tony" ends with the sentence handed to you to keep.
 - **1-on-1 meeting notes are never used as a private store.** They are shared with the other
   person, whatever the deployment — a private observation does not belong there.
 - **A bare agent still works.** `give-feedback`, `give-recognition`, and the drafting half of
@@ -92,11 +90,9 @@ Three things worth knowing before you start, so nothing is a surprise:
 
 ### [Foundations](./skills/foundations) — what the others lean on
 
-- **[save-private-note](./skills/foundations/save-private-note/SKILL.md)** — catch the durable
-  fact the moment it is said ("she hates public praise") and restate it in one third-person
-  sentence. Filing needs the 2026-08 MCP update
-  ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); on older workspaces it hands you the
-  sentence.
+- **[save-private-note](./skills/foundations/save-private-note/SKILL.md)** — catch the durable fact
+  the moment it is said ("she hates public praise") and restate it in one third-person sentence.
+  Filing needs the 2026-08 MCP update; on older workspaces it hands you the sentence.
 - **[ask-topicflow](./skills/foundations/ask-topicflow/SKILL.md)** — user-invoked
   (`/ask-topicflow`). Ask a management question, review the current thread, choose the right
   focused skill, or check what the account can see.
@@ -107,11 +103,10 @@ Three things worth knowing before you start, so nothing is a surprise:
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
 Seven more skills — team detectors (stuck work, relationship drift, recognition equity, a weekly
-brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. The
-main thing they wait on is a scheduler for routine runs; the recognition read they also needed
-ships in the 2026-08 MCP update.
-[skills/later/README.md](./skills/later/README.md) says what unblocks each one;
-the backlog lives in [TF-1599](https://linear.app/topicflow/issue/TF-1599).
+brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. The main
+thing they wait on is a scheduler for routine runs; the recognition read they also needed ships in
+the 2026-08 MCP update. [skills/later/README.md](./skills/later/README.md) says what unblocks each
+one; the wider backlog is tracked internally.
 
 ## How to use them
 
@@ -230,11 +225,10 @@ scripts/
 
 ## Contributing
 
-Read [references/library-conventions.md](./references/library-conventions.md) first — a skill
-that breaks one of its rules is a bug rather than a variation. Then [CLAUDE.md](./CLAUDE.md) for
-how to add a skill and what the checker enforces. Ideas already considered and declined are in
-[.out-of-scope/](./.out-of-scope); deferred ones live in
-[TF-1599](https://linear.app/topicflow/issue/TF-1599).
+Read [references/library-conventions.md](./references/library-conventions.md) first — a skill that
+breaks one of its rules is a bug rather than a variation. Then [CLAUDE.md](./CLAUDE.md) for how to
+add a skill and what the checker enforces. Ideas already considered and declined are in
+[.out-of-scope/](./.out-of-scope); deferred ones are tracked internally.
 
 ## Versioning
 
@@ -250,9 +244,9 @@ direct-report interview, durable private context, and two manager-facing entry p
 workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
 skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
 
-The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)) ships the
-dependencies that mattered most: private-note read, create, and delete, plus the recognition
-read. The skills keep their fallbacks for deployments that predate it. Full list, with the
-fallback each one uses: [references/topicflow-tools.md](./references/topicflow-tools.md).
+The 2026-08 MCP update ships the dependencies that mattered most: private-note read, create, and
+delete, plus the recognition read. The skills keep their fallbacks for deployments that predate it.
+Full list, with the fallback each one uses:
+[references/topicflow-tools.md](./references/topicflow-tools.md).
 
 MIT licensed. Use them, fork them, make them yours.

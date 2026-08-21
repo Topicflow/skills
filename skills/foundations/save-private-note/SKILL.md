@@ -71,10 +71,9 @@ Then return to whatever the manager was doing.
 
 ## Sources
 
-**Private notes — read, create, and delete ship in the 2026-08 MCP update**
-([TF-1595](https://linear.app/topicflow/issue/TF-1595)). The write is `save_private_note`; take
-the read and delete names from the live tool list — never guess a name. There is no AI-memory
-layer: what the notes hold is all this skill knows. Withheld conclusions:
+**Private notes — read, create, and delete ship in the 2026-08 MCP update.** The write is
+`save_private_note`; take the read and delete names from the live tool list — never guess a name.
+There is no AI-memory layer: what the notes hold is all this skill knows. Withheld conclusions:
 [data-sources.md](../../../references/data-sources.md). Connection and write details:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
 

@@ -37,10 +37,9 @@ giving advice. Rules: [management-rules.md](../../../references/management-rules
   start its concrete action now; do not tell the manager to type or run another command. The
   manager selecting it is explicit consent: invoke that installed skill on the next turn. Do not
   draft, send, or write on behalf of it before they choose it.
-- **Be plain about the limits.** The recognition read and the private-note tools ship in the
-  2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
-  [TF-1596](https://linear.app/topicflow/issue/TF-1596)); deployments that predate it lack both,
-  and no deployment has AI-memory access. Name what applies, without softening.
+- **Be plain about the limits.** The recognition read and the private-note tools ship in the 2026-08
+  MCP update; deployments that predate it lack both, and no deployment has AI-memory access. Name
+  what applies, without softening.
 - **No plumbing.** Capabilities in plain words — never call names, parameters, or file paths.
 - One answer, one action. Not a brochure.
 

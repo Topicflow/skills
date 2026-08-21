@@ -60,12 +60,12 @@ The eight kinds of data, each with its call and its withheld conclusions:
 practice does not change, only the call. Keep tool names in Sources so swapping one touches one
 section.
 
-**3. Write-back to private notes.** Anything durable learned during a run — from the manager's
-words or from a tool — gets kept. This holds even when the run ends in silence: a finding
-nobody was pinged about is still worth keeping for review time. The private-note tools ship in the
-2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); where a deployment
-predates it, that means producing the note text and saying plainly it was not filed. **Meeting notes are not a fallback** — they are
-shared with the report. See the `save-private-note` skill.
+**3. Write-back to private notes.** Anything durable learned during a run — from the manager's words
+or from a tool — gets kept. This holds even when the run ends in silence: a finding nobody was
+pinged about is still worth keeping for review time. The private-note tools ship in the 2026-08 MCP
+update; where a deployment predates it, that means producing the note text and saying plainly it was
+not filed. **Meeting notes are not a fallback** — they are shared with the report. See the
+`save-private-note` skill.
 
 **4. Confirm once.** Every Topicflow write tool is a two-step: the write tool returns a
 *preview* plus a `pending_id`, and `confirm_creation(pending_id)` commits it. Show the

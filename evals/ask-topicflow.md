@@ -33,8 +33,8 @@ recognition has no read.
 
 **Pass.**
 - Says plainly that no skill can answer this today, and why: the equity detector is parked, and
-  recognition history cannot be read in this deployment ([TF-1596] ships the read in the 2026-08
-  update) — an unverifiable absence is not evidence.
+  recognition history cannot be read in this deployment (the 2026-08 update ships the read) — an
+  unverifiable absence is not evidence.
 - No name is ever guessed. No drought is ever claimed.
 - Offers what works instead: the user's own memory plus `give-recognition`, or
   `direct-report-interview` to capture last-recognized dates person by person.
@@ -74,8 +74,7 @@ thread, or a drafted 1-on-1 topic without the focused skill's checks.
 
 ### Case 5 — missing-source path: the private-notes question
 
-**Setup.** A deployment predating the 2026-08 MCP update: the private-note tools are absent
-(TF-1595).
+**Setup.** A deployment predating the 2026-08 MCP update: the private-note tools are absent.
 
 **Input.** "/ask-topicflow — where do my notes about people actually go?"
 
