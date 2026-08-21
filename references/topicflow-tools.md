@@ -49,6 +49,8 @@ per change, but one approval from the manager covers the batch they approved.
   returns topics, agendas, and notes** — this is where open action items and past topics
   live, and it is the substitute for a dedicated action-item tool. The payload is large:
   always pair it with a date filter and a small `limit`.
+  A lone topic titled **`New Topic`** with no notes is Topicflow's blank default, so treat it as
+  **no agenda**, not as a prepared topic or a topic with no follow-through.
   **`meeting_id` and `topic_id` for any write come from here.**
 - **`list_goals(owners?, contributors?, status?, visibility?, due_date_start?, due_date_end?, search_term?, limit?, order?)`**
   — returns **visible open goals**; defaults to the current user's own. Pass `owners:
@@ -97,7 +99,13 @@ per change, but one approval from the manager covers the batch they approved.
   also accepts a team name. Never set the recipient to the current user.
 - **`create_goal(title, scope, key_results[], owner_*?, due_date?, state?, visibility?)`** —
   `key_results` is required and must be measurable (P11). `owner_*` defaults to the current
-  user, so **pass the report's ID** when the goal is theirs.
+  user, so **pass the report's ID** when the goal is theirs. A correctly configured quantitative
+  KR needs a real start value, end value, unit, and direction; a goal with KRs needs the progress
+  type **Average Progress of Key Results & Aligned Goals**. Check the live tool schema before
+  creating: this currently documented signature exposes only `key_results[]` strings, so it
+  cannot set those fields. **Do not invent extra parameters, use `0/100` as a universal default,
+  or claim those settings were applied.** Hand the specified draft back for manual configuration
+  until the MCP exposes the needed fields.
 - **`edit_goal(goal_id, title?, status?, state?, visibility?, scope?, owner_*?, key_results[{op, id?, title?}]?)`**
   — `key_results` takes `op: "add" | "edit" | "remove"`. `state`: 0 draft, 1 open, 2 closed
   (closing sets the completion date). `owner_*` **replaces all owners** — be careful.

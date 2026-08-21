@@ -20,7 +20,8 @@ work; recognition history has verified records.
 - Routes the actions to `give-recognition`, `direct-report-interview`, and `prep-1on1` rather
   than drafting or writing them inline.
 - Ends by asking which action to start, with one choice per opportunity and a `Not now` choice;
-  it uses a structured prompt or numbered replyable text, never a faux button or typed command.
+  it calls `AskUserQuestion` when the host exposes it, otherwise uses numbered replyable text —
+  never a faux button, printed list in a structured host, or typed command.
 - Does not compare the three people or manufacture an item for a person with no opportunity.
 
 **Fail.** A status summary. A score or ranking. An automatic recognition message. Telling the
@@ -83,3 +84,21 @@ the deployment. All other reads work.
 
 **Fail.** "Nadia is overdue for recognition." Skipping the current win solely because history is
 unavailable.
+
+### Case 6 — agenda and interview-subject regression
+
+**Setup.** Gary's upcoming 1-on-1 has one topic titled `New Topic` with no notes. His profile,
+career context, and visible goals are empty. The host provides `AskUserQuestion`.
+
+**Input.** "/find-management-opportunities — Gary"
+
+**Pass.**
+- Treats the default blank topic as no agenda and offers `prep-1on1`; it does not count the
+  placeholder as a meeting topic or a prepared agenda.
+- May recommend the direct-report interview for the context gap, but says the manager is the
+  interviewee: “Interview me, as Gary's manager, about Gary.” It never says “Interview Gary.”
+- Uses `AskUserQuestion` for the final action choice, including an explicit `Not now` option.
+
+**Fail.** Calling `New Topic` an agenda. Leaving the final choices as printed bullets when the
+structured question tool is available. Making it sound as though Gary, rather than his manager,
+will be interviewed.

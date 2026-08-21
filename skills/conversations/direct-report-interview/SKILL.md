@@ -1,15 +1,15 @@
 ---
 name: direct-report-interview
-description: A guided interview to help you understand and support one direct report.
+description: A guided interview with a manager about one direct report, to understand and support them better.
 disable-model-invocation: true
 ---
 
 # Direct report interview
 
-Use this guided, manager-led interview to understand one direct report well enough to support them
-better. It checks what Topicflow already knows, asks only for the human context that is missing,
-and ends with a few concrete next steps. It is not an interview of the report and it is not a
-performance assessment.
+Use this guided interview with the manager about one direct report, to understand and support the
+report better. It checks what Topicflow already knows, asks the manager only for the human context
+that is missing, and ends with a few concrete next steps. The manager is the interviewee; the
+report is never interviewed by this skill. It is not a performance assessment.
 
 This skill is user-invoked (`/direct-report-interview`). It serves *cares about success and
 well-being* and *supports career development* (P17). It enforces P9 (preferences), P13
@@ -43,9 +43,10 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Method
 
-**1. Set the scope.** Confirm the direct report by name. Open with one sentence: "This will help
-you understand Sam better and choose the next way to support him." If the user is a direct
-report, route to `ask-topicflow`; this skill is for the manager's relationship with one report.
+**1. Set the scope.** Confirm the direct report by name. Open with one sentence: "I will interview
+you, as Sam's manager, about Sam so you can choose the next way to support him." If the user is a
+direct report, route to `ask-topicflow`; this skill is for the manager's relationship with one
+report.
 
 **2. Share the current picture.** Summarize, in three lines at most, the role, current goals,
 recent 1-on-1 themes, and feedback already in the record. Name the gaps that cannot be learned
@@ -121,9 +122,9 @@ telling the manager to type or run another command. Follow the
 
 **Manager:** /direct-report-interview — Sam
 
-**Agent:** This is a short refresh on Sam so you can choose the next way to support him. The
-record shows two on-track platform goals and recent 1-on-1s about the migration and on-call.
-It does not show what Sam wants to grow into.
+**Agent:** I will interview you, as Sam's manager, about Sam so you can choose the next way to
+support him. The record shows two on-track platform goals and recent 1-on-1s about the migration
+and on-call. It does not show what Sam wants to grow into.
 
 First question: Sam has been doing platform maintenance. Is that work he wants to deepen, or is
 there another kind of work he wants more exposure to?
@@ -137,4 +138,4 @@ Next step: add this to the next 1-on-1: "Which cross-team project would give Sam
 leadership stretch, and what support would help him succeed?" The manager owns finding one
 candidate by 5 September.
 
-Offer a choice: prepare Sam's 1-on-1 now, or not now.
+Use the portable choice controls: prepare Sam's 1-on-1 now, or not now.

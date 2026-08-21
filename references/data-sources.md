@@ -57,6 +57,10 @@ to add to notes.
 skill has a private reason for a topic, the topic goes on the agenda and the reason stays with the
 manager.
 
+**`New Topic` with no notes is the default blank topic, not an agenda item.** Treat a meeting that
+only has that placeholder as having no agenda: do not count it as a topic, an action item, or
+evidence that the manager prepared the meeting.
+
 **Nothing here schedules a meeting.** No calendar write exists. "Schedule a 1-on-1" is always a
 request to the manager; a skill can only add to a meeting that already exists.
 

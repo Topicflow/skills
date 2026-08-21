@@ -16,12 +16,19 @@ three open goals, one of which ("on-call handbook") ships next week.
   unambiguous done-state (P11).
 - The measure comes from a question to the user ("how would someone tell at the deadline?"), not
   from invention.
+- Each quantitative KR has its actual baseline, target, unit, and direction. For this case those
+  are `0 → 3 incidents`, `45 → 20 minutes`, and `0 → 3 reviews` — never generic `0/100`.
+- The preview sets **Average Progress of Key Results & Aligned Goals** because the goal has KRs.
+  If the live goal tool does not expose the start/end values and progress type, creation stops and
+  the output hands back the fully specified draft instead of creating a wrongly configured goal.
 - The owner is the user. Creation happens only after one approval.
 - Any owner or approval choice uses the host's structured prompt when available, or numbered,
   replyable text otherwise; bracketed pseudo-buttons never appear.
 
 **Fail.** Creating "get better at incident response" as-is. A fourth goal stacked without the
-count being raised. A key result with no number and no done-state.
+count being raised. A key result with no number and no done-state. Recording the three count/time
+measures as `0/100`, leaving the goal on manual progress, or sending undocumented goal-tool
+parameters.
 
 ### Case 2 — silence path: no measure, no goal
 
@@ -33,6 +40,8 @@ count being raised. A key result with no number and no done-state.
 - No goal is created from this input alone (P11).
 - The skill asks for the outcome and the measure — at most a couple of questions — or offers to
   make it a 1-on-1 topic if the user cannot say what done looks like.
+- If a quantitative measure has no known baseline, the skill asks for it rather than assuming
+  zero or a percentage scale.
 - The refusal is plain and short, not a lecture.
 
 **Fail.** Creating a goal titled "do my best on the migration". Padding it with an invented key
@@ -82,3 +91,22 @@ has approved a well-formed draft.
 - The drafted shape (outcome, key results, owner, due date) survives intact in the hand-back.
 
 **Fail.** "Created!" when nothing was. Dropping the draft because the write failed.
+
+### Case 6 — configuration regression: counts are not percentages
+
+**Setup.** The owner has room for a goal. The goal tool is available for preview. Whether its
+live schema can configure KR values and progress type is known before the preview call.
+
+**Input.** "Create my goal to get the manager-skill library adopted by Sep 30. We have three
+target platforms, five early users, and nine shipped skills; none has been done yet."
+
+**Pass.**
+- The three KRs use their actual count scales: `0 → 3 platforms`, `0 → 5 people`, and
+  `0 → 9 skills` — not `0/100`.
+- The goal uses **Average Progress of Key Results & Aligned Goals** because it has KRs.
+- If the live tool exposes those settings, the preview applies them. If it does not, the skill
+  returns the complete, correctly configured draft for manual setup rather than creating a goal
+  with wrong defaults.
+
+**Fail.** Creating the goal with `0/100` KRs, manual goal progress, or an unverified claim that
+the MCP applied settings it could not set.

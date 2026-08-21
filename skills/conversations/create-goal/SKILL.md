@@ -8,10 +8,8 @@ description: Create a goal with a measurable outcome — the owner drafts, the m
 Most goals fail at birth: they describe activity instead of an outcome, they have no measure
 anyone could argue about at the deadline, or they land on a pile of four others. This skill turns
 "get better at incident response" into a goal that can actually be checked in on — and it works
-from either chair: a person drafting their own goal, or a manager shaping a report's.
-
-Progress on an existing goal is `goal-checkin`, not this.
-
+from either chair: a person drafting their own goal, or a manager shaping a report's. Progress on
+an existing goal is `goal-checkin`, not this.
 Serves *is productive and results-oriented* (P17). Enforces P11 (specific, challenging,
 measurable — the owner drafts), P12 (few and alive), P15 (shape with questions, do not take over).
 Rules: [management-rules.md](../../../references/management-rules.md).
@@ -26,10 +24,16 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 - **Every key result has a number or an unambiguous done-state** (P11). A goal with no measure is
   not created — sharpen it first or do not send it.
+- **Every quantitative key result has its real scale.** Set the current baseline and target in the
+  record. A count is `0 → 3`, not `0 → 100`; `0 → 100` is only a percentage. Keep real values for
+  a decreasing measure (for example, `45 → 20 minutes`). If the baseline is unknown, ask — do not
+  make one up or substitute a generic scale.
+- **Key results determine the goal's progress.** With key results, set **Average Progress of Key
+  Results & Aligned Goals** — never manual progress or a type unrelated to those results.
 - **The owner is the person whose goal it is.** A manager creating a goal for a report ends with
   the report as owner, framed as a proposal for them to accept or rewrite (P11, P15).
-- **Check the active count before adding.** A fourth active goal is a focus problem to raise, not
-  a formality to skip past (P12).
+- **Check the active count before drafting or previewing.** A fourth active goal is a focus
+  problem to raise, not a formality to skip past (P12).
 - **Outcome, not activity.** "Work on documentation" is a task list. "Every public endpoint has a
   docs page by 30 Sep" is a goal.
 - **Challenging but real** (P11). A goal that will certainly happen anyway is a task; say so
@@ -52,9 +56,11 @@ stack a new one on top (P12).
 activity to outcome. Ask the one question that does most of the work: "How would someone tell, at
 the deadline, whether this happened?"
 
-**4. Draft 1-3 key results.** Each one carries a number or a clear done-state. Where the user
-gives a vague measure ("better", "faster", "fewer complaints"), propose a concrete one and let
-them correct it — a wrong specific invites a fix; a vague placeholder survives forever.
+**4. Draft 1-3 key results and their scales.** Each one carries a number or a clear done-state.
+For a quantitative result, establish the current value, target value, unit, and direction; show
+them as `start → end` in the draft. Where the user gives a vague measure ("better", "faster",
+"fewer complaints"), propose a concrete measure and let them correct it — a wrong specific
+invites a fix; a vague placeholder survives forever.
 
 **5. Check the challenge (P11).** Would hitting this require something to change about how the
 owner works? If it would happen anyway, say it reads as a task and offer to either raise the bar
@@ -64,8 +70,11 @@ or track it somewhere lighter than a goal.
 set the report as owner, and suggest they refine it — the next 1-on-1 is the natural place. A
 goal written entirely by the manager fails P11 even when it is well written.
 
-**7. Preview and create.** Show the goal in plain text — outcome, key results, owner, due date.
-One approval, then create it.
+**7. Preview and create.** Show the goal in plain text — outcome, key results with their
+`start → end` values and units, owner, due date, and derived progress type. One approval, then
+create it. Before the preview call, check that the live goal tool can set the KR values and the
+progress type. If it cannot, do not create a goal that will carry incorrect defaults: hand over
+the full draft and say which settings must be made in Topicflow.
 
 ## Sources
 
@@ -76,15 +85,21 @@ One approval, then create it.
 - `list_goals(owners: <owner id>)` — the active count and overlap check. Defaults to the current
   user's own goals; pass the report's ID when the goal is theirs.
 - `create_goal(title, scope, key_results[], owner_*, due_date)` — `key_results` is required and
-  must be measurable (P11). `owner_*` defaults to the current user, so **pass the report's ID**
-  when the goal is theirs, or the manager becomes the owner by accident.
+  must be measurable (P11). When the live schema offers KR start/end values and a goal progress
+  type, populate them: use the real baseline and target for each quantitative KR, and **Average
+  Progress of Key Results & Aligned Goals** for the goal. `owner_*` defaults to the current user,
+  so **pass the report's ID** when the goal is theirs, or the manager becomes the owner by
+  accident.
 - `add_meeting_topics(meeting_id, topics)` — when the right move is "draft it together in the
   1-on-1" rather than creating it now.
 
 **Withheld.** Goals unreadable → the count check is impossible: say so in one line, ask what is
 open, and draft from the answer. Only open goals are retrievable → never claim this is someone's
-first goal, and never reason about what they completed before. If nothing can be created, the
-drafted goal is handed over as text — the shape was always the valuable part.
+first goal, and never reason about what they completed before. If the goal tool does not expose
+KR baselines, targets, and a compatible progress type, do not fake them with undocumented
+parameters or generic `0/100` values; hand over the fully specified draft for the owner to set in
+Topicflow. If nothing can be created, the drafted goal is handed over as text — the shape was
+always the valuable part.
 
 ## Gate
 
@@ -99,9 +114,10 @@ in the goal record.
 
 ## Output
 
-The goal in plain text — outcome, key results with measures, owner, due date — then use the
-[portable choice controls](../../references/interaction-controls.md) to ask whether to create it,
-edit it, or make it a 1-on-1 topic instead.
+The goal in plain text — outcome, key results with their `start → end` values and units, owner,
+due date, and **Average Progress of Key Results & Aligned Goals** — then use the [portable choice
+controls](../../references/interaction-controls.md) to ask whether to create it, edit it, or make
+it a 1-on-1 topic instead.
 
 ## Worked example
 
@@ -124,12 +140,13 @@ mitigate is bad, like 45 minutes
 
 > Run incident response for the payments area by end of Q4.
 >
-> - Lead 3 incident responses as incident commander (0 of 3)
-> - Median time-to-mitigation under 20 minutes across those incidents (currently ~45)
-> - Post-incident review published within 48h for each (0 of 3)
+> - Lead incident responses as incident commander: 0 → 3 incidents
+> - Median time-to-mitigation across those incidents: ~45 → 20 minutes
+> - Publish the post-incident review within 48h: 0 → 3 reviews
 >
-> Owner: you. Due: 2026-12-31. It is challenging — leading three real incidents is not going to
-> happen by accident — and every measure is arguable at the deadline.
+> Owner: you. Due: 2026-12-31. Progress: Average Progress of Key Results & Aligned Goals. It is
+> challenging — leading three real incidents is not going to happen by accident — and every
+> measure is arguable at the deadline.
 >
 > Offer a choice: create this goal, edit it, or make it a 1-on-1 topic instead.
 

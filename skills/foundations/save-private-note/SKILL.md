@@ -102,12 +102,14 @@ Not applicable — this skill is never run by a routine. It fires on what the ma
 
 ## Output
 
-A one-line receipt naming the person and the fact. Nothing else. If the fact was not saved
-because a tool was missing, the receipt says so and includes the text to keep:
+A one-line receipt naming the person and the fact. If the fact was not saved because a tool was
+missing, the receipt says so and includes the text to keep:
 
-If a follow-up choice is needed, follow the
-[portable choice controls](../../../references/interaction-controls.md); this receipt itself is
-not a choice.
+Then end interactively through the
+[portable choice controls](../../../references/interaction-controls.md) when this is a standalone
+interaction: offer to save another fact or review the saved fact. When it runs inside another
+skill, return the receipt to that parent; the parent ends with the interactive choice. In Claude
+Code, that means `AskUserQuestion`, not a printed list.
 
 > Couldn't write to Tony's file (note saving hasn't reached this workspace). Keep this one:
 > "Tony prefers recognition privately rather than in a channel."

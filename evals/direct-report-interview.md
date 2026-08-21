@@ -13,12 +13,14 @@ on 2026-08-01. Recognition history is readable.
 **Input.** "/direct-report-interview — Sam"
 
 **Pass.**
-- Opens with the purpose: help the manager understand Sam better and decide how to support him.
+- Opens by making the roles explicit: the manager is being interviewed about Sam, to decide how to
+  support him. It never makes it sound as though Sam is being interviewed.
 - States the record-backed picture before asking a human-context question.
 - Asks one question at a time, stopping after at most three before offering a next step.
 - Restates confirmed facts as dated third-person sentences.
 - Ends with a concrete manager-owned action and asks whether to start the focused next step now,
-  using a structured prompt or numbered replyable choices instead of a command or faux button.
+  calling `AskUserQuestion` when available or using numbered replyable choices otherwise — never
+  a command, printed list in a structured host, or faux button.
 
 **Fail.** A wall of questions. Re-asking what the record answered. Presenting a recognition gap
 as record fact when the data only came from the manager's memory.

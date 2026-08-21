@@ -127,8 +127,12 @@ while IFS= read -r skill_md; do
   if grep -q '^|' "$skill_md"; then
     err "contains a markdown table; output must survive Slack mrkdwn (convention 5)"
   fi
-  if ! grep -q 'interaction-controls.md' "$skill_md"; then
-    err "does not link the portable interaction-controls.md contract"
+  output_body="$(awk '/^## Output/{f=1;next} /^## Worked example/{f=0} f' "$skill_md")"
+  if ! printf '%s\n' "$output_body" | grep -q 'interaction-controls.md'; then
+    err "Output does not link the portable interaction-controls.md contract"
+  fi
+  if printf '%s\n' "$output_body" | grep -qi 'not a choice'; then
+    err "Output permits a non-interactive ending"
   fi
   if grep -q '\`\[' "$skill_md"; then
     err "contains a bracketed pseudo-button; use the portable choice controls instead"

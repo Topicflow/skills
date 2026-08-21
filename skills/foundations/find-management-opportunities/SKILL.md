@@ -68,6 +68,10 @@ history, and profile context. Separate facts from gaps in the record.
   manager-owned way to create the right stretch and support.
 - **Context gap:** a missing preference, aspiration, or maturity fact that would materially
   improve the manager's next move. Use `direct-report-interview`, not an unbounded questionnaire.
+  The manager answers that interview about their report: phrase the handoff as “Interview me, as
+  Gary's manager, about Gary,” never “Interview Gary.”
+- **Meeting agenda:** a lone `New Topic` with no notes is Topicflow's default blank topic. Treat
+  it as no agenda and offer `prep-1on1`; never call the placeholder an agenda item.
 
 **4. Filter hard.** Keep only candidates that have a fact, why it matters, and an action the
 manager can take now. Drop status updates, routine activity, vague concern, and opportunities
@@ -130,7 +134,8 @@ Start with one plain sentence describing the scope and any unreadable lens. Then
 
 End by asking which action to begin. Follow the
 [portable choice controls](../../../references/interaction-controls.md): one action per option,
-plus `Not now`.
+plus `Not now`. In a host with it, call `AskUserQuestion` for that final choice; do not print the
+options as a bulleted question.
 
 ## Worked example
 
@@ -147,5 +152,5 @@ done that before. Pick one bounded first project and agree what support the mana
 introduce Priya to the data team, and Wednesday has no agenda topic for it. Close the loop before
 moving to new status.
 
-Offer a choice: draft recognition for Nadia, interview Sam about support, prepare Priya's 1-on-1,
-or not now.
+Use the portable choice controls to offer: draft recognition for Nadia, interview me as Sam's
+manager about Sam's support, prepare Priya's 1-on-1, or not now.

@@ -73,11 +73,11 @@ no "nothing to report" message. Gate thresholds live in the skill body as named,
 tunable defaults, so a manager can change 4 weeks to 6 without editing logic.
 
 **7. Output contract.** finding → why it matters → proposed action(s). A skill never ends
-with raw data, and never ends without an action the manager can take in one click or one
-sentence. When it needs a choice, use the [portable choice controls](interaction-controls.md):
-call the host's structured prompt when it exists; otherwise use a numbered, replyable question.
-Never present bracketed text as a button or tell the manager to type another command. A “yes”
-starts a selected skill on the next turn; its own preview and approval rules still apply.
+with raw data or an inert handoff: it always ends with an action the manager can take in one click
+or one sentence. Use the [portable choice controls](interaction-controls.md): call the host's
+structured prompt when it exists; otherwise use a numbered, replyable question. Never present
+bracketed text as a button or tell the manager to type another command. A “yes” starts a selected
+skill on the next turn; its own preview and approval rules still apply.
 
 **8. Practice conformance.** Every skill operationalizes numbered rules from
 [management-rules.md](management-rules.md) and names them. Before showing a
