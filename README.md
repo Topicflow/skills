@@ -83,23 +83,24 @@ Three things worth knowing before you start, so nothing is a surprise:
 - **[goal-checkin](./skills/conversations/goal-checkin/SKILL.md)** — progress in the owner's
   voice: what moved, the numbers, whether the status still tells the truth. Never posted in
   someone else's name.
-- **[interview-me](./skills/conversations/interview-me/SKILL.md)** — user-invoked
-  (`/interview-me`). A short interview about one direct report: preferences, aspirations, what
-  they are new to — the facts no system holds. A new report is the first interview, day-7/30/60
-  topics included.
+- **[direct-report-interview](./skills/conversations/direct-report-interview/SKILL.md)** —
+  user-invoked (`/direct-report-interview`). A guided interview helps a manager understand one
+  direct report, fill the important human gaps, and turn them into concrete support. A new report
+  gets day-7/30/60 topics too.
 
 ### [Foundations](./skills/foundations) — what the others lean on
 
-- **[management-rules](./skills/foundations/management-rules/SKILL.md)** — the seventeen rules
-  (P1-P17) as pass/fail checks. Every other skill runs them on its own drafts before you see them.
 - **[save-private-note](./skills/foundations/save-private-note/SKILL.md)** — catch the durable
   fact the moment it is said ("she hates public praise") and restate it in one third-person
   sentence. Filing needs the 2026-08 MCP update
   ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); on older workspaces it hands you the
   sentence.
 - **[ask-topicflow](./skills/foundations/ask-topicflow/SKILL.md)** — user-invoked
-  (`/ask-topicflow`). The map: which skill fits the moment, what good practice says, and what
-  these skills can and cannot see in your account.
+  (`/ask-topicflow`). Ask a management question, review the current thread, choose the right
+  focused skill, or check what the account can see.
+- **[find-management-opportunities](./skills/foundations/find-management-opportunities/SKILL.md)**
+  — user-invoked (`/find-management-opportunities`). A deliberate manager review of the named
+  direct reports: the few next actions that would help them most.
 
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
@@ -120,8 +121,14 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "update my goal — the migration is at 60%"
 > "set my goals for Q4"
 
-Two skills are user-invoked, because they should never start themselves: `/interview-me` and
-`/ask-topicflow`.
+Three skills are user-invoked because they should start only when the manager asks: ask a question
+or review the current thread with `/ask-topicflow`; run a guided interview about one person with
+`/direct-report-interview`; step back across named reports with
+`/find-management-opportunities`.
+
+When a skill recommends a next step, it asks whether to start it. Choose the labelled action (a
+button in clients that support them) or simply say yes — there is no second slash command to
+memorize.
 
 ## What makes these different
 
@@ -140,9 +147,10 @@ neglected for six weeks. Every skill names what it could not see, in one line, i
 to update a report's goal gets a 1-on-1 topic, not a ghost-written check-in. The report drafts
 the goal; the manager shapes it. The person decides; the skill prepares.
 
-**Everything ends in Topicflow.** Topics land on the real meeting, feedback and recognition are
-sent through the record, check-ins carry real numbers. What you do today is what the review can
-cite in six months.
+**Focused actions end in Topicflow.** Topics land on the real meeting, feedback and recognition
+are sent through the record, check-ins carry real numbers. The two advisory entry points choose
+the next action; they never write on their own. What you do today is what the review can cite in
+six months.
 
 ## The seventeen rules
 
@@ -228,9 +236,10 @@ how to add a skill and what the checker enforces. Ideas already considered and d
 
 ## Status
 
-Version 0.2.0 — the v1 cut: nine skills covering the core performance workflow for both chairs,
-every one ending in a Topicflow write that works today. Seven further skills are parked in
-[skills/later/](./skills/later) until the infrastructure they need exists.
+Version 0.2.0 — nine installed skills: five core workflows that work from either chair, a guided
+direct-report interview, durable private context, and two manager-facing entry points. The focused
+workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
+skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
 
 The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)) ships the
 dependencies that mattered most: private-note read, create, and delete, plus the recognition

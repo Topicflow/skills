@@ -80,7 +80,7 @@ Those need a walkthrough in order, in one session, on accumulating state:
    Broken today on Topicflow alone (TF-1595) — each half passes on its own, which is why no per-skill
    case catches it.
 3. **`prep-1on1` → the agenda → the next `prep-1on1`.** Does an open action item come back?
-4. **`interview-me` (new report) → day 30 arriving.** Does anything surface the dated check-in
+4. **`direct-report-interview` (new report) → day 30 arriving.** Does anything surface the dated check-in
    topic, or did it land on a meeting that never got scheduled?
 5. **`give-feedback`'s two-week reroute → the conversation happening.** An old event becomes "a
    1-on-1 topic about the pattern" — does that topic actually reach an agenda, or evaporate?

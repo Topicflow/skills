@@ -141,8 +141,8 @@ first so all four hit the right person.
 
 When the update reaches a deployment, the skills that shed the heaviest workarounds are
 `save-private-note` (the fallback ladder collapses to one call), `give-recognition` (preference
-looked up from notes instead of asked every time), and `interview-me` (its answers get a durable
-home, and it stops re-asking what a note already holds). It also unblocks the parked
+looked up from notes instead of asked every time), and `direct-report-interview` (its answers get a
+durable home, and it stops re-asking what a note already holds). It also unblocks the parked
 `recognition-scan` — evidence at last — and gives the other detectors a note ledger that makes
 cross-run cooldowns enforceable.
 

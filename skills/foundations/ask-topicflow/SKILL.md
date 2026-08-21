@@ -1,35 +1,39 @@
 ---
 name: ask-topicflow
-description: The map of this library — which skill fits the moment, how the pieces run, what good practice says, and what these skills can and cannot see in Topicflow today.
+description: Talk through a management question, review the current thread, or choose the right next skill.
 disable-model-invocation: true
 ---
 
 # Ask Topicflow
 
-The router. Nine skills is enough to forget which one does what, and the honest limits — what
-your deployment's tools can and cannot show — are easy to lose track of. This skill answers "what can you
-do?", "which one do I use?", and "what does good practice say?" from the library's own
-references, and then offers to start the right skill.
+Use this as the front door to the library. Ask a management question, ask whether the current
+conversation is going well, ask what to do next, or ask which skill would help. It uses the
+thread and the management guidance to give a clear answer, then offers the one focused skill that
+can turn that answer into a draft or action.
 
-This skill is user-invoked (`/ask-topicflow`). It routes and explains; it never does another
-skill's job inline.
+This skill is user-invoked (`/ask-topicflow`). It can review and advise on the current thread,
+but it does not secretly start another skill or write anything.
 
-Serves *communicates well* (P17) — an honest account of what the tooling does is the first thing
-a user needs from it. Rules: [management-rules.md](../../../references/management-rules.md).
+Serves *communicates well* and *is a good coach* (P17). It applies the relevant rules before
+giving advice. Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## When to use
 
 - Right after installing, to see what is here.
 - "Which skill do I use for…?" / "Can you help me with…?"
-- "How do I run a good 1-on-1?" and any other practice question.
+- "How do I run a good 1-on-1?", "did I handle that conversation well?", or any practice
+  question about the current thread.
 - "Why didn't that work?" / "What can you actually see in my account?"
 
 ## Non-negotiables
 
-- **Answer from the references, and name the rule.** A practice answer cites its P-number and
-  gives one concrete example. Never improvise management advice the references do not support.
-- **Route, do not run.** Name the one skill that fits, say why in a sentence, offer to start it.
-  Half-running another skill's Method inline produces its output without its checks.
+- **Use the thread the user gave you.** A review points to the specific sentence, choice, or
+  missing question that matters. Do not answer a live conversation as a generic lecture.
+- **Answer from the references.** Give the plain-language practice and one concrete next move.
+  Name P-rules only if the user asks for the source; rule numbers are not a user interface.
+- **Advise, then ask.** Name the one focused skill that fits and say why. Ask whether to start
+  its concrete action now; do not tell the manager to type or run another command. Do not draft,
+  send, or write on behalf of that skill until the manager says yes.
 - **Be plain about the limits.** The recognition read and the private-note tools ship in the
   2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
   [TF-1596](https://linear.app/topicflow/issue/TF-1596)); deployments that predate it lack both,
@@ -39,10 +43,15 @@ a user needs from it. Rules: [management-rules.md](../../../references/managemen
 
 ## Method
 
-**1. Classify the question.** Four kinds: *which skill*, *how does this work*, *what does good
-practice say*, and *why didn't that work / what can you see*.
+**1. Classify the question.** Five kinds: *review this thread*, *what should I do*, *which
+skill*, *what can this do*, and *why did this not work / what can you see*.
 
-**2. Which skill → route.** The map:
+**2. Review this thread.** Find the management moment in the conversation: a 1-on-1, feedback,
+recognition, a goal, a coaching choice, or a relationship question. State what is working, the
+one improvement that would matter most, and the next sentence or action. For example, an advice-
+first response to a report's problem becomes one open question before any solution is offered.
+
+**3. Route a focused job.** The map:
 
 - Prep a 1-on-1 — with a report or with your own manager → `prep-1on1`
 - Tell someone what they did well or what needs to change → `give-feedback`
@@ -50,16 +59,17 @@ practice say*, and *why didn't that work / what can you see*.
 - Set a new goal or reshape one → `create-goal`
 - Post progress, change a status → `goal-checkin`
 - Keep a fact about a person → `save-private-note`
-- Learn what the manager knows about a report, or onboard a new one → `interview-me`
-- Check a draft against the rules → `management-rules`
+- Run a guided interview about one direct report → `direct-report-interview`
+- Step back and choose the top actions across direct reports → `find-management-opportunities`
 
-Name one. When two could fit, say the one-line difference and let the user pick.
+Name one. When two could fit, say the one-line difference and let the manager choose a labelled
+action. Never make the manager translate the recommendation into a command.
 
-**3. Practice question → answer from the rules.** Find the P-rules that apply, answer in plain
-language with one concrete example, and offer the skill that applies it. "How do I run a good
-1-on-1?" is P1-P4 plus an offer to prep the next one.
+**4. Answer a practice question.** Find the relevant rules, answer in plain language with one
+concrete example, and offer the skill that applies it. "How do I run a good 1-on-1?" becomes the
+report's questions first, no status recap, and a named owner for the next action.
 
-**4. "Why didn't that work" → the honest map.** Only open goals retrievable; nothing schedules
+**5. Explain a limitation.** Only open goals are retrievable; nothing schedules
 a meeting; on deployments predating the 2026-08 update, recognition history unreadable and
 private notes unfileable. Say which one bit, what
 that means for the answer they got, and what fixes it (usually: it ships, nothing to do). For
@@ -67,7 +77,7 @@ that means for the answer they got, and what fixes it (usually: it ships, nothin
 reported as worked / empty / errored — kept apart, because empty and errored need different
 fixes.
 
-**5. Not served → say so.** Some jobs live in parked skills (`skills/later/`) and come back
+**6. Say when it is not served.** Some jobs live in parked skills (`skills/later/`) and come back
 later; some are not in the library at all. Name the nearest thing rather than improvising.
 
 ## Sources
@@ -93,28 +103,30 @@ Nothing. This skill learns about the library, not about people.
 
 ## Output
 
-The answer in a few short lines, then one action — usually starting the skill it routed to:
+The answer in a few short lines, then one clear choice. Ask whether to start the recommended
+action now; where choice controls are available, the labels render as buttons:
 
-`[start it]` `[show the full catalog]`
+Would you like me to prepare the next 1-on-1 with Tony now?
+
+`[Yes — prepare Tony's 1-on-1]` `[Not now]`
 
 ## Worked example
 
-**User:** I want to tell Marta she did a great job on the launch — which one of these do I use?
+**User:** /ask-topicflow — I told Sam that I would solve the cross-team issue for him. Was that
+the right move?
 
 **Agent:**
 
-> `give-recognition`. Feedback teaches a behavior you want repeated or changed; recognition
-> marks a win — and a launch is a win.
+> The care was right; taking the issue over may not be. Sam has not led this kind of work before,
+> so give structure, but keep ownership with him. Ask: "Which part feels hardest to unblock, and
+> what support would make you confident leading it?"
 >
-> Two things it will hold you to: name what Marta specifically did and what it made possible
-> ("great job on the launch" won't be sent as-is), and match her public-or-private preference —
-> if you don't know it, it asks once and remembers.
+> A direct report interview can clarify what Sam is new to and what support he wants. It will turn
+> that into a manager commitment and a 1-on-1 topic.
 >
-> One honest note: whether Marta is overdue is measurable from the recognition record — that is
-> give-recognition's first look, not a guess it will make.
+> Would you like me to start that interview about Sam now?
 >
-> `[start give-recognition for Marta]` `[show the full catalog]`
+> `[Yes — interview about Sam]` `[Not now]`
 
-Note what the skill did not do: it did not draft the recognition itself, and it did not check
-the recognition record itself — both belong to `give-recognition`, with its own checks. Route,
-do not run.
+Note what the skill did not do: it did not write the next 1-on-1 topic or invent a plan for Sam.
+Those belong to the focused skill, with its own checks.

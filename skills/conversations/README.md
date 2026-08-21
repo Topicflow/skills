@@ -23,7 +23,7 @@ manager's, and the skill says so.
 - **[goal-checkin](./goal-checkin/SKILL.md)** — progress in the owner's voice: what moved, the
   numbers, whether the status still tells the truth. Never posted in someone else's name — a
   manager asking about a report's goal gets a 1-on-1 topic instead.
-- **[interview-me](./interview-me/SKILL.md)** — user-invoked (`/interview-me`). A short interview
-  about one direct report covering exactly what no call can answer: preferences, aspirations, the
-  new-to list, the manager's own memory of recognition. A new report is the first interview,
-  with day-7/30/60 check-in topics included.
+- **[direct-report-interview](./direct-report-interview/SKILL.md)** — user-invoked
+  (`/direct-report-interview`). A guided interview helps a manager fill the important human gaps
+  about one direct report and turn them into next steps. A new report gets day-7/30/60 check-in
+  topics too.

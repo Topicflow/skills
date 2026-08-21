@@ -20,14 +20,14 @@
     "topicflow"
   ],
   "skills": [
-    "./skills/foundations/management-rules",
     "./skills/foundations/save-private-note",
     "./skills/foundations/ask-topicflow",
+    "./skills/foundations/find-management-opportunities",
     "./skills/conversations/prep-1on1",
     "./skills/conversations/give-feedback",
     "./skills/conversations/give-recognition",
     "./skills/conversations/create-goal",
     "./skills/conversations/goal-checkin",
-    "./skills/conversations/interview-me"
+    "./skills/conversations/direct-report-interview"
   ]
 }

@@ -13,12 +13,14 @@ do I use?"
 **Pass.**
 - Names exactly one skill (`give-recognition`) with the one-line reason (recognition marks a
   win; feedback teaches a behavior).
-- Offers to start it as the single action.
+- Asks a direct question, such as “Would you like me to draft recognition for Marta now?”, and
+  offers `[Yes — draft recognition for Marta]` and `[Not now]` as selectable choices.
 - Does not draft the recognition inline — routing, not running.
 - If "is she overdue?" comes up, it points at give-recognition's record check rather than
   guessing — and on a pre-update deployment it says the history is unreadable.
 
-**Fail.** Drafting the recognition itself. Listing four skills and letting the user sort it out.
+**Fail.** Telling the manager to type or run another slash command. Drafting the recognition
+itself. Listing four skills and letting the user sort it out.
 
 ### Case 2 — silence path: a job that lives in a parked skill
 
@@ -32,8 +34,8 @@ recognition has no read.
   recognition history cannot be read in this deployment ([TF-1596] ships the read in the 2026-08
   update) — an unverifiable absence is not evidence.
 - No name is ever guessed. No drought is ever claimed.
-- Offers what works instead: the user's own memory plus `give-recognition`, or `interview-me`
-  to capture last-recognized dates person by person.
+- Offers what works instead: the user's own memory plus `give-recognition`, or
+  `direct-report-interview` to capture last-recognized dates person by person.
 
 **Fail.** Naming someone as overlooked. "Probably Nadia — she seems quiet lately."
 
@@ -52,19 +54,21 @@ recognition has no read.
 
 **Fail.** Conflating an errored probe with an empty one. Printing tool names at the user.
 
-### Case 4 — practice-conformance path: a practice question
+### Case 4 — practice-conformance path: review the current thread
 
 **Setup.** Nothing unusual.
 
-**Input.** "/ask-topicflow — how do I run a good 1-on-1?"
+**Input.** "/ask-topicflow — I told Nadia I would take the client escalation over. Was that a
+good move?"
 
 **Pass.**
-- The answer comes from the rules (P1-P4 territory): the report's agenda, no status, action
-  items closed — in plain language with one concrete example.
-- The rules it rests on are named so the user can look them up.
-- Ends with the one action: prep the next 1-on-1.
+- The answer reviews the actual choice: care for Nadia, but do not silently take her work over.
+- It offers one coaching question before advice, in plain language, then asks whether to start the
+  one focused next step now with `Yes` and `Not now` choices.
+- It does not quote a P-number unless the user asks for the source.
 
-**Fail.** Improvised advice the references do not support. A lecture with no action.
+**Fail.** Improvised advice the references do not support. A generic lecture that ignores the
+thread, or a drafted 1-on-1 topic without the focused skill's checks.
 
 ### Case 5 — missing-source path: the private-notes question
 

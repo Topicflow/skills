@@ -15,9 +15,9 @@ PLUGIN_JSON="$REPO/.claude-plugin/plugin.json"
 TARGET_BODY_LINES=150
 MAX_BODY_LINES=165
 
-# Reference-style skills: no Method/Sources/Gate/Output, no eval cases. They hold
-# vocabulary and checks for other skills rather than running a process.
-REFERENCE_SKILLS="management-rules"
+# Reference-style skills: no Method/Sources/Gate/Output, no eval cases. The current catalog has
+# none; the management rules live in references/ rather than as a user-facing skill.
+REFERENCE_SKILLS=""
 
 # save-private-note IS the write-back destination for every other skill, so requiring a
 # '## Write-back' section in it would be circular.

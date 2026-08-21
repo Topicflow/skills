@@ -64,6 +64,29 @@ done
 for DEST in "${DESTS[@]}"; do
   mkdir -p "$DEST"
 
+  # A skill retired from this checkout would otherwise remain installed forever. Remove only
+  # symlinks that this exact repo created; leave every other user-owned skill untouched.
+  for target in "$DEST"/*; do
+    [ -L "$target" ] || continue
+    name="$(basename "$target")"
+    active=false
+    for current_name in "${names[@]}"; do
+      if [ "$name" = "$current_name" ]; then
+        active=true
+        break
+      fi
+    done
+    [ "$active" = true ] && continue
+
+    link_target="$(readlink "$target")"
+    case "$link_target" in
+      "$REPO"/skills/*)
+        rm "$target"
+        echo "removed retired skill link $name ($DEST)"
+        ;;
+    esac
+  done
+
   for i in "${!names[@]}"; do
     name="${names[$i]}"
     src="${srcs[$i]}"

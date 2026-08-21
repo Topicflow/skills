@@ -21,8 +21,8 @@ What unblocks each one:
   belongs to the conversation skill that posts progress). Needs a scheduler.
 - **request-feedback**, **review-prep** — review-cycle skills. Reviews are episodic, not weekly;
   these come back when a review cycle is the driving use case.
-- **onboard-direct-report** — absorbed into `interview-me`: a new report is the first interview,
-  and the day-7/30/60 topics moved with it. Kept here for reference.
+- **onboard-direct-report** — absorbed into `direct-report-interview`: a new report starts with a
+  guided manager interview, and the day-7/30/60 topics moved with it. Kept here for reference.
 
 Backlog and reactivation notes: [TF-1599](https://linear.app/topicflow/issue/TF-1599).
 
