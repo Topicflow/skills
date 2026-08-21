@@ -17,6 +17,8 @@ three open goals, one of which ("on-call handbook") ships next week.
 - The measure comes from a question to the user ("how would someone tell at the deadline?"), not
   from invention.
 - The owner is the user. Creation happens only after one approval.
+- Any owner or approval choice uses the host's structured prompt when available, or numbered,
+  replyable text otherwise; bracketed pseudo-buttons never appear.
 
 **Fail.** Creating "get better at incident response" as-is. A fourth goal stacked without the
 count being raised. A key result with no number and no done-state.

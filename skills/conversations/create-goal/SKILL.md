@@ -34,12 +34,15 @@ Rules: [management-rules.md](../../../references/management-rules.md).
   docs page by 30 Sep" is a goal.
 - **Challenging but real** (P11). A goal that will certainly happen anyway is a task; say so
   rather than dressing it up.
-- Confirm once before creating.
+- **Use real choices.** For the owner and final approval, follow the
+  [portable choice controls](../../references/interaction-controls.md); never render bracketed
+  labels as controls.
 
 ## Method
 
-**1. Establish whose goal it is.** The user's own, or a report's. This decides the owner and the
-tone: their own goal is drafted with them; a report's goal is a proposal the report refines.
+**1. Establish whose goal it is.** The user's own, or a report's. If unclear, ask through the
+portable choice controls. This decides the owner and the tone: their own goal is drafted with
+them; a report's goal is a proposal the report refines.
 
 **2. Count what is already open.** Pull the owner's open goals first. At or past the active-goal
 threshold, say so before drafting and ask which existing goal closes or waits — do not silently
@@ -96,9 +99,9 @@ in the goal record.
 
 ## Output
 
-The goal in plain text — outcome, key results with measures, owner, due date — then:
-
-`[create it]` `[edit]` `[make it a 1-on-1 topic instead]`
+The goal in plain text — outcome, key results with measures, owner, due date — then use the
+[portable choice controls](../../references/interaction-controls.md) to ask whether to create it,
+edit it, or make it a 1-on-1 topic instead.
 
 ## Worked example
 
@@ -128,7 +131,7 @@ mitigate is bad, like 45 minutes
 > Owner: you. Due: 2026-12-31. It is challenging — leading three real incidents is not going to
 > happen by accident — and every measure is arguable at the deadline.
 >
-> `[create it]` `[edit]` `[make it a 1-on-1 topic instead]`
+> Offer a choice: create this goal, edit it, or make it a 1-on-1 topic instead.
 
 Note what did not happen: no fourth goal stacked silently on three, and "get better" never made
 it into the record. The vague wish became two numbers and a deadline the owner chose.

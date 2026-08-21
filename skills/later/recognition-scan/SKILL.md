@@ -114,9 +114,9 @@ the way. Via `save-private-note`.
 
 ## Output
 
-Per finding: the win, the silence, the action. Plain text, third person, no tables.
-
-`[draft recognition]` `[add to 1-on-1]` `[skip]`
+Per finding: the win, the silence, and the action. Plain text, third person, no tables. Use the
+[portable choice controls](../../../references/interaction-controls.md) to offer draft
+recognition, add it to a 1-on-1, or skip.
 
 ## Worked example
 
@@ -130,7 +130,7 @@ Routine, Monday morning. Four reports scanned. One ping:
 > Six weeks is the longest gap on your team, and this was the biggest thing anyone shipped in
 > that window.
 >
-> `[draft recognition]` `[add to 1-on-1]` `[skip]`
+> Offer a choice: draft recognition, add it to a 1-on-1, or skip.
 
 Not pinged, and why:
 

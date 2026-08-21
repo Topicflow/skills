@@ -64,7 +64,8 @@ Body sections, in this order:
 6. `## Gate` — for anything a routine can run. `worth_attention: yes/no` conditions plus named,
    tunable thresholds. Skills that only run in chat say "not applicable" and why.
 7. `## Write-back` — what durable findings get saved (library convention 3).
-8. `## Output` — the shape, then the action buttons.
+8. `## Output` — the shape, then a portable choice prompt; see
+   [interaction-controls.md](./references/interaction-controls.md).
 9. `## Worked example` — one, at the end, showing real dialogue. The example is where most agents
    learn the voice, so make it concrete: real names, real dates, real numbers. Include what the
    skill *declined* to do and why — that teaches restraint better than a rule.

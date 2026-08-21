@@ -117,9 +117,9 @@ same false alarm next week. Via `save-private-note`.
 
 ## Output
 
-One factual line per finding, then why, then actions. No tables, third person.
-
-`[schedule it]` `[add a topic to the next one]` `[dismiss — tell me why]`
+One factual line per finding, then why, then actions. No tables, third person. Use the
+[portable choice controls](../../../references/interaction-controls.md) to offer schedule it,
+add a topic to the next one, or dismiss with a reason.
 
 ## Worked example
 
@@ -131,7 +131,7 @@ Routine, Monday. Six reports checked. Two findings, one suppressed:
 > Two consecutive cancellations is the pattern worth catching, not the gap itself. Rescheduling
 > beats cancelling — the value of a 1-on-1 comes from it being reliable.
 >
-> `[schedule it]` `[add a topic to the next one]` `[dismiss — tell me why]`
+> Offer a choice: schedule it, add a topic to the next one, or dismiss with a reason.
 >
 > Priya Raman — career hasn't come up in a 1-on-1 since 12 Jun, 9 weeks ago. Cadence is fine
 > otherwise.
@@ -139,7 +139,7 @@ Routine, Monday. Six reports checked. Two findings, one suppressed:
 > Career conversations don't happen by accident; they only happen when someone puts them on an
 > agenda. She's also the person on your team closest to a level change.
 >
-> `[add a career topic to the next one]` `[dismiss]`
+> Offer a choice: add a career topic to the next one, or dismiss.
 
 Suppressed: *Marcus* has a 4-week gap but was pinged for it two weeks ago and the gap has not
 materially worsened. Recorded, not repeated.

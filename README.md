@@ -126,9 +126,9 @@ or review the current thread with `/ask-topicflow`; run a guided interview about
 `/direct-report-interview`; step back across named reports with
 `/find-management-opportunities`.
 
-When a skill recommends a next step, it asks whether to start it. Choose the labelled action (a
-button in clients that support them) or simply say yes — there is no second slash command to
-memorize.
+When a skill needs a choice, Claude Code uses its native picker when it is available. Everywhere
+else, the same choice is a numbered question you can answer in plain language — there is no second
+slash command to memorize and no pretend text button to click.
 
 ## What makes these different
 

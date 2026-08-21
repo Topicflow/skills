@@ -116,9 +116,9 @@ starts with six months of evidence instead of three weeks. Via `save-private-not
 
 ## Output
 
-One pack per report, plain text, four sections, every line dated. Then:
-
-`[request peer input where thin]` `[add a 1-on-1 topic]` `[next report]`
+One pack per report, plain text, four sections, every line dated. Then use the
+[portable choice controls](../../../references/interaction-controls.md) to offer request peer
+input where thin, add a 1-on-1 topic, or move to the next report.
 
 ## Worked example
 
@@ -154,7 +154,7 @@ One pack per report, plain text, four sections, every line dated. Then:
 > visibility one — she works on internal tooling that doesn't show up in these feeds. Get peer
 > input on her before writing either review, or Tony's pack will make her look quiet.
 >
-> `[request peer input on Nadia]` `[add a 1-on-1 topic]` `[next report]`
+> Offer a choice: request peer input on Nadia, add a 1-on-1 topic, or move to the next report.
 
 Note what the pack refuses to do: it does not say Tony is strong, it does not rank him against
 Nadia, and it does not hide the docs miss in a positive section. The most useful sentence in it is

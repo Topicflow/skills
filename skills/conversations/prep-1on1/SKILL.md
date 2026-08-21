@@ -129,9 +129,9 @@ loud — via `save-private-note`. On a silent run, findings are still written ba
 
 ## Output
 
-Plain text, no tables, third person about people. Each topic as a question, a one-line why, then:
-
-`[add these to the meeting]` `[edit]` `[skip]`
+Plain text, no tables, third person about people. Each topic is a question with a one-line why.
+Then use the [portable choice controls](../../references/interaction-controls.md) to offer add to
+the meeting, edit, or skip.
 
 ## Worked example
 
@@ -163,7 +163,7 @@ Plain text, no tables, third person about people. Each topic as a question, a on
 > 4. "From your side — what should I start, stop, or continue doing?" Feedback lands on the
 >    agenda so you actually get some, and it doubles as the how-are-we-working check.
 >
-> `[add these to the meeting]` `[edit]` `[skip]`
+> Offer a choice: add these topics to the meeting, edit them, or skip.
 
 Note the drop: the stale goal — real and data-backed — stays in the notes for next time, because
 the work lane was full. The data proposed; the user disposed.

@@ -122,9 +122,9 @@ Whether a report tends to set goals with no measure (a coachable pattern, not a 
 
 ## Output
 
-Grouped by person, one line per goal, then the action. Plain text, no tables, third person.
-
-`[add to the next 1-on-1]` `[sharpen the key result]` `[nudge them]` `[dismiss]`
+Grouped by person, one line per goal, then the action. Plain text, no tables, third person. Use
+the [portable choice controls](../../../references/interaction-controls.md) for add to the next
+1-on-1, sharpen the key result, nudge them, or dismiss.
 
 ## Worked example
 
@@ -133,18 +133,18 @@ Monthly routine. Nine goals across four reports; three findings:
 > **Tony** — "Migrate billing to the new provider" — no check-in since 2 Jul, 7 weeks.
 > Status still says on track, but the record has gone quiet while the work clearly moved. The
 > gap matters at review time: no check-ins means no evidence.
-> `[add to the next 1-on-1]` `[nudge him]`
+> Offer a choice: add this to the next 1-on-1, nudge him, or dismiss.
 >
 > **Nadia** — "Improve API documentation" — no measurable key result.
 > There is no way to check in on this, and no way to tell at the deadline whether it happened.
 > Suggestion for her to accept or replace: "Every public payments endpoint has a docs page with
 > a working auth example by 30 Sep."
-> `[suggest this to her]` `[add to the next 1-on-1]`
+> Offer a choice: suggest this to her, add it to the next 1-on-1, or dismiss.
 >
 > **Sam** — 5 active goals.
 > Beyond about three, everything becomes a background task. This is yours to fix rather than
 > his: the useful question is which one he would drop if he could only keep three.
-> `[add to the next 1-on-1]` `[dismiss]`
+> Offer a choice: add this to the next 1-on-1, or dismiss.
 >
 > Priya's two goals are on track and checked in this month — nothing to do.
 

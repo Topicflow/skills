@@ -114,12 +114,8 @@ Keep each confirmed durable fact as one dated third-person sentence through
 
 Three short parts: what the record already says, the confirmed human context, and one to three
 next actions with owners. For the primary next action, ask whether to start it now rather than
-telling the manager to type or run another command. Where choice controls are available, the
-labels render as buttons:
-
-Would you like me to prepare Sam's next 1-on-1 now?
-
-`[Yes — prepare Sam's 1-on-1]` `[Not now]`
+telling the manager to type or run another command. Follow the
+[portable choice controls](../../references/interaction-controls.md).
 
 ## Worked example
 
@@ -141,6 +137,4 @@ Next step: add this to the next 1-on-1: "Which cross-team project would give Sam
 leadership stretch, and what support would help him succeed?" The manager owns finding one
 candidate by 5 September.
 
-Would you like me to prepare that 1-on-1 now?
-
-`[Yes — prepare Sam's 1-on-1]` `[Not now]`
+Offer a choice: prepare Sam's 1-on-1 now, or not now.

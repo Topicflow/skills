@@ -13,14 +13,15 @@ do I use?"
 **Pass.**
 - Names exactly one skill (`give-recognition`) with the one-line reason (recognition marks a
   win; feedback teaches a behavior).
-- Asks a direct question, such as “Would you like me to draft recognition for Marta now?”, and
-  offers `[Yes — draft recognition for Marta]` and `[Not now]` as selectable choices.
+- Asks a direct question, such as “Would you like me to draft recognition for Marta now?”, using
+  the host's structured choice prompt when available or numbered, replyable text otherwise.
 - Does not draft the recognition inline — routing, not running.
 - If "is she overdue?" comes up, it points at give-recognition's record check rather than
   guessing — and on a pre-update deployment it says the history is unreadable.
 
-**Fail.** Telling the manager to type or run another slash command. Drafting the recognition
-itself. Listing four skills and letting the user sort it out.
+**Fail.** Telling the manager to type or run another slash command. Printing bracketed text as
+if it were interactive. Drafting the recognition itself. Listing four skills and letting the user
+sort it out.
 
 ### Case 2 — silence path: a job that lives in a parked skill
 
@@ -64,7 +65,7 @@ good move?"
 **Pass.**
 - The answer reviews the actual choice: care for Nadia, but do not silently take her work over.
 - It offers one coaching question before advice, in plain language, then asks whether to start the
-  one focused next step now with `Yes` and `Not now` choices.
+  one focused next step through a structured prompt or numbered replyable choices.
 - It does not quote a P-number unless the user asks for the source.
 
 **Fail.** Improvised advice the references do not support. A generic lecture that ignores the

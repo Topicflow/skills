@@ -97,5 +97,8 @@ Beyond the P-rules, these apply to every case and any of them failing fails the 
 - No markdown tables in output (convention 5).
 - Third person about people, plain text, short sentences (convention 5).
 - finding → why it matters → action; never raw data, never a dead end (convention 7).
+- A selection or approval uses a host's structured choice prompt when available; otherwise it is
+  a numbered, replyable question. Bracketed pseudo-buttons fail the
+  [portable interaction contract](../references/interaction-controls.md).
 - One approval per mutation, never a second ask for the same one (convention 4).
 - Durable findings written back, including on a silent run (convention 3).

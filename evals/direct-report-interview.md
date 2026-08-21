@@ -18,7 +18,7 @@ on 2026-08-01. Recognition history is readable.
 - Asks one question at a time, stopping after at most three before offering a next step.
 - Restates confirmed facts as dated third-person sentences.
 - Ends with a concrete manager-owned action and asks whether to start the focused next step now,
-  with `Yes` and `Not now` choices instead of telling the manager to type a command.
+  using a structured prompt or numbered replyable choices instead of a command or faux button.
 
 **Fail.** A wall of questions. Re-asking what the record answered. Presenting a recognition gap
 as record fact when the data only came from the manager's memory.

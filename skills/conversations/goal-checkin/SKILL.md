@@ -93,9 +93,9 @@ new-to facts surfaced along the way go the same route.
 
 ## Output
 
-The check-in text, the key-result values that change, any status change with its reason, then:
-
-`[post it]` `[edit]` `[make it a 1-on-1 topic instead]`
+The check-in text, the key-result values that change, and any status change with its reason. Then
+use the [portable choice controls](../../references/interaction-controls.md) to offer post, edit,
+or make it a 1-on-1 topic instead.
 
 ## Worked example
 
@@ -113,7 +113,7 @@ hasn't moved, still waiting on legal
 > since 4 Aug." No number change. This one is 2 weeks blocked with a 30 Sep deadline: worth
 > marking at risk so the date does not arrive as a surprise?
 >
-> `[post both]` `[post migration only]` `[edit]`
+> Offer a choice: post both, post the migration only, or edit.
 
 **User:** yeah mark it at risk
 

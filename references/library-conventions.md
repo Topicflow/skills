@@ -74,13 +74,10 @@ tunable defaults, so a manager can change 4 weeks to 6 without editing logic.
 
 **7. Output contract.** finding → why it matters → proposed action(s). A skill never ends
 with raw data, and never ends without an action the manager can take in one click or one
-sentence. When that action hands off to another skill, ask for the choice in plain language;
-never tell the manager to type or run another command. For one clear next action, ask “Would you
-like me to [specific action] now?” and offer `[Yes — …]` and `[Not now]`. For several viable
-actions, offer one clearly labelled choice per action plus `[Not now]`. A client that supports
-choice controls renders those labels as buttons; every client must accept a direct “yes”, “no”,
-or labelled reply. A “yes” begins the selected skill on the next turn; its own preview and
-approval rules still apply.
+sentence. When it needs a choice, use the [portable choice controls](interaction-controls.md):
+call the host's structured prompt when it exists; otherwise use a numbered, replyable question.
+Never present bracketed text as a button or tell the manager to type another command. A “yes”
+starts a selected skill on the next turn; its own preview and approval rules still apply.
 
 **8. Practice conformance.** Every skill operationalizes numbered rules from
 [management-rules.md](management-rules.md) and names them. Before showing a

@@ -19,12 +19,12 @@ work; recognition history has verified records.
   each matters and one focused next step.
 - Routes the actions to `give-recognition`, `direct-report-interview`, and `prep-1on1` rather
   than drafting or writing them inline.
-- Ends by asking which action to start, with one clearly labelled choice per opportunity and a
-  `Not now` choice; it does not ask the manager to type a command.
+- Ends by asking which action to start, with one choice per opportunity and a `Not now` choice;
+  it uses a structured prompt or numbered replyable text, never a faux button or typed command.
 - Does not compare the three people or manufacture an item for a person with no opportunity.
 
 **Fail.** A status summary. A score or ranking. An automatic recognition message. Telling the
-manager to type another slash command.
+manager to type another slash command or printing bracketed pseudo-buttons.
 
 ### Case 2 — silence path: no invented team-wide work
 

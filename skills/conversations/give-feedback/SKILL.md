@@ -128,9 +128,9 @@ Via `save-private-note`.
 
 ## Output
 
-The draft in plain text, then:
-
-`[send]` `[sharpen]` `[make it a 1-on-1 topic instead]`
+The draft in plain text, then use the
+[portable choice controls](../../references/interaction-controls.md) to offer send, sharpen, or
+make it a 1-on-1 topic instead.
 
 ## Worked example
 
@@ -153,7 +153,7 @@ this week were people guessing at the auth header.
 > heavy and I may have added to it. Docs landing with the endpoint is what keeps support out
 > of the loop.
 >
-> `[send]` `[sharpen]` `[make it a 1-on-1 topic instead]`
+> Offer a choice: send it, sharpen it, or make it a 1-on-1 topic instead.
 >
 > Her review work is worth its own message rather than a softener on this one — want me to
 > draft that separately?

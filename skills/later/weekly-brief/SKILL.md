@@ -118,6 +118,8 @@ that is the tuning signal for what this brief should stop reporting. Via `save-p
 ## Output
 
 Plain text, short lines, no tables, third person. Header, person lines, then up to three actions.
+Use the [portable choice controls](../../../references/interaction-controls.md) when an action
+needs a response.
 
 ## Worked example
 
@@ -126,13 +128,13 @@ Monday. Six reports, four lines survived:
 > Four things this week.
 >
 > - Your 1-on-1 with Priya is Wednesday and has no agenda yet — she's the one whose career
->   conversation is 9 weeks overdue. `[prep it]`
-> - Two of Tony's changes are waiting on your review, 6 and 4 days. `[open them]`
+>   conversation is 9 weeks overdue.
+> - Two of Tony's changes are waiting on your review, 6 and 4 days.
 > - Nadia shipped the checkout rewrite on the 12th and hasn't had recognition in 6 weeks.
->   `[draft recognition]`
-> - Sam's 1-on-1 was cancelled twice in a row. `[reschedule]`
+> - Sam's 1-on-1 was cancelled twice in a row.
 >
-> Suggested: prep Priya's Wednesday agenda, clear Tony's two reviews, send Nadia's recognition.
+> Offer a choice: prep Priya's Wednesday agenda, clear Tony's reviews, send Nadia's recognition,
+> or not now.
 
 Not in the brief: Marcus and Dana, because nothing actionable happened for them — and no line
 saying so. No counts of anything. No mention of the four projects that are progressing normally.

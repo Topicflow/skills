@@ -124,9 +124,9 @@ new-to list, `review-prep` reads all of it in six months.
 
 ## Output
 
-The captured baseline, the first agenda, the three check-in topics, then:
-
-`[write all topics]` `[edit]` `[draft the first goal too]`
+The captured baseline, the first agenda, and the three check-in topics. Then use the
+[portable choice controls](../../../references/interaction-controls.md) to offer write all topics,
+edit, or draft the first goal too.
 
 ## Worked example
 
@@ -158,7 +158,7 @@ compliance review process, and she's never been on an on-call rotation.
 >   the first compliance review go?
 > - Oct 24 (day 60): Is the scope right? And book the first career conversation.
 >
-> `[write all topics]` `[edit]` `[draft a 30-day goal too]`
+> Offer a choice: write all topics, edit them, or draft a 30-day goal too.
 
 Note that topic 4 exists at all. The manager arrives at the first meeting with two commitments
 of their own, both aimed at the two things Nadia is new to (P14, P16). And no topic anywhere

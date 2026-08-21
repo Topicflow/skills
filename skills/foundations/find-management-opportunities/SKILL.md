@@ -78,8 +78,9 @@ win, an at-risk or poorly shaped goal, or a manager promise. Spread attention wh
 supports it, but do not manufacture one action per person.
 
 **6. Hand off, do not take over.** For each retained opportunity, name the focused skill that will
-prepare the action. Ask which clearly labelled action to start; never tell the manager to type or
-run another command. Nothing is written without that skill's preview and approval.
+prepare the action. Ask which action to start through the portable choice controls; never tell the
+manager to type or run another command. Nothing is written without that skill's preview and
+approval.
 
 **7. Keep durable facts.** Offer confirmed preferences, aspirations, and maturity observations to
 `save-private-note`. A silent or narrow review still keeps its durable facts; it does not produce
@@ -127,12 +128,9 @@ Start with one plain sentence describing the scope and any unreadable lens. Then
 - **Person — opportunity.** The observed fact, why the manager's attention matters, and the one
   focused action to start.
 
-End by asking which action to begin. Offer one labelled choice per retained action plus `Not now`;
-where choice controls are available, the labels render as buttons:
-
-What would you like me to start?
-`[Prepare a 1-on-1]` `[Draft recognition]` `[Shape a goal]` `[Start a report interview]`
-`[Not now]`
+End by asking which action to begin. Follow the
+[portable choice controls](../../../references/interaction-controls.md): one action per option,
+plus `Not now`.
 
 ## Worked example
 
@@ -149,7 +147,5 @@ done that before. Pick one bounded first project and agree what support the mana
 introduce Priya to the data team, and Wednesday has no agenda topic for it. Close the loop before
 moving to new status.
 
-What would you like me to start?
-
-`[Draft recognition for Nadia]` `[Interview Sam about support]`
-`[Prepare Priya's 1-on-1]` `[Not now]`
+Offer a choice: draft recognition for Nadia, interview Sam about support, prepare Priya's 1-on-1,
+or not now.

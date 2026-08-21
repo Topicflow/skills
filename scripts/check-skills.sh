@@ -127,6 +127,12 @@ while IFS= read -r skill_md; do
   if grep -q '^|' "$skill_md"; then
     err "contains a markdown table; output must survive Slack mrkdwn (convention 5)"
   fi
+  if ! grep -q 'interaction-controls.md' "$skill_md"; then
+    err "does not link the portable interaction-controls.md contract"
+  fi
+  if grep -q '\`\[' "$skill_md"; then
+    err "contains a bracketed pseudo-button; use the portable choice controls instead"
+  fi
 
   # --- practice in Method, calls in Sources (convention 2) ---------------
   # Skills name Topicflow calls directly — one hop, traceable. But the *practice*
@@ -173,7 +179,7 @@ done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -
 # --- repo-level checks ---------------------------------------------------
 printf '\n--- repo ---\n'
 for f in references/management-rules.md references/library-conventions.md \
-         references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
+         references/interaction-controls.md references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
   [ -f "$REPO/$f" ] || err "missing $f"
 done
 

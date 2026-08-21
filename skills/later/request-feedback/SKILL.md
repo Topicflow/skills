@@ -111,9 +111,9 @@ writers rather than asking the same three people forever. Via `save-private-note
 
 ## Output
 
-The writer list with reasons, the questions, then:
-
-`[send all]` `[edit the list]` `[edit the questions]`
+The writer list with reasons and the questions. Then use the
+[portable choice controls](../../../references/interaction-controls.md) to offer send all, edit
+the list, or edit the questions.
 
 ## Worked example
 
@@ -137,7 +137,7 @@ The writer list with reasons, the questions, then:
 >
 > Each note says the input is for his Q3 review and that you'll read it.
 >
-> `[send all]` `[edit the list]` `[edit the questions]`
+> Offer a choice: send all, edit the list, or edit the questions.
 >
 > Worth telling Tony you're collecting this before it lands in his inbox.
 

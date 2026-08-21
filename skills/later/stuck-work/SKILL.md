@@ -130,9 +130,9 @@ it never surfaces again. Via `save-private-note`.
 
 ## Output
 
-Fact, why, actions. Plain text, no tables, third person.
-
-`[draft a check-in]` `[add to the next 1-on-1]` `[ignore this item]`
+Fact, why, actions. Plain text, no tables, third person. Use the
+[portable choice controls](../../../references/interaction-controls.md) to offer draft a check-in,
+add to the next 1-on-1, or ignore this item.
 
 ## Worked example
 
@@ -142,7 +142,7 @@ Daily routine. Two items pass, one is about the manager:
 >
 > He's been blocked on you, not stalled. Both are ahead of anything else in his queue.
 >
-> `[open them]` `[tell him when you'll get to them]`
+> Offer a choice: open the reviews, tell Tony when the reviews will happen, or dismiss.
 >
 > Nadia's compliance-review ticket has been in progress 16 days, with no movement since 4 Aug.
 >
@@ -153,7 +153,7 @@ Daily routine. Two items pass, one is about the manager:
 > "How's the compliance review going — anything in the way? Happy to walk through the process
 > with you if it's the paperwork rather than the code."
 >
-> `[send this]` `[add to the next 1-on-1]` `[ignore this item]`
+> Offer a choice: send this check-in, add it to the next 1-on-1, or ignore this item.
 
 Note three things. The manager's own queue is reported first, because it is the cheapest fix and
 the most common cause. Nadia's draft offers a specific kind of help based on what she is new to

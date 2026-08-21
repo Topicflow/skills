@@ -62,8 +62,8 @@ first response to a report's problem becomes one open question before any soluti
 - Run a guided interview about one direct report → `direct-report-interview`
 - Step back and choose the top actions across direct reports → `find-management-opportunities`
 
-Name one. When two could fit, say the one-line difference and let the manager choose a labelled
-action. Never make the manager translate the recommendation into a command.
+Name one. When two could fit, say the one-line difference and let the manager choose through the
+portable choice controls. Never make the manager translate the recommendation into a command.
 
 **4. Answer a practice question.** Find the relevant rules, answer in plain language with one
 concrete example, and offer the skill that applies it. "How do I run a good 1-on-1?" becomes the
@@ -104,11 +104,7 @@ Nothing. This skill learns about the library, not about people.
 ## Output
 
 The answer in a few short lines, then one clear choice. Ask whether to start the recommended
-action now; where choice controls are available, the labels render as buttons:
-
-Would you like me to prepare the next 1-on-1 with Tony now?
-
-`[Yes — prepare Tony's 1-on-1]` `[Not now]`
+action now through the [portable choice controls](../../../references/interaction-controls.md).
 
 ## Worked example
 
@@ -124,9 +120,7 @@ the right move?
 > A direct report interview can clarify what Sam is new to and what support he wants. It will turn
 > that into a manager commitment and a 1-on-1 topic.
 >
-> Would you like me to start that interview about Sam now?
->
-> `[Yes — interview about Sam]` `[Not now]`
+> Offer a choice: start that interview about Sam now, or not now.
 
 Note what the skill did not do: it did not write the next 1-on-1 topic or invent a plan for Sam.
 Those belong to the focused skill, with its own checks.

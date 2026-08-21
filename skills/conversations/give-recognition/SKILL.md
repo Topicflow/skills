@@ -121,9 +121,9 @@ a named, dated contribution is exactly what a review needs in three months. Via
 
 ## Output
 
-The draft in plain text, then:
-
-`[send]` `[edit]` `[send privately instead]` `[skip]`
+The draft in plain text, then use the
+[portable choice controls](../../references/interaction-controls.md) to offer send, edit, send
+privately instead, or skip.
 
 ## Worked example
 
@@ -144,7 +144,7 @@ otherwise. no idea on public/private.
 > weekday evening. He went straight to the traffic pattern instead of the obvious suspects,
 > which is why it was ten minutes and not sixty.
 >
-> `[send]` `[edit]` `[send publicly instead]` `[skip]`
+> Offer a choice: send it, edit it, send it publicly instead, or skip.
 >
 > One thought while you're here: the record shows Nadia's last recognition was 2 Jul — seven
 > weeks, with real history before it — and she carried the checkout rewrite this month. Worth a
