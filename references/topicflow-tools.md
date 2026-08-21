@@ -84,8 +84,8 @@ per change, but one approval from the manager covers the batch they approved.
   `operation` defaults to `append`; use `replace` only when the manager asks to overwrite.
   `notes_type` defaults to `auto`. **Treat every value as shared: 1-on-1 meeting notes are
   visible to the other participant.** This tool writes to the meeting, and the meeting belongs to
-  both people in it. Never put a manager-private observation here — that is what private notes are
-  for, and they are not built yet.
+  both people in it. Never put a manager-private observation here — that is what private notes
+  are for.
 - **`create_feedback(title, description, recipient_*?, sender_*?, recipients_can_view?, recipients_managers_can_view?, admins_can_view?, is_draft?)`**
   — two modes. *Giving* feedback: set `recipient_*` to the person it is about.
   *Requesting* feedback: set `sender_*` to the person you are asking to **write** it and
@@ -110,36 +110,43 @@ per change, but one approval from the manager covers the batch they approved.
 
 ## Gaps and fallbacks
 
-Four tools this library wants and does not have. Build order matters: (1) blocks a
-library-wide rule, the rest degrade.
+**Shipping in the 2026-08 MCP update** ([TF-1595](https://linear.app/topicflow/issue/TF-1595),
+with [TF-1596](https://linear.app/topicflow/issue/TF-1596) folded in): **private notes — read,
+create, and delete** — and the **recognition read**. The update does **not** ship AI-memory
+access, and none is planned: what a skill knows about a person is what the private notes hold.
+Deployments that predate the update lack these tools; the fallbacks below stay for them.
 
-**1. `save_private_note(person, text)` — P0.** Blocks library convention 3 (write-back). Private
-notes are scoped to the current user; nothing here holds them today.
-**In dev: [TF-1595](https://linear.app/topicflow/issue/TF-1595).** *Fallback until it lands:*
-produce the note text in third person and hand it to the manager to keep. **There is no second
-option.** Meeting notes are shared with the other participant, so they are not a private store, and
-a manager-private observation must never be written there.
+**Private notes.** Scoped to the current user. The write is `save_private_note`; take the read
+and delete names from the live tool list once the update is merged — never guess a tool name.
+*Fallback where the tools are absent:* produce the note text in third person and hand it to the
+manager to keep. **There is no second option.** Meeting notes are shared with the other
+participant, so they are not a private store, and a manager-private observation must never be
+written there.
 
-**2. `get_person_context(person, since)`.** A curated synthesis: role, current focus,
+**`list_recognitions`.** Was registered but scope-gated behind `recognitions:read`, so it never
+appeared to any client; the update ships the scope. Recognition is **not** carried by
+`list_feedback` — a live check confirmed it. *Where absent:* recognition recency is unreadable —
+no drought claim, no equity claim; ask the manager instead. **The general lesson outlives the
+fix:** a scope-gated tool is invisible, and "not there", "returned nothing", and "nothing ever
+happened" look identical from a client. So a drought is never claimed on an unverified empty,
+even with the read live — a record nobody has written to yet has no history to measure.
+
+Two tools remain wanted and missing:
+
+**1. `get_person_context(person, since)`.** A curated synthesis: role, current focus,
 recent work, open items. *Fallback:* compose it — `get_user_infos` +
 `query_external_events` + `list_goals(owners=id)` + `list_meetings(is_oneonone=true,
 with_notes_and_transcript=true, limit=2-3)`. Four calls instead of one; resolve the ID
 first so all four hit the right person.
 
-**3. `read_ai_memory(person?)`.** Durable observations and facts. **Also in
-[TF-1595](https://linear.app/topicflow/issue/TF-1595)**, which opens up memory and profile notes
-alongside note saving. *Fallback until it lands:* past 1-on-1 topic notes via
-`list_meetings(with_notes_and_transcript=true)`, plus asking the manager once. Without it,
-"unknown" and "not true" are indistinguishable — so for preference questions (P9), ask rather
-than guess, and never report an absence as a fact.
+When the update reaches a deployment, the skills that shed the heaviest workarounds are
+`save-private-note` (the fallback ladder collapses to one call), `give-recognition` (preference
+looked up from notes instead of asked every time), and `interview-me` (its answers get a durable
+home, and it stops re-asking what a note already holds). It also unblocks the parked
+`recognition-scan` — evidence at last — and gives the other detectors a note ledger that makes
+cross-run cooldowns enforceable.
 
-When TF-1595 ships, the skills that carry the heaviest workarounds are `save-private-note` (the
-whole fallback ladder collapses to one call), `give-recognition` (preference lookup instead of a
-private-by-default guess), and `interview-me` (its answers get a durable home). It also unblocks
-the parked detectors in `skills/later/` — a real ping ledger makes their cross-run cooldowns
-enforceable.
-
-**4. `list_action_items(person)`.** Open action items across 1-on-1s. *Mostly covered:*
+**2. `list_action_items(person)`.** Open action items across 1-on-1s. *Mostly covered:*
 `list_meetings(with_notes_and_transcript=true)` returns topics and notes, so action items
 are readable from the last two or three meetings — that is what `prep-1on1` does. A
 dedicated tool would remove the keyword-scanning and the recency window.
@@ -150,20 +157,6 @@ dedicated tool would remove the keyword-scanning and the recency window.
   last quarter" from the API alone: list what is open with status, then ask the user what
   closed, and mark it as an evidence gap rather than reporting zero. `create-goal` also cannot
   tell a missing goal from a closed one — it asks.
-- **`list_recognitions` exists but is currently unreachable.** It is registered in the tool
-  registry and requires the OAuth scope `recognitions:read`, which is missing from the
-  server's supported scopes — so no client can hold it, and the tool never appears in
-  `tools/list`. From a client the effect is that recognitions can be **created and edited but
-  not read**. Tracked in [TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
-  [TF-1595](https://linear.app/topicflow/issue/TF-1595).
-  Recognition is **not** carried by `list_feedback` — a live check found feedback
-  and feedback requests there and no recognitions, which is consistent with them living
-  behind their own tool. Until the scope ships, treat recognition recency as unreadable and
-  say so, rather than pinging on a false drought.
-  **The general lesson, worth keeping after this is fixed:** a tool that is scope-gated is
-  invisible, and from the client side "the tool is not there", "the tool returned nothing",
-  and "nothing has ever happened" look identical. That is why the drought conclusion is withheld on
-  an unverified empty result rather than trusted.
 - **No calendar write.** Nothing here schedules, reschedules, or cancels a meeting. A
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.

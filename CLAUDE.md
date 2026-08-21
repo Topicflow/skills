@@ -15,7 +15,8 @@ a wrong sentence in a SKILL.md is a bug that ships to every manager using it.
    Topicflow call that serves each one, and **the claim a skill must stop making when that call
    fails or returns empty**. Skills name these calls directly: one hop, traceable.
 4. [references/topicflow-tools.md](./references/topicflow-tools.md) — full parameters, the
-   preview-then-confirm write pattern, and the four tools this library wants and does not have.
+   preview-then-confirm write pattern, the tools shipping in the 2026-08 MCP update, and the
+   two still missing.
    **Never invent a tool or a parameter.** Where nothing serves a job, the job is unbound — a real
    answer, and the withheld conclusion applies as written.
 
@@ -111,10 +112,11 @@ the Method is good management practice. That is what review is for.
 
 ## Common mistakes
 
-- **Inventing tools.** `save_private_note` and `read_ai_memory` do not exist yet — both are in dev
-  in [TF-1595](https://linear.app/topicflow/issue/TF-1595). A skill may reference them as the
-  intended path, but must always say what to do today. When TF-1595 lands, revisit the fallback
-  ladders rather than deleting them: self-hosted and older deployments will still hit them.
+- **Inventing tools.** The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595))
+  ships private-note read/create/delete and the recognition read — take exact tool names from the
+  live tool list, never guess one. **There is no AI-memory access and none is planned: no skill or
+  doc refers to it.** Keep the fallback ladders rather than deleting them: self-hosted and older
+  deployments still hit them.
 - **Letting a missing source become a negative finding.** "No recognition found" and "recognition
   history unreadable" are different claims, and conflating them produces false alarms about real
   people.

@@ -61,20 +61,24 @@ and one guess.
 should be saved twice, and a fact that *contradicts* a known one is the interesting case:
 save the new one and note that it supersedes, do not silently overwrite.
 
-**4. Hand it over.** There is nowhere private to file it yet (see Sources), so give the manager
-the sentence to keep and say plainly that it was not filed.
+**4. File it.** Save it with the note write. Where the write is absent (see Sources), give the
+manager the sentence to keep and say plainly that it was not filed.
 
-**5. Receipt.** One line, and it says which of the two happened: "Keep this for Tony's file: prefers
-private recognition — I can't file it yet." Then return to whatever the manager was doing.
+**5. Receipt.** One line, and it says which of the two happened: "Saved to Tony's file: prefers
+private recognition" — or, where filing is impossible, "keep this one, I can't file it here."
+Then return to whatever the manager was doing.
 
 ## Sources
 
-**Private notes — and there is no tool for them yet.** `save_private_note` and AI-memory access are
-in dev in [TF-1595](https://linear.app/topicflow/issue/TF-1595). Details and what each of the eight
-sources withholds: [data-sources.md](../../../references/data-sources.md).
+**Private notes — read, create, and delete ship in the 2026-08 MCP update**
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)). The write is `save_private_note`; take
+the read and delete names from the live tool list — never guess a name. There is no AI-memory
+layer: what the notes hold is all this skill knows. Withheld conclusions:
+[data-sources.md](../../../references/data-sources.md).
 
-**What to do today, and there is only one option.** Produce the sentence in third person and hand it
-to the manager to keep. Do not look for somewhere else to put it.
+**Where the update has not reached the deployment, there is only one option.** Produce the
+sentence in third person and hand it to the manager to keep. Do not look for somewhere else to
+put it.
 
 **1-on-1 meeting notes are not a fallback.** They are shared with the other participant, so
 `edit_meeting_topic_notes` writes where the report can read. A maturity observation or a preference
@@ -88,8 +92,9 @@ still kept, a fact silently dropped is not.
 **The receipt says which happened.** "Keep this for Tony — I can't file it yet" is a complete
 receipt. Silence is not, and "saved" when nothing was saved is worse than either.
 
-**When TF-1595 lands**, this becomes one call and the write-back convention starts working across
-the whole library. Until then every skill's write-back ends here.
+**With the update live**, the write-back convention works across the whole library — every
+skill's write-back ends here, in one call. The read makes dedup and supersede real: check before
+saving, and never silently delete what a new fact contradicts.
 
 ## Gate
 
@@ -100,7 +105,7 @@ Not applicable — this skill is never run by a routine. It fires on what the ma
 A one-line receipt naming the person and the fact. Nothing else. If the fact was not saved
 because a tool was missing, the receipt says so and includes the text to keep:
 
-> Couldn't write to Tony's file (note saving isn't available yet). Keep this one:
+> Couldn't write to Tony's file (note saving hasn't reached this workspace). Keep this one:
 > "Tony prefers recognition privately rather than in a channel."
 
 ## Worked example

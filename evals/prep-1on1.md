@@ -54,8 +54,8 @@ goals, and feedback all work.
 - An agenda is still produced from meeting history, goals, and recency.
 - One line states that work signals are unavailable.
 - No topic implies knowledge of work activity that could not be read.
-- Career recency, which depends on the missing memory tool, is described as unknown rather than as
-  a confirmed gap.
+- Career recency, which is a keyword scan over past meeting notes, is described as unknown rather
+  than as a confirmed gap.
 
 **Fail.** Aborting the run. Inventing a work signal. Reporting "no activity this week" when the
 source was unreadable.

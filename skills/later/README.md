@@ -10,9 +10,10 @@ not exist yet, or a review-cycle skill that is not part of the weekly loop.
 
 What unblocks each one:
 
-- **recognition-scan** — needs the recognition read
-  ([TF-1596](https://linear.app/topicflow/issue/TF-1596)). Without it, a drought cannot be
-  verified, and the skill's own strictest rule keeps it silent.
+- **recognition-scan** — needed the recognition read, and the 2026-08 MCP update ships it
+  ([TF-1596](https://linear.app/topicflow/issue/TF-1596)). Now blocked only on a scheduler for
+  routine mode. Before reactivating: revisit its eval cases that assert silence, and verify
+  emptiness as real history before ever measuring a drought.
 - **relationship-drift**, **stuck-work**, **weekly-brief** — need a scheduler for routine mode,
   and [TF-1595](https://linear.app/topicflow/issue/TF-1595) for cross-run ping cooldowns. On
   demand they work today, but on demand is exactly when a detector is least useful.

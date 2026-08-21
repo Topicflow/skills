@@ -19,8 +19,9 @@ the Topicflow calls it makes — read a skill and you know exactly what it does,
 
 Eight kinds of data sit underneath: **people, meetings, meeting agenda, work, goals, feedback,
 recognition, private notes.** Each one names the call that serves it and, more importantly, **the
-claim a skill must stop making when that call comes back empty**. Two of the eight have no working
-read today, and the skills say so out loud rather than guessing. See
+claim a skill must stop making when that call comes back empty**. Where a deployment cannot serve
+one — recognition and private notes only gained their tools in the 2026-08 MCP update — the
+skills say so out loud rather than guessing. See
 [references/data-sources.md](./references/data-sources.md).
 
 ## Quickstart
@@ -54,13 +55,14 @@ configure. Not sure what is here? Type `/ask-topicflow`.
 
 Three things worth knowing before you start, so nothing is a surprise:
 
-- **Recognition cannot be read back.** You can send it; the permission to list it isn't available
-  to any client yet ([TF-1596](https://linear.app/topicflow/issue/TF-1596)). So no skill here will
-  ever claim someone is overdue for recognition — when it matters, it asks your memory instead.
-- **Private notes have nowhere to go yet** ([TF-1595](https://linear.app/topicflow/issue/TF-1595)).
-  "Remember that about Tony" ends with the sentence handed to you to keep. 1-on-1 meeting notes are
-  *not* used as a stand-in — those are shared with the other person, and a private observation does
-  not belong there.
+- **Recognition and private notes just gained their tools.** The 2026-08 Topicflow MCP update
+  ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
+  [TF-1596](https://linear.app/topicflow/issue/TF-1596)) ships the recognition read and
+  private-note read, create, and delete. On a workspace that predates the update, the skills fall
+  back honestly: nothing is ever claimed about recognition history, and "remember that about
+  Tony" ends with the sentence handed to you to keep.
+- **1-on-1 meeting notes are never used as a private store.** They are shared with the other
+  person, whatever the deployment — a private observation does not belong there.
 - **A bare agent still works.** `give-feedback`, `give-recognition`, and the drafting half of
   every other skill run from the conversation alone. The draft was always the valuable part.
 
@@ -92,8 +94,9 @@ Three things worth knowing before you start, so nothing is a surprise:
   (P1-P17) as pass/fail checks. Every other skill runs them on its own drafts before you see them.
 - **[save-private-note](./skills/foundations/save-private-note/SKILL.md)** — catch the durable
   fact the moment it is said ("she hates public praise") and restate it in one third-person
-  sentence. Filing it needs [TF-1595](https://linear.app/topicflow/issue/TF-1595); until then it
-  hands you the sentence.
+  sentence. Filing needs the 2026-08 MCP update
+  ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); on older workspaces it hands you the
+  sentence.
 - **[ask-topicflow](./skills/foundations/ask-topicflow/SKILL.md)** — user-invoked
   (`/ask-topicflow`). The map: which skill fits the moment, what good practice says, and what
   these skills can and cannot see in your account.
@@ -101,9 +104,10 @@ Three things worth knowing before you start, so nothing is a surprise:
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
 Seven more skills — team detectors (stuck work, relationship drift, recognition equity, a weekly
-brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. Each
-needs something that does not exist yet: a scheduler for routine runs, the recognition read, or
-private notes. [skills/later/README.md](./skills/later/README.md) says what unblocks each one;
+brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. The
+main thing they wait on is a scheduler for routine runs; the recognition read they also needed
+ships in the 2026-08 MCP update.
+[skills/later/README.md](./skills/later/README.md) says what unblocks each one;
 the backlog lives in [TF-1599](https://linear.app/topicflow/issue/TF-1599).
 
 ## How to use them
@@ -228,9 +232,9 @@ Version 0.2.0 — the v1 cut: nine skills covering the core performance workflow
 every one ending in a Topicflow write that works today. Seven further skills are parked in
 [skills/later/](./skills/later) until the infrastructure they need exists.
 
-The dependency that matters most is `save_private_note` and AI-memory access, in dev in
-[TF-1595](https://linear.app/topicflow/issue/TF-1595). Until it ships, "remember this about Tony"
-ends with the agent handing you the sentence to keep rather than filing it. Full list, with the
-fallback each skill uses today: [references/topicflow-tools.md](./references/topicflow-tools.md).
+The 2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)) ships the
+dependencies that mattered most: private-note read, create, and delete, plus the recognition
+read. The skills keep their fallbacks for deployments that predate it. Full list, with the
+fallback each one uses: [references/topicflow-tools.md](./references/topicflow-tools.md).
 
 MIT licensed. Use them, fork them, make them yours.

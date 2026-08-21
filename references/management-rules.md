@@ -24,7 +24,7 @@ Sources verified 2026-08; URLs in the footer.
 *Sources: Gallup / Workhuman research (5 pillars, 2024 turnover study).*
 
 - **P8 — Specific and timely.** Recognition names the exact contribution and why it mattered, close to the event. Generic praise ("great job!") fails this rule.
-- **P9 — Personalized.** Respect the person's public-vs-private preference. Store it in memory; ask once if unknown.
+- **P9 — Personalized.** Respect the person's public-vs-private preference. Keep it on file; ask once if unknown.
 - **P10 — Equitable.** Check distribution across all reports. The drought detector (no recognition in 4+ weeks) is an equity rule, not just a nudge. Target: meaningful recognition roughly weekly across the team. High-quality recognition correlates with ~45% lower turnover risk.
 
 ## Goals

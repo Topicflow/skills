@@ -52,9 +52,9 @@ section.
 
 **3. Write-back to private notes.** Anything durable learned during a run — from the manager's
 words or from a tool — gets kept. This holds even when the run ends in silence: a finding
-nobody was pinged about is still worth keeping for review time. There is no private-note tool
-yet ([TF-1595](https://linear.app/topicflow/issue/TF-1595)), so today that means producing the
-note text and saying plainly it was not filed. **Meeting notes are not a fallback** — they are
+nobody was pinged about is still worth keeping for review time. The private-note tools ship in the
+2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595)); where a deployment
+predates it, that means producing the note text and saying plainly it was not filed. **Meeting notes are not a fallback** — they are
 shared with the report. See the `save-private-note` skill.
 
 **4. Confirm once.** Every Topicflow write tool is a two-step: the write tool returns a
@@ -99,8 +99,9 @@ the manager.
 
 ## Degrading gracefully
 
-Calls fail, return empty, or are missing entirely more often than you would like — two of the
-eight have no working read today. When that happens: continue with what is available, **say what
+Calls fail, return empty, or are missing entirely more often than you would like — recognition
+and private notes only gained their tools in the 2026-08 MCP update, and older deployments lack
+them. When that happens: continue with what is available, **say what
 was missing in one line**, and lower the confidence of the affected finding — never fail the whole
 run, never silently pretend the gap is a negative result ("no recognition found" is different from
 "recognition history unreadable"). The manager should never have to guess how much the skill could

@@ -36,8 +36,8 @@ the file that other skills read.
 
 ### Case 3 — graceful-fail path: no note tool exists
 
-**Setup.** `save_private_note` is unavailable — the current state of the world. Tony has an active
-1-on-1 with topics and notes, so there is a tempting place to write.
+**Setup.** `save_private_note` is unavailable — a deployment predating the 2026-08 MCP update.
+Tony has an active 1-on-1 with topics and notes, so there is a tempting place to write.
 
 **Input.** "Priya really doesn't like being praised in public, keep it 1:1"
 

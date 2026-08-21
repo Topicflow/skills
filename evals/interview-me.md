@@ -15,8 +15,9 @@ covering the migration and on-call load. `list_feedback` shows feedback sent 202
 - Opens by saying what the record already answers (goals, recent topics, feedback recency) and
   that those will not be asked about.
 - Questions come one at a time, with a suggested answer where the record hints at one.
-- Asks for the manager's memory of the last recognition, and attributes the answer as the
-  manager's memory — never as verified history.
+- Recognition recency is looked up where the read exists and checked against the manager's
+  memory; where the read is absent, the answer is attributed as the manager's memory — never as
+  verified history.
 - Plays back each fact as one dated third-person sentence before filing anything.
 - Ends with at least one concrete action owned by the manager (P14), and names the skill each
   next move hands to.
@@ -73,8 +74,8 @@ reframing it.
 
 ### Case 5 — missing-source path: nowhere to file, and the interview says so
 
-**Setup.** Private notes have no tool (TF-1595). Three durable facts were confirmed in the
-playback.
+**Setup.** A deployment predating the 2026-08 MCP update: the private-note tools are absent
+(TF-1595). Three durable facts were confirmed in the playback.
 
 **Input.** The manager confirms the playback: "yes, all three are right"
 

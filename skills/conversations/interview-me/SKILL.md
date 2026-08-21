@@ -55,8 +55,8 @@ not be asked because the record already answers it.
 - *The new-to list* — what they have done many times, what they are doing for the first time
   (P16).
 - *Aspirations* — where they want to go, what they want to learn (P13).
-- *The manager's memory of recognition* — when they last recognized this person. There is no
-  recognition read, so the manager's answer is the only record.
+- *Recognition recency* — where the read exists, look it up and ask only about what it cannot
+  show; where it is absent, the manager's memory is the only record.
 - *Worries and commitments* — what the manager is watching, what either side has promised.
 
 **3. Interview.** One question at a time, suggested answer first where the record hints at one
@@ -72,7 +72,8 @@ intro the manager just promised. Name the skill each one hands to, and take at l
 that is the manager's own (P14).
 
 **6. File.** Agenda-safe items go to the next meeting, one approval. Private facts go via
-`save-private-note` — today that means handed back in one block, said plainly.
+`save-private-note`; where the note write is absent, they are handed back in one block, said
+plainly.
 
 **7. For a new report, add the onboarding set.** A first 1-on-1 about the person, not the work:
 their story, what they need in week one, how the two of them will work, what the manager owns.
@@ -97,13 +98,15 @@ conversation at day 60, P13).
 
 **Withheld.** Profile empty or unreadable → the interview covers the basics too, and says the
 lookup came back empty rather than pretending it was skipped. No meetings visible → skip the
-"already discussed" filter and say so. Recognition and private notes have no read at all — that
-is not a failure here, it is the reason this skill exists: the manager's memory is the source,
-and every such fact is dated as "stated by the manager", never presented as record.
+"already discussed" filter and say so. Where recognition or notes are unreadable (deployments
+predating the 2026-08 update), the manager's memory is the source, and every such fact is dated
+as "stated by the manager", never presented as record. Where the reads exist, look up first —
+the interview covers only what the record still cannot say.
 
-**Filing.** Private facts have nowhere to go until
-[TF-1595](https://linear.app/topicflow/issue/TF-1595) — hand the block back and say it was not
-filed. Agenda topics only go to meetings that exist; nothing schedules one.
+**Filing.** Private facts file via `save-private-note` (tools ship in the 2026-08 update,
+[TF-1595](https://linear.app/topicflow/issue/TF-1595)); where a deployment predates it, hand the
+block back and say plainly it was not filed. Agenda topics only go to meetings that exist;
+nothing schedules one.
 
 ## Gate
 
@@ -133,8 +136,8 @@ named with its owner), and what was filed versus handed back. Then:
 maintenance work, has two open goals (both on track, checked in this month), and your last three
 1-on-1s covered the migration and his on-call load. Career hasn't come up since April.
 
-First question: when did you last recognize Sam for something? I can't see recognition history,
-so your memory is the only record.
+First question: the recognition record shows nothing sent to Sam since 12 March. Does that
+match your memory, or has anything happened outside the record?
 
 **Manager:** honestly, can't remember. probably months
 
@@ -149,7 +152,7 @@ wanting to mentor someone junior
 > Three facts, dated today, stated by you:
 >
 > - Sam has run two production migrations (July 2026); no longer new to them.
-> - Sam has had no recognition in months, by your own memory.
+> - Sam's last recognition was 12 March — five months, record and memory agreeing.
 > - Sam wants to mentor someone junior — first time you've mentioned it.
 >
 > Next moves: draft a recognition for the July migrations now (`give-recognition`); add "who
@@ -160,6 +163,6 @@ wanting to mentor someone junior
 >
 > `[draft the recognition]` `[add the 1-on-1 topic]` `[keep the notes]`
 
-Note what did not happen: no question about his goals (the record answered them), and when the
-manager's memory said "months", that stayed *the manager's memory* — dated, attributed, and
-turned into an action rather than reported as a verified drought.
+Note what did not happen: no question about his goals (the record answered them), and the
+record's silence since March was checked against the manager's memory before it became a
+five-month gap — a record can miss what happened off the books.

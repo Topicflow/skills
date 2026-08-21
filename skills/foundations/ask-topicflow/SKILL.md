@@ -6,8 +6,8 @@ disable-model-invocation: true
 
 # Ask Topicflow
 
-The router. Nine skills is enough to forget which one does what, and the honest limits — two
-kinds of data have no working read — are easy to lose track of. This skill answers "what can you
+The router. Nine skills is enough to forget which one does what, and the honest limits — what
+your deployment's tools can and cannot show — are easy to lose track of. This skill answers "what can you
 do?", "which one do I use?", and "what does good practice say?" from the library's own
 references, and then offers to start the right skill.
 
@@ -30,10 +30,10 @@ a user needs from it. Rules: [management-rules.md](../../../references/managemen
   gives one concrete example. Never improvise management advice the references do not support.
 - **Route, do not run.** Name the one skill that fits, say why in a sentence, offer to start it.
   Half-running another skill's Method inline produces its output without its checks.
-- **Be plain about the two gaps.** Recognition cannot be read back
-  ([TF-1596](https://linear.app/topicflow/issue/TF-1596)) and private notes have nowhere to go
-  ([TF-1595](https://linear.app/topicflow/issue/TF-1595)). Name them whenever they are relevant,
-  without softening.
+- **Be plain about the limits.** The recognition read and the private-note tools ship in the
+  2026-08 MCP update ([TF-1595](https://linear.app/topicflow/issue/TF-1595) /
+  [TF-1596](https://linear.app/topicflow/issue/TF-1596)); deployments that predate it lack both,
+  and no deployment has AI-memory access. Name what applies, without softening.
 - **No plumbing.** Capabilities in plain words — never call names, parameters, or file paths.
 - One answer, one action. Not a brochure.
 
@@ -59,8 +59,9 @@ Name one. When two could fit, say the one-line difference and let the user pick.
 language with one concrete example, and offer the skill that applies it. "How do I run a good
 1-on-1?" is P1-P4 plus an offer to prep the next one.
 
-**4. "Why didn't that work" → the honest map.** Recognition history unreadable; private notes
-unfileable; only open goals retrievable; nothing schedules a meeting. Say which one bit, what
+**4. "Why didn't that work" → the honest map.** Only open goals retrievable; nothing schedules
+a meeting; on deployments predating the 2026-08 update, recognition history unreadable and
+private notes unfileable. Say which one bit, what
 that means for the answer they got, and what fixes it (usually: it ships, nothing to do). For
 "what can you see in my account", offer to test it: one real probe per source they ask about,
 reported as worked / empty / errored — kept apart, because empty and errored need different
@@ -109,11 +110,11 @@ The answer in a few short lines, then one action — usually starting the skill 
 > ("great job on the launch" won't be sent as-is), and match her public-or-private preference —
 > if you don't know it, it asks once and remembers.
 >
-> One honest limit: I can't see past recognitions, so if you're wondering whether Marta is
-> overdue, your memory is the only record of that today.
+> One honest note: whether Marta is overdue is measurable from the recognition record — that is
+> give-recognition's first look, not a guess it will make.
 >
 > `[start give-recognition for Marta]` `[show the full catalog]`
 
-Note what the skill did not do: it did not draft the recognition itself — that is
-`give-recognition`'s job, with its own checks — and it did not pretend it could see whether
-Marta had been recognized before.
+Note what the skill did not do: it did not draft the recognition itself, and it did not check
+the recognition record itself — both belong to `give-recognition`, with its own checks. Route,
+do not run.

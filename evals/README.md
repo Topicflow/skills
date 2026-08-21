@@ -18,7 +18,8 @@ Every skill file has at least these, in this order:
    skill either fixes it before showing it or asks the question that fixes it. Showing a
    non-conformant draft with a caveat is a fail.
 5. **Missing-source path** — **one of the eight sources is unavailable, errors, or returns empty.**
-   Two of them have no working read at all today, so this is the normal case, not the edge one. The
+   Recognition and private notes only gained their tools in the 2026-08 MCP update, so on many
+   deployments this is still the normal case, not the edge one. The
    skill must do the most the remaining sources allow, name what was missing in one line, and never
    let an absent source become a claim about a person. Three ways to fail: stopping when it could
    have narrowed; substituting a source that cannot support the claim (meeting notes standing in for

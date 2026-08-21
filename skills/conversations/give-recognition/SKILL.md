@@ -53,10 +53,10 @@ finds public praise excruciating, a channel post is a cost, not a gift.
 **3. Check timeliness.** Under ~3 weeks: send. Older: say it is late, and offer either a
 short, honest version ("late but worth saying") or a spoken mention in the next 1-on-1.
 
-**4. From the manager's chair only, glance at distribution (P10).** Recognition history cannot
-be read, so this works from what the manager knows: if this is the second or third message for
-the same person in recent memory, ask in one line who else carried something lately. Do not
-block the send, and do not moralize. A peer or a report skips this step entirely.
+**4. From the manager's chair only, glance at distribution (P10).** From the recognition record
+where it is readable — a measured gap with real history behind it is worth one line. Where it is
+not readable, work from what the manager knows: ask in one line who else carried something
+lately. Do not block the send, and do not moralize. A peer or a report skips this step entirely.
 
 **5. Draft.** Two to four sentences, plain text:
 
@@ -86,13 +86,14 @@ visible to the recipient only rather than a broadcast recognition.
 - `create_recognition(title, recipient_id)` then `confirm_creation(pending_id, summary)` —
   **`title` is the message**, two to four sentences, plain text, no markdown. Never recognise
   the current user.
-- The public-or-private preference has nowhere to live yet (TF-1595), so it is asked, not
-  looked up.
+- The public-or-private preference lives in private notes: where the notes read exists, look it
+  up; where it does not, or nothing is on file, ask once and save the answer (P9).
 
-**Withheld, and it is absolute. There is no working recognition read** — `list_recognitions` is
-scope-gated and invisible to clients ([TF-1596](https://linear.app/topicflow/issue/TF-1596)). So:
-**no equity line and no drought claim from data, for anyone.** The distribution glance runs on
-the manager's own memory, and the output says so.
+**Withheld.** `list_recognitions` ships in the 2026-08 MCP update
+([TF-1596](https://linear.app/topicflow/issue/TF-1596)). Where it is absent, or an empty result
+cannot be verified as real history: **no equity line and no drought claim from data, for
+anyone** — the distribution glance runs on the manager's own memory, and the output says so.
+With a verified read, dates are citable and a measured gap is a legitimate one-line note.
 
 **No preference on file and the user cannot be asked → draft private and say why.** Never
 broadcast on a guess (P9).
@@ -106,8 +107,9 @@ sentences were always the whole product.
 ## Gate
 
 Not applicable — this skill only runs in chat today. The weekly equity detector
-(`skills/later/recognition-scan`) comes back when the recognition read ships
-([TF-1596](https://linear.app/topicflow/issue/TF-1596)); it will hand its findings here to draft.
+(`skills/later/recognition-scan`) is unblocked by the 2026-08 recognition read
+([TF-1596](https://linear.app/topicflow/issue/TF-1596)) and waits only on a scheduler; when
+reactivated, it hands its findings here to draft.
 
 Thresholds (tunable): `timeliness_weeks: 3`, `equity_note_after_repeats: 2`.
 
@@ -144,10 +146,12 @@ otherwise. no idea on public/private.
 >
 > `[send]` `[edit]` `[send publicly instead]` `[skip]`
 >
-> One thought while you're here: I can't see recognition history, so — anyone else carry
-> something this month that nobody has marked? Your memory is the only record of that today.
+> One thought while you're here: the record shows Nadia's last recognition was 2 Jul — seven
+> weeks, with real history before it — and she carried the checkout rewrite this month. Worth a
+> minute when you're done here.
 
 Note the three moves: the impact question turned "recognize Gavin" into a sentence with a
 number in it; the unknown preference became a private default plus a plan to ask (P9); and the
-equity check became a question to the manager, not a claim from data that does not exist (P10).
-A peer sending the same message would skip that last question — it is not their job.
+equity line is measured from the recognition record — real history, a real gap — never guessed
+(P10). On a workspace without the read, that line becomes a question to the manager's memory
+instead. A peer gets neither version — the glance is the manager's job.

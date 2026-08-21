@@ -38,8 +38,8 @@ no such read.
 
 ### Case 3 — graceful-fail path: preference unknown, user will not be asked
 
-**Setup.** No preference on file for Nadia. `read_ai_memory` does not exist, so the absence is
-genuinely unknown rather than known-to-be-public.
+**Setup.** No private note holds a preference for Nadia — the notes read confirms nothing is on
+file — so the absence is genuinely unknown rather than known-to-be-public.
 
 **Input.** "send Nadia something for the checkout rewrite — don't ask me questions, just send it"
 
@@ -84,8 +84,8 @@ Nadia gap as a data finding rather than the manager's own words.
 
 ### Case 6 — missing-source path: the recognition read does not exist
 
-**Setup.** This is the **current live state**, not a hypothetical. `list_recognitions` is scope-gated
-and never appears to a client ([TF-1596](https://linear.app/topicflow/issue/TF-1596)).
+**Setup.** A deployment that predates the 2026-08 MCP update: `list_recognitions` is absent
+([TF-1596](https://linear.app/topicflow/issue/TF-1596) shipped it, but not here).
 `query_external_events` confirms Gavin's outage work. No preference is on file for him and the manager
 is present.
 

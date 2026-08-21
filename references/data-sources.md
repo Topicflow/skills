@@ -104,31 +104,35 @@ against a live response.
 ## 7. Recognition
 
 Write `create_recognition(title, recipient_id)` — `title` is the message, 2-4 sentences, plain
-text. **There is no working read.** `list_recognitions` requires the OAuth scope
-`recognitions:read`, which the server does not offer, so the tool never appears to a client
+text. Read `list_recognitions` — **shipping in the 2026-08 MCP update**
 ([TF-1596](https://linear.app/topicflow/issue/TF-1596), folded into
-[TF-1595](https://linear.app/topicflow/issue/TF-1595)).
+[TF-1595](https://linear.app/topicflow/issue/TF-1595)); deployments that predate it do not have
+the read.
 
-*Withheld, and this is the strictest rule in the library:* **no drought finding and no recognition
-equity finding, for anyone.** Not "none found". Not a cautious hedge. Nothing. Report the wins that
-were found and ask the manager when they last recognised that person.
+*Withheld wherever the read is absent, errors, or returns an empty that cannot be verified as
+real history — and this is the strictest rule in the library:* **no drought finding and no
+recognition equity finding, for anyone.** Not "none found". Not a cautious hedge. Nothing. Report
+the wins that were found and ask the manager when they last recognised that person.
 
-From a client, "the tool is absent", "the tool returned nothing", and "nothing ever happened" are
-indistinguishable. That is why an empty result is never trusted as neglect. **The lesson outlives
-the fix:** when the scope ships, `recognition-scan` (parked in `skills/later/`) can come back and
-run on evidence — but the eval cases that currently assert silence need revisiting.
+Without a verified read, "absent", "returned nothing", and "nothing ever happened" are
+indistinguishable — an empty from a record nobody has written to yet is not a drought; verify
+there is history before measuring a gap in it. With the read live, `recognition-scan` (parked in
+`skills/later/`) can come back — its eval cases that currently assert silence need revisiting.
 
 ## 8. Private notes — what the manager knows and no system holds
 
-**There is no tool yet.** `save_private_note` and AI-memory access are in dev in
-[TF-1595](https://linear.app/topicflow/issue/TF-1595).
+**Read, create, and delete ship in the 2026-08 MCP update**
+([TF-1595](https://linear.app/topicflow/issue/TF-1595)). The write is `save_private_note`; take
+the read and delete names from the live tool list — never guess a tool name. There is **no
+AI-memory access**, and none is planned: what a skill knows about a person is what the notes
+hold, nothing more. Deployments that predate the update have none of the three.
 
 Private notes belong to the manager alone. **1-on-1 meeting notes are not a substitute** — those are
 shared with the other participant, so a manager-private observation put there is an observation the
 report can read.
 
-Until the tool lands, there is one honest path: produce the sentence in third person and hand it to
-the manager to keep. Do not look for somewhere else to put it.
+Where the update has not reached the deployment, there is one honest path: produce the sentence
+in third person and hand it to the manager to keep. Do not look for somewhere else to put it.
 
 *Withheld:* no read → dedup is impossible, so ask in half a sentence rather than duplicating, and
 **never report a fact as new**. No write → produce the sentence and say plainly it was not filed.

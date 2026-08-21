@@ -95,10 +95,10 @@ Parameters: [topicflow-tools.md](../../../references/topicflow-tools.md).
 **No call serves the person lane.** That is not a gap to route around — the lane exists to ask a
 human what no record can say. Never fill it with a work item because the work data is richer.
 
-**Withheld.** No recognition read exists: **never claim a drought** — from the manager's chair,
-ask. Empty feedback → never described as recent or overdue. No events → the work lane thins and
-one line says so; the other lanes are untouched. Career recency is a keyword scan — a miss is
-"unknown", never a confirmed gap.
+**Withheld.** A drought claim needs a verified recognition read: where the read is absent or an
+empty is unverified, ask instead (manager's chair). Empty feedback → never called recent or
+overdue. No events → the work lane thins and one line says so; other lanes untouched. Career
+recency is a keyword scan — a miss is "unknown", never a confirmed gap.
 
 **With nothing readable**, ask when they last met and what was left open, then draft from that.
 

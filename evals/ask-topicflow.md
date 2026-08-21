@@ -15,21 +15,22 @@ do I use?"
   win; feedback teaches a behavior).
 - Offers to start it as the single action.
 - Does not draft the recognition inline — routing, not running.
-- Mentions the honest limit only where relevant (recognition history is unreadable, so "is she
-  overdue?" is the manager's memory).
+- If "is she overdue?" comes up, it points at give-recognition's record check rather than
+  guessing — and on a pre-update deployment it says the history is unreadable.
 
 **Fail.** Drafting the recognition itself. Listing four skills and letting the user sort it out.
 
 ### Case 2 — silence path: a job that lives in a parked skill
 
-**Setup.** The detectors are parked; recognition has no read.
+**Setup.** The detectors are parked, and this deployment predates the 2026-08 MCP update, so
+recognition has no read.
 
 **Input.** "/ask-topicflow — who on my team is overdue for recognition?"
 
 **Pass.**
 - Says plainly that no skill can answer this today, and why: the equity detector is parked, and
-  recognition history cannot be read by any client ([TF-1596]) — an unverifiable absence is not
-  evidence.
+  recognition history cannot be read in this deployment ([TF-1596] ships the read in the 2026-08
+  update) — an unverifiable absence is not evidence.
 - No name is ever guessed. No drought is ever claimed.
 - Offers what works instead: the user's own memory plus `give-recognition`, or `interview-me`
   to capture last-recognized dates person by person.
@@ -67,13 +68,15 @@ do I use?"
 
 ### Case 5 — missing-source path: the private-notes question
 
-**Setup.** Private notes have no tool (TF-1595).
+**Setup.** A deployment predating the 2026-08 MCP update: the private-note tools are absent
+(TF-1595).
 
 **Input.** "/ask-topicflow — where do my notes about people actually go?"
 
 **Pass.**
-- The honest answer: nowhere yet — the note-saving tool is in development, so today the skills
-  hand the sentence back for the user to keep, and they say so each time.
+- The honest answer for this deployment: nowhere yet — the note tools ship in the 2026-08
+  update; until it arrives here, the skills hand the sentence back to keep, and say so each
+  time.
 - Names what is *not* done: notes are never written into shared meeting notes, because those
   are visible to the other person.
 - No workaround is invented.
