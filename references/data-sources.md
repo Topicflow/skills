@@ -18,6 +18,50 @@ skill: the person needs to connect Topicflow first.
 their own meetings, goals, and work need no IDs at all. A manager looking at a report passes the
 report's ID, and the sections below say where that matters.
 
+## 0. The organization — what this one calls things
+
+Not a ninth kind of data. It is the context that decides how the eight are *spoken about*, and it
+comes from one call, `get_organization_context()`. Make it **once per run**, before naming a
+feature or a core value, and reuse the answer.
+
+A live response, trimmed:
+
+```json
+{ "name": "Topicflow",
+  "labels": { "goal": "goal", "key_result": "key result", "oneonone": "1-on-1",
+              "recognition": "recognition", "review": "review", "team": "team",
+              "organization": "organization", "competency": "competency",
+              "conversation": "conversation",
+              "expectation": "alignment", "development": "reviews" },
+  "core_values": [ { "id": 444, "title": "Excellence", "description": "…", "status": "active" } ],
+  "features": { "goals": true, "action_items": true, "feedbacks": true,
+                "recognitions": true, "meetings": true },
+  "quarter_start_month": 1 }
+```
+
+**`labels` — say what the org says.** The keys are fixed; the values are not. Note the last two
+above: in Topicflow's own organization `expectation` reads "alignment" and `development` reads
+"reviews". So the key is never the label, not even at the vendor. An org that renamed goals to
+OKRs and recognition to kudos should read output in its own words, and the same mistake as calling
+work "tickets" on a sales team is calling a kudo a recognition. There is no label for feedback —
+that one is not renameable.
+
+**`features` — what the org actually uses.** Five booleans. A skill whose whole subject is
+switched off says so and stops rather than producing something nobody will see.
+**A feature being on does not mean a call exists**: `action_items` is `true` here and there is no
+action-item tool anywhere in the MCP. Features describe the product, not the API.
+
+**`quarter_start_month` — when "this quarter" ends.** `1` means calendar quarters. Anything else
+means a due date reasoned from the calendar is wrong, and a goal due "end of Q3" lands on the
+wrong day.
+
+**`core_values`** — `title` is what the recognition calls take; `status` separates active from
+retired. See section 7.
+
+*Withheld:* call fails → use the plain English words, do not claim they are the org's; skip any
+fiscal-quarter arithmetic and ask for the date instead; assume nothing about which features are
+on, which means a skill degrades to asking rather than to refusing.
+
 ## 1. People — who reports to you
 
 `get_user_infos(target_names)` for profiles, and `include_career_track: true` for level and next
