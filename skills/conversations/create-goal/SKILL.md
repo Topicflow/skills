@@ -73,9 +73,9 @@ goal written entirely by the manager fails P11 even when it is well written.
 
 **7. Preview and create.** Show the goal in plain text — outcome, key results with their
 `start → end` values and units, owner, due date, and derived progress type. One approval, then
-create it. Before the preview call, check that the live goal tool can set the KR values and the
-progress type. If it cannot, do not create a goal that will carry incorrect defaults: hand over
-the full draft and say which settings must be made in Topicflow.
+create it, with every value from the draft carried into the record. A goal created without its
+scales is a goal someone has to go and fix by hand, so the draft and the record say the same thing
+or the goal is not created.
 
 ## Sources
 
@@ -83,24 +83,32 @@ the full draft and say which settings must be made in Topicflow.
 [data-sources.md](../../../references/data-sources.md). Parameters:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
 
+- `get_organization_context()` — the org's word for a goal and a key result, and
+  `quarter_start_month`. **A fiscal year that does not start in January moves every quarter
+  boundary**, so "end of Q3" is a different date than the calendar says. One call, reused.
 - `list_goals(owners: <owner id>)` — the active count and overlap check. Defaults to the current
-  user's own goals; pass the report's ID when the goal is theirs.
+  user's own goals; pass the report's ID when the goal is theirs. Returns open goals by default;
+  `state: 2` returns closed ones, which is how "is this a duplicate of something they already
+  finished?" gets answered rather than guessed.
 - `create_goal(title, scope, key_results[], owner_*, due_date)` — `key_results` is required and
-  must be measurable (P11). When the live schema offers KR start/end values and a goal progress
-  type, populate them: use the real baseline and target for each quantitative KR, and **Average
-  Progress of Key Results & Aligned Goals** for the goal. `owner_*` defaults to the current user,
-  so **pass the report's ID** when the goal is theirs, or the manager becomes the owner by
-  accident.
+  must be measurable (P11). **Each one carries its own `start_value`, `target_value` and
+  `progress_type`**, so the real baseline and target go in the record, not just in the draft
+  text. Leave the three unset only where there is genuinely nothing to count, and use the boolean
+  type for a plain done / not-done. The goal's own `progress_type` derives from the key results —
+  do not set a manual one alongside them. `owner_*` defaults to the current user, so **pass the
+  report's ID** when the goal is theirs, or the manager becomes the owner by accident. A
+  team-scoped goal also needs its team named, or it belongs to no team.
 - `add_meeting_topics(meeting_id, topics)` — when the right move is "draft it together in the
   1-on-1" rather than creating it now.
 
-**Withheld.** Goals unreadable → the count check is impossible: say so in one line, ask what is
-open, and draft from the answer. Only open goals are retrievable → never claim this is someone's
-first goal, and never reason about what they completed before. If the goal tool does not expose
-KR baselines, targets, and a compatible progress type, do not fake them with undocumented
-parameters or generic `0/100` values; hand over the fully specified draft for the owner to set in
-Topicflow. If nothing can be created, the drafted goal is handed over as text — the shape was
-always the valuable part.
+**Withheld.** Org context unreadable → use the plain English words without claiming they are the
+org's, and ask for the due date outright rather than computing a quarter end. Goals unreadable →
+the count check is impossible: say so in one line, ask what is
+open, and draft from the answer. Closed goals unreadable → the duplicate check covers open goals
+only, and say so rather than implying the history was checked. **Never invent a scale to fill the
+fields.** An unknown baseline is a question for the owner, not a `0` to be going on with — the
+fields existing is not permission to guess what goes in them. If nothing can be created, the
+drafted goal is handed over as text — the shape was always the valuable part.
 
 ## Gate
 

@@ -10,9 +10,11 @@ not exist yet, or a review-cycle skill that is not part of the weekly loop.
 
 What unblocks each one:
 
-- **recognition-scan** — needed the recognition read, and the 2026-08 MCP update ships it. Now
-  blocked only on a scheduler for routine mode. Before reactivating: revisit its eval cases that
-  assert silence, and verify emptiness as real history before ever measuring a drought.
+- **recognition-scan** — needed the recognition read; the 2026-08 MCP update shipped it, and the
+  skill now names `list_recognitions` as its drought source. Blocked only on a scheduler for
+  routine mode, which is its main path. Before reactivating: confirm a team's recognition record
+  has history at all, because an empty read across everybody looks identical to a team-wide
+  drought and this is the skill most likely to make a false claim about a real person.
 - **relationship-drift**, **stuck-work**, **weekly-brief** — need a scheduler for routine mode, and
   the private-note tools for cross-run ping cooldowns. On demand they work today, but on demand is
   exactly when a detector is least useful.

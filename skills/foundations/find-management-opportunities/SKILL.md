@@ -100,7 +100,10 @@ preview rules: [topicflow-tools.md](../../../references/topicflow-tools.md).
 - `get_user_infos` — resolve each named person and career context. The reports list is not a
   trustworthy roster.
 - `list_meetings` — recent action items, upcoming agendas, and shared 1-on-1 themes.
-- `list_goals` — visible open goals and their current status, not completed-goal history.
+- `list_goals` — visible goals and their current status; open by default, `state: 2` for what
+  closed.
+- `list_goal_checkins(goal_id)` — the "needs a check-in" finding runs on this, and on nothing
+  else. A goal's status says whether it is on track, never when anyone last said so.
 - `query_external_events` — discrete work evidence, never effort, performance, or a stall from
   silence alone.
 - `list_feedback` — feedback already sent, not recognition.
@@ -110,7 +113,8 @@ preview rules: [topicflow-tools.md](../../../references/topicflow-tools.md).
 **Withheld.** No roster confirmation means no whole-team claim. A source error is named as
 unreadable and that lens is omitted. An empty source is not a negative finding. No recognition
 history means no recognition-gap or equity claim; a concrete current contribution can still be
-offered for recognition. Unknown private context leads only to an offer to refresh it with
+offered for recognition. No check-in history read means the stale-goal finding is dropped, not
+guessed at from a status. Unknown private context leads only to an offer to refresh it with
 `direct-report-interview`.
 
 ## Gate

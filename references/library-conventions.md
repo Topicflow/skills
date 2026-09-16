@@ -64,18 +64,29 @@ section.
 or from a tool — gets kept. This holds even when the run ends in silence: a finding nobody was
 pinged about is still worth keeping for review time. The private-note tools ship in the 2026-08 MCP
 update; where a deployment predates it, that means producing the note text and saying plainly it was
-not filed. **Meeting notes are not a fallback** — they are shared with the report. See the
-`save-private-note` skill.
+not filed. **Meeting notes are not a fallback** — a write there is one you cannot promise the
+report will not read. See the `save-private-note` skill.
 
-**4. Confirm once.** Every Topicflow write tool is a two-step: the write tool returns a
+**4. Confirm once.** Almost every Topicflow write is a two-step: the write tool returns a
 *preview* plus a `pending_id`, and `confirm_creation(pending_id)` commits it. Show the
 preview, get one approval, call `confirm_creation`. Never ask for the same approval twice
 — the manager saying "yes, send it" is the approval.
+
+The exception is `create_private_note`, which saves immediately and returns no `pending_id`.
+Do not wait for a preview there and do not add a confirmation: the note reaches nobody but its
+author, and the delete undoes it.
 
 **5. Voice.** Observations about people in the third person ("Tony prefers private
 recognition"), never second person, never speculation dressed as fact. Output plain
 text, short sentences. No markdown tables — output has to survive Slack mrkdwn. Plain
 `- ` bullets are fine.
+
+**Say what the organization says.** Orgs rename the features: goals become OKRs, recognition
+becomes kudos, the 1-on-1 becomes a check-in. `get_organization_context` carries the org's own
+label for each one — one call, once per run, before naming a feature in output. Writing "goal" at
+an org that says "OKR" is the same mistake as writing "ticket" for a sales team: the skill is
+describing its own vocabulary instead of the reader's. Where the call fails, use the plain English
+word and do not claim it is theirs. Section 0 of [data-sources.md](data-sources.md) has the shape.
 
 **6. Gate.** Any skill a routine can run ends with a gate: `worth_attention: yes/no`
 plus a one-line reason. `no` means write the findings back (rule 3) and stop silently —

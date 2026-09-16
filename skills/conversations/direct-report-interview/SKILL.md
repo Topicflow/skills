@@ -87,7 +87,8 @@ Read the available record before asking. Full source contracts and withheld conc
 
 - `get_user_infos(target_names, include_career_track: true)` — role, level, competencies, and
   next role where available.
-- `list_goals(owners: <report id>)` — current commitments, not completed-goal history.
+- `list_goals(owners: <report id>)` — current commitments, and `state: 2` for what they
+  finished, which is where most of the interview's best material comes from.
 - `list_meetings(is_oneonone: true, with_notes_and_transcript: true, limit: 2-3)` — recent
   shared topics and action items, not manager-private context.
 - `list_feedback(recipients: <report id>, state: 2)` — feedback already given.

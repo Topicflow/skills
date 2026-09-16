@@ -84,9 +84,13 @@ visible to the recipient only rather than a broadcast recognition.
 - `query_external_events(start_datetime, end_datetime, target: <person id>)` — the artifact, the
   date, and often the impact the user only half-remembers. That detail is what separates
   recognition from praise.
-- `create_recognition(title, recipient_id)` then `confirm_creation(pending_id, summary)` —
-  **`title` is the message**, two to four sentences, plain text, no markdown. Never recognise
-  the current user.
+- `get_organization_context()` — the org's word for recognition, and its active core values with
+  their descriptions. One call, reused.
+- `create_recognition(title, recipient_id, core_value?)` then `confirm_creation(pending_id,
+  summary)` — **`title` is the message**, two to four sentences, plain text, no markdown.
+  `core_value` is an exact active value **name**, and only where the contribution plainly is that
+  value — a stretched match reads as box-ticking and cheapens the rest. Never recognise the
+  current user.
 - The public-or-private preference lives in private notes: where the notes read exists, look it
   up; where it does not, or nothing is on file, ask once and save the answer (P9).
 

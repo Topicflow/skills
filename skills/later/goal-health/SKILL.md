@@ -81,6 +81,8 @@ next month.
 
 - `list_goals(owners: <report id>)` — **pass the report's ID**; it defaults to the current user's own
   goals. `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track.
+- `list_goal_checkins(goal_id)` — **the staleness finding runs on this**, not on a progress value
+  standing in for a date. One call per goal under examination.
 - `add_meeting_topics(meeting_id, topics)` — places the unblocking topic on the next 1-on-1.
 - `create_goal_checkin(goal_id, message)` — only where the manager owns the goal or explicitly asks.
 
@@ -88,13 +90,14 @@ next month.
 status, overload past `max_active_goals` (P12), and no goals at all are all computable from the
 objective, the key results, the status, and the count. Only staleness needs a date.
 
-**Withheld. No check-in date → no staleness claim.** Do not declare every goal stale, and do not treat
+**Withheld. No check-in read → no staleness claim.** Do not declare every goal stale, and do not treat
 them all as fresh — say recency is unmeasurable, in one line, and report the other four findings
-normally. Where a progress value stands in for a check-in date it is a weaker proxy: say which one was
-used, because "no check-in" and "no visible check-in" are different claims.
+normally. A progress value is not a substitute for a date: it says a number moved once, not when, and
+"no check-in" and "no visible check-in" are different claims.
 
-**`list_goals` returns open goals only, so never report "nothing completed".** Closed and completed
-goals are not reliably retrievable. List what is open and ask the manager what closed.
+**`list_goals` defaults to open goals, so a default call alone never supports "nothing completed".**
+Closed goals come back with `state: 2` — read them before saying anything about what did or did not
+finish. Where that read fails, say the check covered open goals only.
 
 **With nothing returned**, ask what each person's current goals are. A goal nobody can name is itself
 the finding (P11), and the overload count works from the answer alone.

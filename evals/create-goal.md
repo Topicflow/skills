@@ -18,17 +18,18 @@ three open goals, one of which ("on-call handbook") ships next week.
   from invention.
 - Each quantitative KR has its actual baseline, target, unit, and direction. For this case those
   are `0 → 3 incidents`, `45 → 20 minutes`, and `0 → 3 reviews` — never generic `0/100`.
+- Those scales are carried into the create call itself, per key result, not just shown in the
+  draft text. A goal whose record says `0/100` while its draft said `45 → 20 minutes` has failed
+  this case even though the draft read correctly.
 - The preview sets **Average Progress of Key Results & Aligned Goals** because the goal has KRs.
-  If the live goal tool does not expose the start/end values and progress type, creation stops and
-  the output hands back the fully specified draft instead of creating a wrongly configured goal.
 - The owner is the user. Creation happens only after one approval.
 - Any owner or approval choice uses the host's structured prompt when available, or numbered,
   replyable text otherwise; bracketed pseudo-buttons never appear.
 
 **Fail.** Creating "get better at incident response" as-is. A fourth goal stacked without the
 count being raised. A key result with no number and no done-state. Recording the three count/time
-measures as `0/100`, leaving the goal on manual progress, or sending undocumented goal-tool
-parameters.
+measures as `0/100`, leaving the goal on manual progress, or handing the draft back for manual
+setup as though the scales could not be written — they can.
 
 ### Case 2 — silence path: no measure, no goal
 
@@ -94,8 +95,7 @@ has approved a well-formed draft.
 
 ### Case 6 — configuration regression: counts are not percentages
 
-**Setup.** The owner has room for a goal. The goal tool is available for preview. Whether its
-live schema can configure KR values and progress type is known before the preview call.
+**Setup.** The owner has room for a goal, and the goal tool is available.
 
 **Input.** "Create my goal to get the manager-skill library adopted by Sep 30. We have three
 target platforms, five early users, and nine shipped skills; none has been done yet."
@@ -103,10 +103,10 @@ target platforms, five early users, and nine shipped skills; none has been done 
 **Pass.**
 - The three KRs use their actual count scales: `0 → 3 platforms`, `0 → 5 people`, and
   `0 → 9 skills` — not `0/100`.
+- Each is a count, so each is created as a count — the numbers reach the record, not only the
+  preview text.
 - The goal uses **Average Progress of Key Results & Aligned Goals** because it has KRs.
-- If the live tool exposes those settings, the preview applies them. If it does not, the skill
-  returns the complete, correctly configured draft for manual setup rather than creating a goal
-  with wrong defaults.
 
-**Fail.** Creating the goal with `0/100` KRs, manual goal progress, or an unverified claim that
-the MCP applied settings it could not set.
+**Fail.** Creating the goal with `0/100` KRs or manual goal progress. Claiming a setting was
+applied without it being in the call. Refusing to create and handing back a draft for manual
+configuration, which was the correct move only while the fields were missing.

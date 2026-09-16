@@ -73,8 +73,8 @@ recommendation into a command.
 concrete example, and offer the skill that applies it. "How do I run a good 1-on-1?" becomes the
 report's questions first, no status recap, and a named owner for the next action.
 
-**5. Explain a limitation.** Only open goals are retrievable; nothing schedules
-a meeting; on deployments predating the 2026-08 update, recognition history unreadable and
+**5. Explain a limitation.** Nothing schedules a meeting; there is no action-item call, so open
+items are read out of recent meeting notes; on deployments predating the 2026-08 update, recognition history unreadable and
 private notes unfileable. Say which one bit, what
 that means for the answer they got, and what fixes it (usually: it ships, nothing to do). For
 "what can you see in my account", offer to test it: one real probe per source they ask about,
@@ -87,10 +87,17 @@ later; some are not in the library at all. Name the nearest thing rather than im
 ## Sources
 
 **This skill reads the library, not Topicflow** — the references are its source, and most
-answers need no call at all. The exception is step 4's probe: one real call per source the user
+answers need no call at all. Two exceptions. Step 4's probe: one real call per source the user
 asks about, judged by the three outcomes in
 [data-sources.md](../../../references/data-sources.md). Parameters:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
+
+And `get_organization_context()`, which is worth one call at the start of any answer that names
+features. It carries the org's own word for each one and which are switched on — so the catalog
+is described in the reader's vocabulary, and a skill is never offered for a feature this
+organization does not use. It is also the one place a wrong answer is invisible: an org that
+calls them OKRs will not correct you, they will just read a menu that sounds like a different
+product.
 
 **Withheld.** A probe that errors is reported as unreadable — the fix is access, not a
 workaround — and never as "you have no data". A probe that returns empty is reported as empty,

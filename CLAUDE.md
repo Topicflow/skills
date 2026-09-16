@@ -13,7 +13,9 @@ a wrong sentence in a SKILL.md is a bug that ships to every manager using it.
    skills cite.
 3. [references/data-sources.md](./references/data-sources.md) — the eight kinds of data, the
    Topicflow call that serves each one, and **the claim a skill must stop making when that call
-   fails or returns empty**. Skills name these calls directly: one hop, traceable.
+   fails or returns empty**. Skills name these calls directly: one hop, traceable. Section 0 is
+   not a ninth kind: it is the organization's own labels, feature switches and fiscal year, which
+   decide how the eight get spoken about.
 4. [references/topicflow-tools.md](./references/topicflow-tools.md) — full parameters, the
    preview-then-confirm write pattern, the tools shipping in the 2026-08 MCP update, and the
    two still missing.
@@ -131,6 +133,10 @@ the Method is good management practice. That is what review is for.
 - **Assuming a job function.** "Ticket", "PR", and "review" are as hardcoded as a tool name — they
   assume an engineering team. Work is deals and stages for a sales manager, campaigns and briefs
   for a marketing one. Say "item" and let the data say what it is.
+- **Assuming the org's vocabulary.** The same mistake one level up. Orgs rename the features —
+  goals to OKRs, recognition to kudos, the 1-on-1 to a check-in — and `get_organization_context`
+  carries their word for each. One call per run, before naming a feature in output. Nobody
+  corrects this one: they just read a menu that sounds like a different product.
 - **Assuming the manager's chair.** A direct report prepping their own 1-on-1 or posting their own
   goal check-in is a first-class user, not an edge case — for check-ins, the owner is the golden
   path (P15). Write "the user"; reserve "the manager" for steps that are genuinely theirs, like
