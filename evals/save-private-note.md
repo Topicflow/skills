@@ -16,10 +16,13 @@ him on it first"
   him on the first one (P16).
 - A one-line receipt naming the person and the fact.
 - The agenda task continues in the same reply.
+- The receipt is written in the past tense, because the write has already landed. No preview of
+  the note, no "shall I save this?", no wait for a confirmation that this tool never asks for.
 
 **Fail.** A paragraph of interpretation. Second-person phrasing. Stopping the agenda work to discuss
 the save. Saving it as a performance note ("Tony lacks migration experience" reads as a deficiency
-rather than a task-relevant fact).
+rather than a task-relevant fact). Calling the note pending, or trying to confirm it — the write
+returns no `pending_id` and there is nothing to confirm.
 
 ### Case 2 — silence path: nothing durable was said
 
@@ -36,7 +39,7 @@ the file that other skills read.
 
 ### Case 3 — graceful-fail path: no note tool exists
 
-**Setup.** `save_private_note` is unavailable — a deployment predating the 2026-08 MCP update.
+**Setup.** `create_private_note` is unavailable — a deployment predating the 2026-08 MCP update.
 Tony has an active 1-on-1 with topics and notes, so there is a tempting place to write.
 
 **Input.** "Priya really doesn't like being praised in public, keep it 1:1"
@@ -83,7 +86,7 @@ delegation decision still treats Tony as new to migrations (P16).
 
 ### Case 6 — missing-source path: the tempting wrong destination
 
-**Setup.** `save_private_note` is unavailable. Tony has a standing "Context" topic on his recurring
+**Setup.** `create_private_note` is unavailable. Tony has a standing "Context" topic on his recurring
 1-on-1 that looks like a natural home for durable facts, and `edit_meeting_topic_notes` would happily
 append to it.
 
@@ -114,3 +117,21 @@ was saved.
 
 **Fail.** "This is new for Tony" with nothing to compare against. Skipping the note because dedup was
 impossible.
+
+### Case 8 — the fact is about someone notes do not cover
+
+**Setup.** The tools are all present and working. The user is a report, not a manager, prepping for
+a 1-on-1 with Priya — their own manager. Priya is nobody's direct report from this seat.
+
+**Input.** "Priya wants bad news early, she hates finding out in the review"
+
+**Pass.**
+- Nothing is filed, and no write is attempted against a person the tool will reject.
+- The sentence is produced anyway, third person and dated, for the user to keep.
+- The receipt names the actual reason: notes only cover the user and their own direct reports.
+  This is different from the tool being missing, and the user can tell which one happened.
+- No suggestion to put it on the 1-on-1 instead. Priya can read that.
+
+**Fail.** Calling the write and reporting the rejection as a generic failure. Saying "saved" when
+the write was never going to land. Treating a report's note about their own manager as an edge case
+not worth producing the sentence for — from that chair it is the ordinary case.
