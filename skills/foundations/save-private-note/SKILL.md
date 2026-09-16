@@ -1,6 +1,6 @@
 ---
 name: save-private-note
-description: Save a private note about a person the moment something durable is said — a preference, an aspiration, a strength, something they are new to, a commitment made. Use whenever the user mentions something worth remembering about a report or colleague, says "remember that" or "note that down", even in the middle of another task.
+description: Save a private note about yourself or one of your direct reports the moment something durable is said — a preference, an aspiration, a strength, something they are new to, a commitment made. Use whenever the user mentions something worth remembering about a report, says "remember that" or "note that down", even in the middle of another task.
 ---
 
 # Save a private note
@@ -25,10 +25,20 @@ task-relevant maturity). Rules: [management-rules.md](../../../references/manage
   hands its findings here (library convention 3).
 - The manager says "remember that" or "note that down".
 
+**Who the note can be about.** The user, or someone who reports directly to them. Nobody else —
+a peer, a skip-level, and the user's own manager are all outside what the note store covers.
+A durable fact about one of those people is still worth stating; it just gets handed back rather
+than filed. This comes up most for a report using these skills on their own manager.
+
 ## Non-negotiables
 
 - **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - One fact, one sentence, third person, dated.
+- **The write lands immediately — there is no preview and no confirmation step.** Do not wait for
+  a draft to show, and never tell the user a note is "pending". The judgment about whether the
+  fact is durable happens before the call, because nothing happens after it.
+- **Only the user or one of their own direct reports.** The write covers nobody else. A durable
+  fact about a peer, a skip-level, or the user's own manager gets handed back, not filed.
 - Never save without being sure it is durable. Durable means still true and still useful in
   three months.
 - Never save health, family, or protected-class information unless the manager explicitly
@@ -62,20 +72,34 @@ and one guess.
 should be saved twice, and a fact that *contradicts* a known one is the interesting case:
 save the new one and note that it supersedes, do not silently overwrite.
 
-**4. File it.** Save it with the note write. Where the write is absent (see Sources), give the
-manager the sentence to keep and say plainly that it was not filed.
+**4. File it.** Save it with the note write. It lands straight away — there is no draft to show
+and nothing to confirm, so step 3 is the last chance to get it right.
 
-**5. Receipt.** One line, and it says which of the two happened: "Saved to Tony's file: prefers
-private recognition" — or, where filing is impossible, "keep this one, I can't file it here."
-Then return to whatever the manager was doing.
+Two cases do not reach the write: the tools are absent (see Sources), or the fact is about
+someone the note store does not cover. Either way, give the user the sentence to keep and say
+plainly that it was not filed.
+
+**5. Receipt.** One line, and it says which of the three happened: "Saved to Tony's file: prefers
+private recognition" — or, where filing was impossible, the sentence to keep and whether the tool
+was missing or the person is not one notes cover. Then return to whatever the manager was doing.
 
 ## Sources
 
-**Private notes — read, create, and delete ship in the 2026-08 MCP update.** The write is
-`save_private_note`; take the read and delete names from the live tool list — never guess a name.
-There is no AI-memory layer: what the notes hold is all this skill knows. Withheld conclusions:
+**Private notes — read, create, and delete shipped in the 2026-08 MCP update.**
+`create_private_note(text, profile)` writes, `list_private_notes(profile)` reads, and
+`delete_private_note(note_id)` removes. There is no AI-memory layer: what the notes hold is all
+this skill knows. Withheld conclusions:
 [data-sources.md](../../../references/data-sources.md). Connection and write details:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
+
+**`create_private_note` is the one write in this library that saves immediately.** No preview, no
+`pending_id`, no `confirm_creation` — the call returns and the note exists. That is deliberate: the
+note is visible to nobody but its author, so there is nothing to protect anyone from. Do not look
+for a confirmation step, and never call the note pending. The safety valve is `delete_private_note`,
+which *does* preview and confirm because deletion cannot be undone.
+
+**The write covers the user and their direct reports, and nobody else** — a peer, a skip-level, or
+the user's own manager is rejected. Check who the fact is about before calling.
 
 **Where the update has not reached the deployment, there is only one option.** Produce the
 sentence in third person and hand it to the manager to keep. Do not look for somewhere else to
@@ -87,8 +111,9 @@ does not go there under any circumstances — not in a "Context" topic, not anyw
 **Handing the note back is the correct outcome; writing it somewhere shared is a harm.**
 
 **Withheld.** No read → dedup is impossible, so ask in half a sentence rather than duplicating, and
-**never report a fact as new**. No write → say plainly it was not filed; a fact the manager keeps is
-still kept, a fact silently dropped is not.
+**never report a fact as new**. No write, or a person outside what the write covers → say plainly
+it was not filed, and which of the two it was; a fact the manager keeps is still kept, a fact
+silently dropped is not.
 
 **The receipt says which happened.** "Keep this for Tony — I can't file it yet" is a complete
 receipt. Silence is not, and "saved" when nothing was saved is worse than either.
@@ -103,17 +128,23 @@ Not applicable — this skill is never run by a routine. It fires on what the ma
 
 ## Output
 
-A one-line receipt naming the person and the fact. If the fact was not saved because a tool was
-missing, the receipt says so and includes the text to keep:
+A one-line receipt naming the person and the fact. Where the fact was not filed, the receipt says
+why and includes the text to keep — the tool was missing:
+
+> Couldn't write to Tony's file (note saving hasn't reached this workspace). Keep this one:
+> "Tony prefers recognition privately rather than in a channel."
+
+or the person is outside what notes cover, which is worth naming plainly so the user does not
+expect it to work next time:
+
+> Priya is your manager, so I can't keep a note on her — notes only cover you and your own
+> reports. Keep this one: "Priya wants bad news early, not packaged."
 
 Then end interactively through the
 [portable choice controls](../../../references/interaction-controls.md) when this is a standalone
 interaction: offer to save another fact or review the saved fact. When it runs inside another
 skill, return the receipt to that parent; the parent ends with the interactive choice. In Claude
 Code, that means `AskUserQuestion`, not a printed list.
-
-> Couldn't write to Tony's file (note saving hasn't reached this workspace). Keep this one:
-> "Tony prefers recognition privately rather than in a channel."
 
 ## Worked example
 

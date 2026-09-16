@@ -37,10 +37,34 @@ Never describe the `pending_id` to the manager. Never confirm without an approva
 same conversation. Never ask twice for the same change (library convention 4).
 
 A batch of separate changes (five feedback requests, for example) is a preview + confirm
-per change, but one approval from the manager covers the batch they approved.
+per change, but one approval from the manager approves the batch.
+
+### The one exception — `create_private_note` saves immediately
+
+`create_private_note` is the only write that is not a preview. It returns no `pending_id`,
+and `confirm_creation` has nothing to confirm. The note is saved the moment the call is made.
+
+**Do not wait for a draft, and never describe the note as pending.** An agent that goes looking
+for a confirmation step here will either stall or report the save as not yet done.
+
+**That is deliberate, not an oversight, so do not bolt a confirmation on.** The preview gate
+exists to stop something reaching another person before its author has seen it. A private note
+reaches nobody — it is visible only to whoever wrote it, and `delete_private_note` removes it.
+Adding an "are you sure?" would put a detour in the one write designed not to have one.
+
+What *does* move earlier is the judgment: whether the fact is worth keeping has to be settled
+before the call, because there is no draft to catch it afterwards. The receipt is the review.
+
+`delete_private_note(private_note_id)` *does* preview and confirm, and deletion cannot be undone.
 
 ## Reads
 
+- **`get_organization_context(include_inactive_core_values?)`** — how this org is configured:
+  the **recognition core values** (active by default), the label it uses for each feature, which
+  features it turned on, and the month its fiscal year starts. Call it once per run and reuse the
+  answer. **Today the library uses it for one job: resolving a core-value name before
+  `create_recognition` or a `list_recognitions` filter.** The labels, the feature switches, and
+  the fiscal year are real and unused — see the note at the end of this file.
 - **`get_user_infos(target_names?, team_name?, include_career_track?)`** — profiles. Pass
   full names or IDs in `target_names`, or a `team_name` for a whole team (fuzzy match
   accepted). `include_career_track: true` adds level, competencies, responsibilities, and
@@ -110,9 +134,15 @@ per change, but one approval from the manager covers the batch they approved.
   `recipient_*` to the **subject** it is about. `description` is plain text, 2-4 sentences.
   Visibility defaults: recipient can view, managers and admins cannot. For corrective
   feedback keep it that way (P7, private-first).
-- **`create_recognition(title, recipient_id? | recipient_ids? | recipient_email? | recipient_name?, core_value_id?)`**
+- **`create_recognition(title, recipient_id? | recipient_ids? | recipient_email? | recipient_name?, core_value?)`**
   — **`title` is the message**, 2-4 sentences, plain text, no markdown. `recipient_name`
   also accepts a team name. Never set the recipient to the current user.
+  **`core_value` is a name, not an ID**, and the names are different in every org. Copy one of
+  the org's *active* core values exactly, from `get_organization_context`. Never guess one, and
+  never send an ID. Retired core values still tag older recognitions, so they remain usable as a
+  filter on the read, but a new recognition must use an active one. Set it only when the
+  contribution clearly maps to a value; leaving it unset is correct far more often than reaching
+  for the closest match.
 - **`create_goal(title, scope, key_results[], owner_*?, due_date?, state?, visibility?)`** —
   `key_results` is required and must be measurable (P11). `owner_*` defaults to the current
   user, so **pass the report's ID** when the goal is theirs. A correctly configured quantitative
@@ -134,20 +164,35 @@ per change, but one approval from the manager covers the batch they approved.
 
 ## Gaps and fallbacks
 
-**Shipping in the 2026-08 MCP update:** private notes — **read, create, and delete** — and the
+**Shipped in the 2026-08 MCP update:** private notes — **read, create, and delete** — and the
 **recognition read**. The update does **not** ship AI-memory access, and none is planned: what a
 skill knows about a person is what the private notes hold. Deployments that predate the update lack
 these tools; the fallbacks below stay for them.
 
-**Private notes.** Scoped to the current user. The write is `save_private_note`; take the read
-and delete names from the live tool list once the update is merged — never guess a tool name.
+**Private notes.** All three are scoped to the current user: the read never returns another
+person's notes, and the note is visible to nobody but its author.
+
+- **`create_private_note(text, profile? | profile_id?)`** — `text` is plain text. `profile`
+  takes an ID, an email, or a name; omit it to note about yourself. **Saves immediately** — see
+  the exception above. **You can only write a note about yourself or one of your own direct
+  reports.** A note about a peer, a skip-level, or the user's own manager is rejected, so a skill
+  that hears something durable about one of those people hands the sentence back instead.
+- **`list_private_notes(profile?, created_datetime_start?, created_datetime_end?, limit?, order?)`**
+  — the caller's own notes. `profile` filters to notes about one person; omit it for all of them.
+  Newest first by default.
+- **`delete_private_note(private_note_id)`** — preview then confirm, and the deletion cannot be
+  undone. Get the id from `list_private_notes`; never guess one.
+
 *Fallback where the tools are absent:* produce the note text in third person and hand it to the
 manager to keep. **There is no second option.** Meeting notes are shared with the other
 participant, so they are not a private store, and a manager-private observation must never be
 written there.
 
-**`list_recognitions`.** Was registered but scope-gated behind `recognitions:read`, so it never
-appeared to any client; the update ships the scope. Recognition is **not** carried by
+**`list_recognitions(recipients?, sender?, core_values?, created_datetime_start?,
+created_datetime_end?, search_term?, limit?, order?)`.** Was registered but scope-gated behind
+`recognitions:read`, so it never appeared to any client; the update ships the scope. The
+`core_values` filter takes **names**, not IDs, and they are org-specific — resolve them through
+`get_organization_context` the same way `create_recognition` does. Recognition is **not** carried by
 `list_feedback` — a live check confirmed it. *Where absent:* recognition recency is unreadable —
 no drought claim, no equity claim; ask the manager instead. **The general lesson outlives the
 fix:** a scope-gated tool is invisible, and "not there", "returned nothing", and "nothing ever
@@ -187,6 +232,23 @@ dedicated tool would remove the keyword-scanning and the recency window.
   `get_user_infos(team_name=...)` covers a team, and `list_meetings(is_oneonone=true)`
   reveals who the manager actually meets one-on-one. Team-wide skills should ask the
   manager to confirm the roster once rather than inferring it silently every run.
+
+## Exposed and not yet used: the rest of `get_organization_context`
+
+The call is in the Reads list above because `create_recognition` needs it for core-value names.
+It also returns three things no skill reads yet, and each one is a live assumption the library is
+currently making without checking:
+
+- **The label the org uses for each feature.** Orgs rename these. A skill that says "goal" to an
+  org that says "OKR", or "recognition" to an org that says "kudos", is making the same mistake as
+  a skill that says "ticket" to a sales team.
+- **Which features the org turned on.** Nothing checks. A goal skill can run its whole method in
+  an org that has goals switched off.
+- **The month the fiscal year starts.** "This quarter" in a due date currently means the calendar
+  quarter, which is wrong wherever the fiscal year is not.
+
+Wiring these up changes house style and several Methods, so it is its own piece of work rather
+than a parameter fix. Until then, no skill should claim to be using the org's own vocabulary.
 
 ## Secondary sources
 
