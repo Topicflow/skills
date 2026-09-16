@@ -43,11 +43,11 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 **1. Take what the user gave you.** Two paths, decided by what is already on the table:
 
-*Quick path* — the user stated a specific situation. Draft immediately, then offer to
-sharpen. Do not interview someone who already told you the story.
+*They stated a specific situation* — draft immediately, then offer to sharpen. Do not
+interview someone who already told you the story.
 
-*Guided path* — the user gave you a judgement ("he's been sloppy") or a vibe. Ask the
-questions that turn it into SBI, at most three, in this order:
+*They gave you a judgement ("he's been sloppy") or a vibe* — ask the questions that turn
+it into SBI, at most three, in this order. A first usable answer is not a reason to stop:
 
 1. Which specific thing, and roughly when?
 2. What did they actually do or not do?

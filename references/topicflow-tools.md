@@ -270,13 +270,17 @@ fix:** a scope-gated tool is invisible, and "not there", "returned nothing", and
 happened" look identical from a client. So a drought is never claimed on an unverified empty,
 even with the read live — a record nobody has written to yet has no history to measure.
 
-Two tools remain wanted and missing:
+### Three tools that exist in the product but not in this MCP
 
-**1. `get_person_context(person, since)`.** A curated synthesis: role, current focus,
-recent work, open items. *Fallback:* compose it — `get_user_infos` +
-`query_external_events` + `list_goals(owners=id)` + `list_meetings(is_oneonone=true,
-with_notes_and_transcript=true, limit=2-3)`. Four calls instead of one; resolve the ID
-first so all four hit the right person.
+Topicflow's own in-app assistant calls all three. They are not hypothetical designs — naming them
+turns "we wish this existed" into "expose these three", and it is why the fallbacks below are
+workarounds rather than the intended shape.
+
+**1. A person-context bundle.** In-app it is `fetch_overview_bundle`: one call returning goals,
+action items, meetings, feedback, recognitions and work events for one person or several, over a
+window. *Fallback:* compose it — `get_user_infos` + `query_external_events` +
+`list_goals(owners=id)` + `list_meetings(is_oneonone=true, with_notes_and_transcript=true,
+limit=2-3)`. Four calls instead of one; resolve the ID first so all four hit the right person.
 
 When the update reaches a deployment, the skills that shed the heaviest workarounds are
 `save-private-note` (the fallback ladder collapses to one call), `give-recognition` (preference
@@ -285,20 +289,68 @@ durable home, and it stops re-asking what a note already holds). It also unblock
 `recognition-scan` — evidence at last — and gives the other detectors a note ledger that makes
 cross-run cooldowns enforceable.
 
-**2. `list_action_items(person)`.** Open action items across 1-on-1s. *Mostly covered:*
-`list_meetings(with_notes_and_transcript=true)` returns topics and notes, so action items
-are readable from the last two or three meetings — that is what `prep-1on1` does. A
-dedicated tool would remove the keyword-scanning and the recency window.
+**2. Action items.** In-app it is `list_action_items`, and the org context reports
+`action_items: true` — the feature is on, the API is not there. **This is the library's largest
+workaround.** *Mostly covered:* `list_meetings(with_notes_and_transcript=true)` returns topics and
+notes, so action items are readable from the last two or three meetings — that is what `prep-1on1`
+does, by scanning text for them. A dedicated tool would remove the keyword-scanning and the
+recency window, and would let a skill see an item older than the last few meetings at all.
+
+**3. A collaborator list.** In-app it is `list_close_collaborators`: direct reports first, then
+peers who share a manager, then teammates and recent meeting co-attendees, each with an id, name,
+role and profile URL. That is the roster every team-wide skill needs and none can get.
+*Fallback:* `get_user_infos(team_name=...)` covers a team, and `list_meetings(is_oneonone=true)`
+reveals who the manager actually meets one-on-one — but see the warning on that call, and ask the
+manager to confirm the roster once rather than inferring it silently every run.
 
 **Also missing, and worth knowing:**
 
 - **No calendar write.** Nothing here schedules, reschedules, or cancels a meeting. A
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.
-- **No org chart traversal.** There is no "list my direct reports" tool.
-  `get_user_infos(team_name=...)` covers a team, and `list_meetings(is_oneonone=true)`
-  reveals who the manager actually meets one-on-one. Team-wide skills should ask the
-  manager to confirm the roster once rather than inferring it silently every run.
+
+## The review-cycle family — read-only here
+
+Eight reads beyond `list_review_programs`, `list_my_review_tasks` and `list_assessments`. Nothing
+installed uses them yet; the parked `review-prep` rests on `list_my_review_tasks` alone.
+
+- **`list_review_program_assignments(program_id, steps?, statuses?, subject_ids?, assignee_ids?, cursor?, limit?)`**
+  — every requirement in a cycle, **including unstarted and blocked work**, which is what makes it
+  the one that answers "what is outstanding". `steps` covers `self_review`, `downward_review`,
+  `peer_review`, `upward_review`, `peer_nomination`, `pre_calibration`, `post_calibration`,
+  `approval`, `delivery`, `one_on_one`, `engagement_survey`; `statuses` covers `not_started`,
+  `in_progress`, `completed`, `not_required`.
+- **`list_review_program_participants(program_id, user_ids?, cursor?, limit?)`** — who is enrolled.
+- **`list_review_program_events(program_id, user_id?, verb?, since?, limit?)`** — the activity log:
+  notification and reminder batches with sent / failed / skipped counts, plus admin actions. Pass
+  `user_id` for "did this person actually get it?" — it returns their individual rows with a
+  channel, a status, and a reason for any skip.
+- **`list_review_program_setup_options(resource_type?, assessment_type?, search?, page?, limit?)`**
+  — what a draft cycle may be configured with: participant scopes, question sets, 1-on-1
+  templates, career framework, core values, talent indicators.
+- **`get_review_program_setup(program_id)`** — a draft cycle's saved configuration and its
+  outstanding validation issues.
+- **`get_review_progress(assessment_id)`** — saved answers and the next unanswered question on the
+  caller's own draft review.
+- **`get_review_calibration(program_id, target_id, assessment_template_id)`** — calibration state,
+  permitted actions, ratings and suggestion history. Get the template id from the subject's
+  `downward_review` row in the assignments call, including when that row is blocked.
+- **`get_peer_nomination_options(program_id, assessment_template_id, target_id, search?, offset?, limit?)`**
+  — current nominees and eligible coworkers for a `peer_nomination` task. Eligible coworkers need
+  not be enrolled in the cycle themselves.
+
+**Over MCP this family is read-only, and that may be a scope gate rather than a real absence.**
+The matching writes — starting a review, saving an answer, submitting it, updating peer
+nominations, applying or suggesting a calibration rating, completing calibration, configuring a
+draft program — are named inside these tools' own descriptions but **are not exposed to the
+client this was verified against**. That is exactly the `list_recognitions` situation again: a
+scope-gated tool is invisible, and invisible is indistinguishable from absent. **Verify against an
+admin account before building a skill that assumes any of those writes.**
+
+Two cautions carried over from the in-app skills, which are worth keeping whatever serves this:
+calibration content and review contents are private, and never move to a public channel; and
+a peer nomination is not a completed review — selecting reviewers does not mean they have written
+anything.
 
 ## Secondary sources
 

@@ -40,12 +40,20 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Method
 
-**1. Get the win concrete.** From the user's words, or from the work signals behind it. You
-need three things: what they did, when, and what it made possible. Missing the third is the
-usual gap — ask one question: "What did that unlock?"
+**1. Get the win concrete.** You need three things: what they did, when, and what it made
+possible. Where they come from depends on what the user gave you.
 
-Impact can be small and still real ("support stopped getting that ticket"). It cannot be
-vague ("big impact on the team").
+*They gave you substance, or asked you to draw from the person's work* — draft now. Do not
+interview someone who already told you the story, and do not interview someone who just told you
+to go and look.
+
+*They named a person and nothing else* ("recognize Jordan") — ask, do not go hunting. Two short
+questions, one at a time: what did they do, and what did it make possible. Drafting from whatever
+the work signals happen to show invents the occasion; the user already knows why they thought of
+this person. Never narrate which of these you are doing.
+
+Missing the third is the usual gap either way — ask "What did that unlock?" Impact can be small
+and still real ("support stopped getting that ticket"), but never vague ("big impact on the team").
 
 **2. Check the preference (P9).** Public or private? If it is known, follow it. If not, ask
 once, in half a sentence, and save the answer. Never broadcast on a guess — for someone who
