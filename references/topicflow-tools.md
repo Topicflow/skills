@@ -59,6 +59,20 @@ before the call, because there is no draft to catch it afterwards. The receipt i
 
 ## Reads
 
+**Paging, everywhere.** Every read takes `limit`, and asking for more than the cap does not
+raise it. Two families:
+
+- **The everyday reads** — meetings, goals, goal check-ins, feedback, recognitions, private
+  notes, review tasks — **default to 10 and cap at 50.** So the default is small enough to miss
+  things silently. Set `limit` deliberately on any call whose answer depends on completeness.
+- **The bulk reads** — assessments, review programs, and the review-program listings — default
+  to 50, cap at 200, and page with a `cursor`. **Follow `next_cursor` until it stops before
+  reporting any total, count, or distribution**; a first page read as the whole set is how an
+  undercount becomes a confident number.
+
+There is no way to ask "how many are there" without paging to the end. A capped result and a
+complete one look identical, so a skill that reports a count either paged or says it did not.
+
 - **`get_organization_context(include_inactive_core_values?)`** — how this org is configured:
   the **recognition core values** (active by default), the label it uses for each feature, which
   features it turned on, and the month its fiscal year starts. Call it once per run and reuse the
@@ -84,8 +98,11 @@ before the call, because there is no draft to catch it afterwards. The receipt i
   `is_manager_and_report_oneonone: true`, and cross-check the other participant against the
   confirmed roster. Skipping this makes `relationship-drift` report drift on a lunch and
   `prep-1on1` prep an agenda for someone who does not report to the manager.
-  `status` filters confirmed / tentative / cancelled (values 1, 2, 3 — confirm the mapping
-  against a live response before relying on it). **`with_notes_and_transcript: true`
+  **There is no `participants` parameter.** It is the obvious thing to reach for and it does not
+  exist — Topicflow's in-app assistant has one, this does not. Narrow by `title` and a date
+  window, then match participants in the response.
+  `status` filters confirmed / tentative / cancelled (values 1, 2, 3, confirmed against the live
+  schema). **`with_notes_and_transcript: true`
   returns topics, agendas, and notes** — this is where open action items and past topics
   live, and it is the substitute for a dedicated action-item tool. The payload is large:
   always pair it with a date filter and a small `limit`.
@@ -107,16 +124,29 @@ before the call, because there is no draft to catch it afterwards. The receipt i
 - **`list_feedback(recipients?, sender?, state?, created_datetime_start?, created_datetime_end?, search_term?, limit?, order?)`**
   — informal feedback. `state`: 1 draft, 2 sent, 3 requested. Filter `state: 2` for what
   actually reached someone. This is the primary source for feedback recency; it does not include
-  recognition.
-- **`list_assessments(target?, responder?, program_id?, program_title?, state?, include_content?, submitted_datetime_start?, submitted_datetime_end?)`**
+  recognition. `recipients` takes a list plus `recipients_match_mode` (`any` by default, `all`
+  for feedback naming several people).
+  **`state: 3` is how an unanswered request is found.** Requests the caller sent come back with
+  no message, so "I asked Kameron three weeks ago and heard nothing" is readable rather than
+  guessed at. A request is not feedback that happened — never count one as feedback given.
+- **`list_assessments(target?, responder?, program_id?, program_title?, assessment_types?, state?, include_content?, include_answers?, include_dimensions?, include_calibrations?, question_ids?, submitted_datetime_start?, submitted_datetime_end?, limit?, cursor?, order?)`**
   — review-cycle assessments. `target` is the person being assessed, `responder` is the
-  person who wrote it. `state` defaults to 2 (submitted). `include_content: true` for the
-  written answers — only when you need the text.
-- **`list_review_programs(current_only?, state?, title?, program_id?, include_participants?, include_participant_status?)`**
-  — review cycles. `current_only: true` for what is running now, `state: "published"` for
-  launched cycles.
-- **`list_my_review_tasks(current_only?, include_completed?, program_id?, program_title?)`**
-  — review work assigned to the manager. The trigger for `review-prep` (parked in `skills/later/`).
+  person who wrote it. `state` defaults to 2 (submitted); 1 is draft. `assessment_types` filters
+  `performance` / `manager` / `peer` / `engagement_survey`. `include_content: true` for the
+  written answers — only when you need the text. `include_answers`, `include_dimensions` and
+  `include_calibrations` are for reporting and each **requires `program_id`**.
+  Pages with `cursor`: **follow `next_cursor` until `has_more` is false before reporting any
+  distribution**, or the numbers describe the first page rather than the cycle.
+- **`list_review_programs(current_only?, state?, title?, program_id?, include_participants?, include_participant_status?, limit?, cursor?, order?)`**
+  — review cycles. `current_only: true` for what is running now. `state` is a string —
+  `draft`, `published`, `paused`, `closed` — and `published` means launched. `order` takes
+  `start_date` or `due_date`, `-` prefixed for descending. Pages with `cursor`.
+- **`list_my_review_tasks(current_only?, include_completed?, program_id?, program_title?, limit?)`**
+  — review work assigned to the user. `current_only` defaults to true; `include_completed`
+  defaults to false and turning it on also surfaces finished work that can still be revised.
+  Each row carries a `review_type`, and they are not all "write a review" — `peer_nomination`
+  means choosing who reviews someone, which is a different job with different tools.
+  The trigger for `review-prep` (parked in `skills/later/`).
 - **`query_external_events(start_datetime, end_datetime, target?, sources?)`** — work
   signals from connected tools (GitHub, Linear, and others). **Both datetimes are
   required**, ISO 8601 UTC (`YYYY-MM-DDTHH:MM:SSZ`). `target` defaults to the current
@@ -126,16 +156,21 @@ before the call, because there is no draft to catch it afterwards. The receipt i
 ## Writes (all preview-then-confirm)
 
 - **`add_meeting_topics(meeting_id, topics[{title, notes?}])`** — `title` is plain text,
-  no markdown. `notes` is an array where each entry is one block; consecutive entries
-  starting with `- ` merge into one bulleted list, and an empty string `""` inserts a
-  blank line. Links as `[text](url)`.
-- **`edit_meeting_topic(topic_id, title)`** — retitle only.
+  no markdown. `notes` is an array where each entry is one block, and **markdown works inside a
+  block**: `**bold**`, `*italic*`, `[text](url)`, inline code. Consecutive entries starting with
+  `- ` merge into one bulleted list — **keep the `- ` prefix**, it is not stripped for you — and
+  an empty string `""` inserts a blank line. So a grouped update is
+  `["**Shipped**", "- [PR 100](…)", "- [PR 101](…)", "", "**Working on**", "- [PR 102](…)"]`.
+- **`edit_meeting_topic(topic_id, title)`** — retitle only. No `meeting_id`.
 - **`edit_meeting_topic_notes(meeting_id, topic_id, text, operation?, notes_type?)`** —
-  `operation` defaults to `append`; use `replace` only when the manager asks to overwrite.
-  `notes_type` defaults to `auto`. **Treat every value as shared: 1-on-1 meeting notes are
-  visible to the other participant.** This tool writes to the meeting, and the meeting belongs to
-  both people in it. Never put a manager-private observation here — that is what private notes
-  are for.
+  `text` takes the same markdown as a topic note. `operation` defaults to `append`; use
+  `replace` only when the manager asks to overwrite.
+  `notes_type` is `auto` (default), `shared`, or `individual`. On a formal 1-on-1, `auto` writes
+  to individual notes where the topic has them active, and to shared notes otherwise.
+  **Write as though every value is shared.** Whether individual notes are visible to the other
+  participant is **not verified** — and `auto` means a skill does not reliably know which of the
+  two it just wrote to. An unverified privacy boundary is not a private store: never put a
+  manager-private observation here. That is what private notes are for, and they are unambiguous.
 - **`create_feedback(title, description, recipient_*?, sender_*?, recipients_can_view?, recipients_managers_can_view?, admins_can_view?, is_draft?)`**
   — two modes. *Giving* feedback: set `recipient_*` to the person it is about.
   *Requesting* feedback: set `sender_*` to the person you are asking to **write** it and
@@ -187,8 +222,14 @@ before the call, because there is no draft to catch it afterwards. The receipt i
   Omit `current_value` on an aligned_average goal; it is ignored, and the key results carry it.
   A check-in should come from the goal's owner; a manager posting one on a report's goal is a
   last resort, not the default (P15).
-- **`edit_feedback`**, **`edit_recognition`** — amend before or after sending; same
-  preview-then-confirm flow.
+- **`edit_feedback(feedback_id, title?, description?, recipients_can_view?, recipients_managers_can_view?, admins_can_view?, send?)`**
+  — amend before or after sending; omitted fields stay as they are. `send: true` sends a draft
+  the user saved earlier, and only works on their own draft. Get the id from `list_feedback`.
+  Changing a visibility toggle changes who can read something already written — say who gains or
+  loses access in the preview, never just that visibility changed.
+- **`edit_recognition(recognition_id, title?, core_value?, clear_core_value?)`** — `title` is the
+  message. `core_value` takes an exact active core-value name; `clear_core_value: true` removes
+  the current one, and the two are mutually exclusive. Get the id from `list_recognitions`.
 
 ## Gaps and fallbacks
 

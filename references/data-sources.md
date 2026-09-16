@@ -60,9 +60,15 @@ notes → no action-item carry-over and no career-topic recency.
 title)` to retitle. `edit_meeting_topic_notes(meeting_id, topic_id, text, operation: "append")`
 to add to notes.
 
-**Shared notes are visible to the report.** A manager-private observation never goes here. Where a
-skill has a private reason for a topic, the topic goes on the agenda and the reason stays with the
-manager.
+**Treat everything written here as visible to the report.** A manager-private observation never
+goes here. Where a skill has a private reason for a topic, the topic goes on the agenda and the
+reason stays with the manager.
+
+The note write also has an `individual` mode, and its default picks between individual and shared
+on its own. **Whether individual notes are private to their author is unverified**, and a skill
+using the default does not reliably know which of the two it wrote to. That is not a privacy
+boundary anything should be built on — which makes the rule above firmer, not looser. Private
+notes are the unambiguous store; use those.
 
 **`New Topic` with no notes is the default blank topic, not an agenda item.** Treat a meeting that
 only has that placeholder as having no agenda: do not count it as a topic, an action item, or
