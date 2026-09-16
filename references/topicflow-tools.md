@@ -24,7 +24,7 @@ the server is connected until a Topicflow tool is actually exposed.
 
 ## The write pattern — preview, then confirm
 
-Every write tool is a **preview**. It does not change anything. It returns a draft plus an
+Almost every write tool is a **preview**. It does not change anything. It returns a draft plus an
 opaque `pending_id`. Nothing exists until `confirm_creation(pending_id, confirmation_summary)`
 runs.
 
@@ -74,11 +74,13 @@ There is no way to ask "how many are there" without paging to the end. A capped 
 complete one look identical, so a skill that reports a count either paged or says it did not.
 
 - **`get_organization_context(include_inactive_core_values?)`** — how this org is configured:
-  the **recognition core values** (active by default), the label it uses for each feature, which
-  features it turned on, and the month its fiscal year starts. Call it once per run and reuse the
-  answer. **Today the library uses it for one job: resolving a core-value name before
-  `create_recognition` or a `list_recognitions` filter.** The labels, the feature switches, and
-  the fiscal year are real and unused — see the note at the end of this file.
+  `labels` (its own word for each feature), `core_values` (active by default, each with a title,
+  description and status), `features` (five booleans), and `quarter_start_month`.
+  **Call it once per run, before naming a feature or a core value, and reuse the answer.**
+  Section 0 of [data-sources.md](data-sources.md) has a live response and what each part is for.
+  Two traps: the label keys are not the labels — Topicflow's own org reads `expectation` as
+  "alignment" — and a feature being `true` does not mean a call exists, since `action_items` is on
+  with no action-item tool anywhere in this MCP.
 - **`get_user_infos(target_names?, team_name?, include_career_track?)`** — profiles. Pass
   full names or IDs in `target_names`, or a `team_name` for a whole team (fuzzy match
   accepted). `include_career_track: true` adds level, competencies, responsibilities, and
@@ -297,23 +299,6 @@ dedicated tool would remove the keyword-scanning and the recency window.
   `get_user_infos(team_name=...)` covers a team, and `list_meetings(is_oneonone=true)`
   reveals who the manager actually meets one-on-one. Team-wide skills should ask the
   manager to confirm the roster once rather than inferring it silently every run.
-
-## Exposed and not yet used: the rest of `get_organization_context`
-
-The call is in the Reads list above because `create_recognition` needs it for core-value names.
-It also returns three things no skill reads yet, and each one is a live assumption the library is
-currently making without checking:
-
-- **The label the org uses for each feature.** Orgs rename these. A skill that says "goal" to an
-  org that says "OKR", or "recognition" to an org that says "kudos", is making the same mistake as
-  a skill that says "ticket" to a sales team.
-- **Which features the org turned on.** Nothing checks. A goal skill can run its whole method in
-  an org that has goals switched off.
-- **The month the fiscal year starts.** "This quarter" in a due date currently means the calendar
-  quarter, which is wrong wherever the fiscal year is not.
-
-Wiring these up changes house style and several Methods, so it is its own piece of work rather
-than a parameter fix. Until then, no skill should claim to be using the org's own vocabulary.
 
 ## Secondary sources
 

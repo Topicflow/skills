@@ -83,6 +83,9 @@ or the goal is not created.
 [data-sources.md](../../../references/data-sources.md). Parameters:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
 
+- `get_organization_context()` — the org's word for a goal and a key result, and
+  `quarter_start_month`. **A fiscal year that does not start in January moves every quarter
+  boundary**, so "end of Q3" is a different date than the calendar says. One call, reused.
 - `list_goals(owners: <owner id>)` — the active count and overlap check. Defaults to the current
   user's own goals; pass the report's ID when the goal is theirs. Returns open goals by default;
   `state: 2` returns closed ones, which is how "is this a duplicate of something they already
@@ -98,7 +101,9 @@ or the goal is not created.
 - `add_meeting_topics(meeting_id, topics)` — when the right move is "draft it together in the
   1-on-1" rather than creating it now.
 
-**Withheld.** Goals unreadable → the count check is impossible: say so in one line, ask what is
+**Withheld.** Org context unreadable → use the plain English words without claiming they are the
+org's, and ask for the due date outright rather than computing a quarter end. Goals unreadable →
+the count check is impossible: say so in one line, ask what is
 open, and draft from the answer. Closed goals unreadable → the duplicate check covers open goals
 only, and say so rather than implying the history was checked. **Never invent a scale to fill the
 fields.** An unknown baseline is a question for the owner, not a `0` to be going on with — the
