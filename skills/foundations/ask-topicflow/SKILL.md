@@ -73,8 +73,8 @@ recommendation into a command.
 concrete example, and offer the skill that applies it. "How do I run a good 1-on-1?" becomes the
 report's questions first, no status recap, and a named owner for the next action.
 
-**5. Explain a limitation.** Only open goals are retrievable; nothing schedules
-a meeting; on deployments predating the 2026-08 update, recognition history unreadable and
+**5. Explain a limitation.** Nothing schedules a meeting; there is no action-item call, so open
+items are read out of recent meeting notes; on deployments predating the 2026-08 update, recognition history unreadable and
 private notes unfileable. Say which one bit, what
 that means for the answer they got, and what fixes it (usually: it ships, nothing to do). For
 "what can you see in my account", offer to test it: one real probe per source they ask about,

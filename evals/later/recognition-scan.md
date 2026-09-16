@@ -86,9 +86,9 @@ counter — that produces exactly the generic recognition P8 forbids.
 
 ### Case 6 — missing-source path: wins visible, silence unmeasurable
 
-> This is the **current live state**, not a hypothetical. The recognition read is scope-gated and
-> unreachable, so Case 1 cannot be run against a live org until it ships. When it does, Case 1
-> becomes the live path and this case still holds for any account with no recognition history yet.
+> No longer the live state. The recognition read shipped in the 2026-08 MCP update, so Case 1 is
+> now the live path. This case holds for deployments predating the update — and, unchanged, for any
+> account whose recognition record has no history yet.
 
 **Setup.** `query_external_events` shows a clear, non-trivial win for Nadia on 2026-08-12.
 `list_recognitions` does not appear in the tool list at all.

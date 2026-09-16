@@ -93,12 +93,20 @@ work rather than applying one number to everything.
 ## 5. Goals
 
 `list_goals(owners: <report id>)`. `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track.
+`list_goal_checkins(goal_id)` for the progress already posted on one.
 Writes: `create_goal`, `edit_goal`, `create_goal_checkin`.
 
-**Open goals only. Closed and completed goals are not reliably retrievable**, so "nothing
-completed" is never a conclusion — list what is open with status and ask the manager what closed.
+**`state` decides which goals come back — 1 open (the default), 2 closed, 0 draft.** Closed goals
+are retrievable, so "nothing completed" can be checked rather than asked about, and a goal that
+does not appear on the default call may be finished rather than missing.
 
-*Withheld:* no check-in date → **no staleness claim**; report shape and status problems only. A goal
+**Progress, status and closing all belong to the check-in**, in one call. Reshaping a goal — its
+title, scale, owner, key-result definitions — is the edit. Using the edit to move a status puts
+the change outside the history that explains it.
+
+*Withheld:* no check-in read → **no staleness claim**, no "oldest first" ordering, and a new
+check-in may unknowingly repeat the last one; report shape and status problems only. No closed
+goals → say the check covered open goals only rather than implying the history was read. A goal
 with no measure is itself the finding (P11), not a gap.
 
 ## 6. Feedback

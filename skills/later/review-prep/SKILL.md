@@ -87,8 +87,9 @@ person hears it — so offer a 1-on-1 topic for anything in the pack they have n
 **Withheld — this is the skill where it does the most damage, so be strict.** No feedback returned →
 peer input is **unreadable, not absent**; put it in the gaps section as a collection problem and offer
 to collect it now. Recognition has no working read at all, so an empty recognition section is never an
-equity finding. No check-in dates → no staleness claim. **`list_goals` returns open goals only, so
-never report "no goals completed"** — list what is open with status and ask the manager what closed.
+equity finding. No check-in read → no staleness claim. **Never report "no goals completed" off a default
+`list_goals` call**, which returns open goals; `state: 2` returns what closed, and only that read
+supports a claim about the quarter's finished work.
 
 **Never let a thin pack read as a weak quarter.** An empty section is a fact about the binding or
 about where the manager's attention went, and the output says which. That sentence is usually the

@@ -39,9 +39,9 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Method
 
-**1. Pull the open goals.** The user's own by default, with key results, status, and last
-check-in. When the user names a specific goal, match it; when they say "my goals", show the list
-with each one's last check-in date, oldest first.
+**1. Pull the open goals and what was already reported on them.** The user's own by default, with
+key results, status, and the check-ins already posted. When the user names a specific goal, match
+it; when they say "my goals", show the list with each one's last check-in date, oldest first.
 
 **2. Get what changed.** From the user's words: which goal, which number moved, what happened in
 words. One question at most if it is ambiguous — "which number moved, and to what?"
@@ -49,6 +49,10 @@ words. One question at most if it is ambiguous — "which number moved, and to w
 **3. Draft the check-in.** One to three sentences: what moved, what is next, what is in the way
 (if anything). Then the updated current value per key result that changed. Plain language — this
 is the owner's progress record, and someone will read it in a review in six months.
+
+Read it against the last check-in before showing it. An update that restates what is already
+posted is worse than none: it pads the history and hides the one entry that mattered. If nothing
+has moved since, say that plainly and name what is in the way.
 
 **4. Check the status against the update.** If the numbers or the remaining time say the goal is
 at risk, propose the status change alongside the check-in, with the reason. If the user calls it
@@ -59,7 +63,9 @@ becomes a surprise in November.
 two real options: a topic for the next 1-on-1, or a nudge to the report to post their own. Post
 only on an explicit ask, and say whose name the check-in will carry.
 
-**6. Preview and post.** Show the check-in and any status change. One approval covers both.
+**6. Preview and post.** Show the check-in, any status change, and — where the update is that the
+goal is finished — marking it complete. One approval covers all of it, and it posts as one
+check-in, so the record shows the status moving and the reason it moved in the same place.
 
 ## Sources
 
@@ -67,19 +73,28 @@ only on an explicit ask, and say whose name the check-in will carry.
 [data-sources.md](../../../references/data-sources.md). Parameters:
 [topicflow-tools.md](../../../references/topicflow-tools.md).
 
-- `list_goals(owners: <owner id>)` — the goal, its key results, status, and check-in recency.
-  Defaults to the current user's own goals — the report persona needs no ID at all.
-- `create_goal_checkin(goal_id, message, key_results[{key_result_id, current_value}])` — the
-  update. Percentages are whole numbers (50, not 0.5).
-- `edit_goal(goal_id, status)` — the status change, when one is warranted.
+- `list_goals(owners: <owner id>)` — the goal, its key results and its status. Defaults to the
+  current user's open goals — the report persona needs no ID at all. A goal the user names that
+  does not come back may be closed rather than missing: `state: 2` settles that instead of asking.
+- `list_goal_checkins(goal_id)` — what was already reported, and when. **Read this before
+  drafting.** It is what stops the update repeating last month's, and it is where the "oldest
+  first" ordering comes from.
+- `create_goal_checkin(goal_id, message, key_results[{key_result_id, current_value}], status?,
+  state?)` — the update, the status change, and closing a finished goal, all in **one** call and
+  one confirmation. Percentages are whole numbers (50, not 0.5). Omit the goal-level value where
+  progress derives from the key results; check in on those instead.
 - `add_meeting_topics(meeting_id, topics)` — where a report's goal needs a conversation instead
   of a check-in.
 
+**Do not reach for `edit_goal` to change a status or close a goal here.** It asks the user to
+confirm a second time, and the change lands outside the check-in history — so the record shows a
+status that moved with no update explaining why. Reshaping a goal is still `create-goal`'s job.
+
 **Withheld.** Goals unreadable → nothing can be posted (there is no `goal_id` to post against):
 say the goal record is unreachable — the fix is access, not a workaround — and hand the drafted
-update back as text to keep. No check-in dates → skip the "oldest first" ordering and say recency
-could not be read; never present the list as if all goals were fresh. Only open goals return →
-a goal the user names that does not appear may be closed, not missing: ask rather than assume.
+update back as text to keep. Check-ins unreadable → skip the "oldest first" ordering, say recency
+could not be read, and never present the list as if all goals were fresh; the risk is a check-in
+that repeats one already posted, so say that is possible rather than letting it surprise the user.
 
 ## Gate
 

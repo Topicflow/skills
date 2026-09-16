@@ -92,10 +92,18 @@ before the call, because there is no draft to catch it afterwards. The receipt i
   A lone topic titled **`New Topic`** with no notes is Topicflow's blank default, so treat it as
   **no agenda**, not as a prepared topic or a topic with no follow-through.
   **`meeting_id` and `topic_id` for any write come from here.**
-- **`list_goals(owners?, contributors?, status?, visibility?, due_date_start?, due_date_end?, search_term?, limit?, order?)`**
-  — returns **visible open goals**; defaults to the current user's own. Pass `owners:
-  <report id>` for a report's goals. `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track.
-  Closed and completed goals are not reliably retrievable — see the gaps below.
+- **`list_goals(owners?, contributors?, state?, status?, scope?, visibility?, due_date_start?, due_date_end?, search_term?, limit?, order?)`**
+  — visible goals; defaults to the current user's own. Pass `owners: <report id>` for a report's
+  goals. `status`: 0 none, 1 on_track, 2 at_risk, 3 off_track. `scope`: 1 personal, 2 team,
+  3 organization, 4 development.
+  **`state` defaults to 1 (open); pass 2 for closed goals and 0 for drafts.** Closed goals are
+  retrievable — a goal that does not come back on the default call may be finished rather than
+  missing, and that is a second call to settle, not a question to ask. Both `owners` and
+  `contributors` take a list plus a `*_match_mode` of `any` (default) or `all`.
+- **`list_goal_checkins(goal_id?, goal_title?, owners?, created_datetime_start?, created_datetime_end?, limit?, order?)`**
+  — the progress updates posted on a goal, newest first. **Read a goal's recent check-ins before
+  posting a new one**, so the update does not repeat what is already there. This is also the only
+  source of check-in recency: `list_goals` does not carry it.
 - **`list_feedback(recipients?, sender?, state?, created_datetime_start?, created_datetime_end?, search_term?, limit?, order?)`**
   — informal feedback. `state`: 1 draft, 2 sent, 3 requested. Filter `state: 2` for what
   actually reached someone. This is the primary source for feedback recency; it does not include
@@ -143,22 +151,42 @@ before the call, because there is no draft to catch it afterwards. The receipt i
   filter on the read, but a new recognition must use an active one. Set it only when the
   contribution clearly maps to a value; leaving it unset is correct far more often than reaching
   for the closest match.
-- **`create_goal(title, scope, key_results[], owner_*?, due_date?, state?, visibility?)`** —
-  `key_results` is required and must be measurable (P11). `owner_*` defaults to the current
-  user, so **pass the report's ID** when the goal is theirs. A correctly configured quantitative
-  KR needs a real start value, end value, unit, and direction; a goal with KRs needs the progress
-  type **Average Progress of Key Results & Aligned Goals**. Check the live tool schema before
-  creating: this currently documented signature exposes only `key_results[]` strings, so it
-  cannot set those fields. **Do not invent extra parameters, use `0/100` as a universal default,
-  or claim those settings were applied.** Hand the specified draft back for manual configuration
-  until the MCP exposes the needed fields.
-- **`edit_goal(goal_id, title?, status?, state?, visibility?, scope?, owner_*?, key_results[{op, id?, title?}]?)`**
-  — `key_results` takes `op: "add" | "edit" | "remove"`. `state`: 0 draft, 1 open, 2 closed
-  (closing sets the completion date). `owner_*` **replaces all owners** — be careful.
-- **`create_goal_checkin(goal_id, message?, current_value?, key_results[{key_result_id, current_value}]?)`**
-  — plain text message. Percentages are whole numbers (50, not 0.5). A check-in should
-  come from the goal's owner; a manager posting one on a report's goal is a last resort,
-  not the default (P15).
+- **`create_goal(title, scope, key_results[], owner_*? | owners?, contributors?, teams?, due_date?, start_date?, goal_description?, parent_goal_id?, progress_type?, state?, visibility?)`**
+  — `key_results` is required and must be measurable (P11). `owner_*` defaults to the current
+  user, so **pass the report's ID** when the goal is theirs; `owners` takes a list and overrides
+  the singular fields. A **team-scoped goal needs `teams`** or it belongs to no team.
+
+  Each entry in `key_results` is an object: `{title, start_value?, target_value?, progress_type?,
+  description?, assignee?}`. **`progress_type` is the unit** — 1 percentage, 2 numeric,
+  3 currency, 4 boolean. Anything that counts gets its real numbers: "Connect to 3 MCP servers"
+  is `start_value: 0, target_value: 3, progress_type: 2`, never `0/100`. For a measure that should
+  go **down**, put the higher number in `start_value` — there is no direction field. Leave all
+  three unset only where there is nothing to count, and use 4 for a plain done / not-done.
+
+  The goal's own `progress_type` adds 5 (aligned_average) and **defaults to it whenever key
+  results are passed**, so its progress is the average of theirs. Set 1-4 with `start_value` /
+  `target_value` only for a goal measured by one number of its own.
+
+  **Real values or none.** The fields existing is not permission to guess what goes in them: an
+  unknown baseline is a question for the owner, not a `0`.
+- **`edit_goal(goal_id, title?, goal_description?, status?, state?, visibility?, scope?, owner_*? | owners?, add_contributors?, remove_contributors?, teams?, parent_goal_id?, progress_type?, start_value?, target_value?, start_date?, due_date?, key_results[{op, id?, ...}]?)`**
+  — `key_results` takes `op: "add" | "edit" | "remove"`, and add/edit carry the same
+  `title` / `start_value` / `target_value` / `progress_type` / `description` / `assignee` fields
+  as creation; anything omitted on an edit stays as it was. `state`: 0 draft, 1 open, 2 closed
+  (closing sets the completion date). `owner_*` and `owners` **replace all owners** — be careful;
+  contributors are added and removed individually instead. `teams` replaces all teams, and an
+  empty list detaches. `parent_goal_id: 0` removes an alignment.
+  **This is for reshaping a goal.** Progress, status and closing belong in a check-in — see below.
+- **`create_goal_checkin(goal_id, message?, current_value?, key_results[{key_result_id, current_value}]?, status?, state?)`**
+  — plain text message. Percentages are whole numbers (50, not 0.5). `status`: 0 none,
+  1 on_track, 2 at_risk, 3 off_track. `state: 2` closes the goal — the "Mark as complete"
+  checkbox in the app.
+  **The message, the numbers, the status change and the close go in one call.** Doing the status
+  or the close through `edit_goal` afterwards costs a second confirmation and lands outside the
+  check-in history, so the record shows a status that moved with nothing explaining why.
+  Omit `current_value` on an aligned_average goal; it is ignored, and the key results carry it.
+  A check-in should come from the goal's owner; a manager posting one on a report's goal is a
+  last resort, not the default (P15).
 - **`edit_feedback`**, **`edit_recognition`** — amend before or after sending; same
   preview-then-confirm flow.
 
@@ -221,10 +249,6 @@ dedicated tool would remove the keyword-scanning and the recency window.
 
 **Also missing, and worth knowing:**
 
-- **No completed-goal history.** `list_goals` returns open goals. Nothing can prove "goals hit
-  last quarter" from the API alone: list what is open with status, then ask the user what
-  closed, and mark it as an evidence gap rather than reporting zero. `create-goal` also cannot
-  tell a missing goal from a closed one — it asks.
 - **No calendar write.** Nothing here schedules, reschedules, or cancels a meeting. A
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.

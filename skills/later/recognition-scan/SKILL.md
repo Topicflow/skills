@@ -74,22 +74,25 @@ it.** Withheld conclusions for every source:
 
 - `query_external_events(start_datetime, end_datetime, target: <report id>)` — candidate wins, one
   read per report over the lookback window, scoped to that person.
-- The date of the last recognition — **and there is no call for it.** `list_recognitions` requires
-  the OAuth scope `recognitions:read`, which the server does not offer, so the tool never appears to
-  a client.
+- `list_recognitions(recipients: <report id>, created_datetime_start, created_datetime_end)` — the
+  date of the last recognition, which is the drought number. The scope shipped in the 2026-08 MCP
+  update; deployments predating it have no read, and the withheld rule below is written for them.
 - The confirmed roster decides who is in scope. A person missing from it can never be found
   overlooked.
 
 **Withheld, and this is the strictest rule in the library. With no recognition read, there is no
 drought finding for anyone.** Not "none found". Not a cautious hedge. Nothing. Report the wins that
-were found and ask the manager when they last recognised that person.
+were found and ask the manager when they last recognised that person. The read being live does not
+retire this rule: it still applies whenever the call errors, or returns an empty nobody has checked.
 
 From a client, "the tool is absent", "the tool returned nothing", and "nothing ever happened" are
 indistinguishable. This is the skill most likely to produce a false claim about a real person, and an
 unverified silence read as neglect is exactly that claim.
 
-**When the scope ships, verify emptiness before trusting it.** An empty result from a record nobody
-has written to yet is not a drought — it is a record with no history. Say so once and stay quiet
+**Verify emptiness before trusting it.** An empty result from a record nobody has written to yet is
+not a drought — it is a record with no history. The read shipping made this the *likely* failure
+rather than a future one: a team that has never used recognition returns empty for everybody, and
+that reads as a team-wide drought unless the history is confirmed first. Say so once and stay quiet
 until there is enough history to measure.
 
 **With no events** the skill has nothing to detect on. Say so once and stop. Roster unknown → ask
