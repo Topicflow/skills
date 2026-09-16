@@ -139,6 +139,20 @@ A detector without its detecting source has nothing to run on and should say so 
 quiet rather than narrow — which is one reason the detectors live in `skills/later/` until the
 sources and the scheduler they need exist.
 
+**An empty result is an answer. Take it and move on.** Do not retry the same question with a
+wider date window, looser filters, or a guess at a different title. Re-asking until something
+comes back does not find data that is not there; it burns the run and, worse, eventually returns
+something adjacent that gets reported as if it were the thing. One call, one answer, and the
+absence is often the finding — no agenda on a recurring 1-on-1 is worth more than any topic the
+search would have found.
+
+**Never fetch unbounded.** Every read caps at 50 or 200 and defaults far lower, so an unbounded
+call does not return everything — it returns a truncated set that looks complete. Scope every
+fetch by a date window and the people involved, and set `limit` deliberately. Topicflow learned
+this the hard way in its own assistant: pulling every meeting with no limit is what overloaded
+and crashed Ask AI. Notes and transcripts are the heavy payload — pair those with a date filter
+and a small limit, and favour the most recent.
+
 ## Adding a skill
 
 1. Name the Oxygen behaviour it serves (P17). If you cannot, do not add it.

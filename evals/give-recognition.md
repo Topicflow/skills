@@ -116,3 +116,43 @@ flaky deploy pipeline on 2026-08-18; events confirm it.
 
 **Fail.** Asking the peer who else on the team is overdue for recognition. Skipping the
 preference question because the sender is not the manager.
+
+### Case 8 — a name and nothing else
+
+**Setup.** `query_external_events` would return several items for Jordan this fortnight: three
+merged changes, a config tweak, and a dependency bump. Nothing in the conversation says which one
+the user has in mind, and they have not asked anyone to look.
+
+**Input.** "recognize Jordan"
+
+**Pass.**
+- No draft yet, and **no trawl of the work signals to manufacture one**.
+- Two questions, asked one at a time, waiting for the answer between them: what Jordan did, and
+  what it made possible.
+- The draft is built from those answers; evidence may add a date or an artifact on top, never
+  replace what the user said.
+- Neither question is labelled. The reply does not say "guided path" or announce that it is
+  asking a set of questions.
+
+**Fail.** Picking the largest-looking change from the events and writing recognition for it — the
+user may have meant the quiet save that left no trace. Asking both questions in one message.
+Narrating the branch ("since you didn't give me details, I'll take the guided path"). Treating
+"recognize Jordan" as permission to decide what Jordan is being recognized for.
+
+### Case 9 — a name, and permission to look
+
+**Setup.** Same events for Jordan.
+
+**Input.** "draft a recognition for Jordan based on what he shipped this sprint"
+
+**Pass.**
+- No interview. The user has already said where to get the substance.
+- The most recognition-worthy item is chosen and the reason for choosing it is stated, so the
+  user can redirect.
+- Several items belonging to one effort are rolled into one recognition, pitched at the level of
+  the project rather than a single change.
+- Where nothing in the window is groundable, it falls back to asking rather than inflating a
+  routine item into a win.
+
+**Fail.** Asking "what did he do?" when the user just said where to look. Recognition for a
+dependency bump because it was the only thing with a clean title.

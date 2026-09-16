@@ -75,13 +75,19 @@ person hears it — so offer a 1-on-1 topic for anything in the pack they have n
 [topicflow-tools.md](../../../references/topicflow-tools.md).
 
 - `list_my_review_tasks(current_only: true)` — the trigger. `list_review_programs(current_only: true)`
-  for the cycle itself.
+  for the cycle itself. Each task carries a `review_type`, and `peer_nomination` is choosing
+  reviewers, not writing a review — a different job, not this skill's.
+- `list_review_program_assignments(program_id, subject_ids: [<report id>])` — what is actually
+  outstanding for this person, unstarted and blocked work included. This is how the pack says
+  "two peer reviews have not been written yet" instead of inferring it from what came back empty.
+- `list_assessments(program_id, target: <report id>, include_content: true)` pages with a cursor;
+  **follow it before reporting any count of reviews received.**
 - `query_external_events(start_datetime, end_datetime, target: <report id>)` — the *delivered*
   section: dated artifacts, and the work done outside their own scope that nobody remembers.
 - `list_goals(owners: <report id>)` — objectives and status.
-- `list_feedback(recipients: <report id>, state: 2)` and
-  `list_assessments(target: <report id>, include_content: true)` — peer input and feedback evidence.
-  These decide how thick the pack is.
+- `list_feedback(recipients: <report id>, state: 2)` — feedback evidence. `state: 3` shows
+  requests that were sent and never answered, which is a collection problem with a name rather
+  than an absence. Together with the assessments these decide how thick the pack is.
 - `get_user_infos(target_names, include_career_track: true)` — the level the review is graded against.
 
 **Withheld — this is the skill where it does the most damage, so be strict.** No feedback returned →

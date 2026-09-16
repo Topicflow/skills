@@ -11,6 +11,11 @@ manager's, and the skill says so.
   goal health, and recency gaps. At least half the topics are the report's, as open questions; no
   status topics. Writes the topics to the meeting. A report prepping with their own manager is
   P1 at its best.
+  **Two people only, and that is deliberate.** Topicflow's in-app assistant splits this into a
+  1-on-1 prep and a separate group-meeting prep, because prepping a team meeting is a different
+  job: it is about the agenda running well, not about the person, and the balance rules here —
+  half the topics theirs, the person lane, the recency gap — do not transfer. Asked to prep a
+  group meeting, say that plainly and offer to draft topics for it rather than running this.
 - **[give-feedback](./give-feedback/SKILL.md)** — feedback in SBI shape: dated situation,
   observable behavior, concrete impact, plus an intent question when it is corrective. Works
   down, sideways, and up; routes anything older than two weeks to a conversation instead.
