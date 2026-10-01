@@ -225,17 +225,22 @@ pastes somewhere is still kept; a fact silently dropped is not.
 
 ## 9. Reviews — the review cycle and the work it assigns
 
-`list_my_review_tasks()` for the user's own review work. `list_review_programs(current_only:
-true)` for the cycles, then `list_review_program_assignments(program_id, ...)` for every
-requirement in one cycle, `list_review_program_participants(program_id)` for who is enrolled, and
-`list_review_program_events(program_id, user_id?)` for what was sent. `get_review_progress` reads a
-draft the user is writing; `get_peer_nomination_options` reads the nominees and candidates for a
-peer selection. `list_assessments` reads what was written.
+**Shipped in the 2026-09 MCP update.** Reads: `list_my_review_tasks()` for the user's own review
+work; `list_review_programs(current_only: true)` for the cycles; then, for one cycle,
+`list_review_program_assignments(program_id, ...)` for every requirement,
+`list_review_program_participants(program_id)` for who is enrolled, and
+`list_review_program_events(program_id, user_id?)` for what was sent. `list_assessments` reads what
+was written.
 
-**Over MCP this kind is read-only today.** Starting, answering and submitting a review, saving peer
-nominations, reminders, date changes and participant changes are not in the live tool list
-(verified 2026-10-01). A skill that needs one hands the user the text or the steps for the web app,
-and says so. Details: the Reviews section of [topicflow-tools.md](topicflow-tools.md).
+Writes, all preview-then-confirm: `start_review`, `answer_review_question` and `submit_review` for
+the responder's own draft (`get_review_progress` reads it); `update_peer_nominations` for choosing
+reviewers (`get_peer_nomination_options` reads the candidates); `send_review_reminder`,
+`change_review_dates` and `update_review_participant` for an admin running a cycle.
+
+**The writes need the `reviews:write` scope, and a grant made before the update does not have it.**
+The server hides a tool the token is not scoped for, so an old connection shows the reads and no
+writes. A missing review write means "reconnect Topicflow", not "this cannot be done". Details:
+the Reviews section of [topicflow-tools.md](topicflow-tools.md).
 
 **A review task is not always a review.** A `peer_nomination` row means choosing reviewers. A
 `waiting` row is blocked on an earlier step. Read the row before naming the job.
@@ -255,6 +260,8 @@ a channel, or another person's evidence. Counts and statuses are process facts; 
 - **A skipped send in the events log** → the reason is in the row. Quote it; never guess it.
 - **No access to a cycle** (the call refuses or returns nothing) → "this account cannot see that
   review", never "the review does not exist".
+- **A review write missing while the reads work** → never "this cannot be done". Say the
+  connection lacks review changes and ask the user to reconnect; until then, hand over the text.
 - **A cycle with `ongoing: true`** → no due date, so no "days left" and no "late" from the cycle's
   own dates. Use the rows' own `due_date` and `overdue`.
 

@@ -21,7 +21,7 @@ Nine kinds of data sit underneath: **people, meetings, meeting agenda, work, goa
 recognition, private notes, reviews.** Each one names the call that serves it and, more importantly, **the
 claim a skill must stop making when that call comes back empty**. Where a deployment cannot serve
 one — recognition and private notes only gained their tools in the 2026-08 MCP update, and reviews
-are read-only over MCP for now — the skills say so out loud rather than guessing. See
+in the 2026-09 one — the skills say so out loud rather than guessing. See
 [references/data-sources.md](./references/data-sources.md).
 
 ## Quickstart
@@ -246,7 +246,8 @@ skills are parked in [skills/later/](./skills/later) until the infrastructure th
 
 The 2026-08 MCP update ships the dependencies that mattered most: private-note read, create, and
 delete, plus the recognition read. The skills keep their fallbacks for deployments that predate it.
-The review-cycle reads are live too (verified 2026-10-01); the review writes are not exposed yet.
+The 2026-09 update adds the review cycle: reads plus writes for writing a review, choosing peers and
+running a cycle. The writes need a connection made after that update; older ones must reconnect.
 Full list, with the fallback each one uses:
 [references/topicflow-tools.md](./references/topicflow-tools.md).
 
