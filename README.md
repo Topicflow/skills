@@ -34,14 +34,14 @@ in the 2026-09 one — the skills say so out loud rather than guessing. See
 
 ```
 /plugin marketplace add Topicflow/skills
-/plugin install manager-skills@topicflow
+/plugin install topicflow-skills@topicflow
 ```
 
 Or from your shell:
 
 ```bash
 claude plugin marketplace add Topicflow/skills
-claude plugin install manager-skills@topicflow
+claude plugin install topicflow-skills@topicflow
 ```
 
 **Copy the skills into your own setup** — hack on them, make them yours:
