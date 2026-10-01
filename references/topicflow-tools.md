@@ -385,6 +385,10 @@ reviewers does not mean anyone has written anything.
     raise `limit`, before saying anything about who did *not* get something.
   - A batch with `failed_count` above zero is worth surfacing. A batch is not a person: read the
     person's rows before saying who it failed for.
+  - **One row per channel.** Observed live: one person's notification came back as two rows in the
+    same batch — email `sent`, Slack `failed` with `error: "This person has no Slack account in
+    this organization"`. So a failed count does not mean the person missed it, and the reason for a
+    failure is in `error`, while the reason for a skip is in `payload.reason`.
 - **`list_assessments(...)`** — the written reviews themselves. Documented under Reads above.
 - **`get_review_program_setup(program_id)`** — a draft cycle's saved configuration and its
   validation issues.
@@ -448,13 +452,23 @@ All three are preview-then-confirm and need the admin's own rights on the review
     underscores.** `self_review` here is an error.
   - `message` is an optional line in the admin's own words. `channels`: `email` (the default),
     `slack`, `teams`.
-  - Paused and closed reviews send nothing.
+  - Paused and closed reviews send nothing. Nobody late on the asked steps → refused.
+  - **The preview names the late participants per step** ("Overdue by step"). Fine in a direct
+    conversation with the admin; never paste it into a channel.
+  - **It is written to whoever owns each step** — the participant, their manager, their peers or
+    their reports — not only the participant.
+  - It reaches only the participants this account can see, so a manager's reminder covers their
+    own part of the cycle. A peer selection has no due date and is never chased.
+  - At send time the list narrows to whoever is still late; if everyone caught up, nothing is
+    sent. Success returns the count and a Progress tab link. Never offer to send it again.
 - **`change_review_dates(program_id, kickoff_date?, due_date?, period_start_date?, period_end_date?)`**
   — preview of moving the review's own dates (`YYYY-MM-DD`).
   - Name only the dates that move; the rest stay.
   - **Step due dates are not changed by this tool.**
   - An ongoing review (no dates of its own) is refused.
   - A published review's change is written to its Activity tab; a draft's is not.
+  - The preview shows each date from → to. If the dates moved after the preview, the save is
+    refused: read again, preview again. Needs edit rights on the review.
 - **`update_review_participant(program_id, user_id, action, reason?)`** — preview of an action on
   ONE participant of a published review. `user_id` comes from
   `list_review_program_participants`.
@@ -463,6 +477,10 @@ All three are preview-then-confirm and need the admin's own rights on the review
   - `add_back` undoes an excuse.
   - **`remove` takes the person off the roster for good** and cannot be undone with this tool.
   - **The person is never notified** of any of the three.
+  - Refused, with the reason, when the account cannot change the review, the review is closed or
+    not yet published, or the person is in a calibration group (take them out of it first, in the
+    web app). For a recurring review the "What happens" field says the removal carries into
+    future cycles; show it verbatim.
 
 ### Calibration, delivery and draft setup (no skill yet)
 

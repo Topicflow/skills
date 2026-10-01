@@ -3,7 +3,7 @@
 Eight rules. They apply to every skill in this library, without exception.
 A skill that breaks one is a bug, not a variation.
 
-## Two callers, two chairs, one catalog
+## Two callers, three chairs, one catalog
 
 Every skill has exactly one Method, and two callers can run it:
 
@@ -13,11 +13,17 @@ Every skill has exactly one Method, and two callers can run it:
 Write the Method once, tool-agnostic. Chat mode and routine mode differ only in the
 Gate section and in whether questions may be asked.
 
-The user sits in one of **two chairs**: a manager working on their team, or a direct report
-working on their own 1-on-1s, feedback, recognition, and goals. The core skills serve both. A
+In the core skills the user sits in one of **two chairs**: a manager working on their team, or a
+direct report working on their own 1-on-1s, feedback, recognition, and goals. They serve both. A
 skill resolves the chair from what the user says and what the data shows (whose meeting, whose
 goal), asks once when it is ambiguous, and says in its body which steps are chair-specific —
 the equity glance is the manager's alone; posting a goal check-in is the owner's.
+
+A **third chair** is the HR admin who runs a review cycle. Their skills live in `skills/admin/`
+and are about process, not people: who is late, which dates move, who is excused. An admin skill
+never reads or quotes review content, shows names of late people only in a direct conversation
+with the admin (counts elsewhere), and says plainly when the account cannot change the review
+rather than reaching for another tool.
 
 And two **invocation types**: most skills are *model-invoked* — the agent picks them up from
 normal conversation, so their descriptions carry trigger phrasings. A few are *user-invoked*

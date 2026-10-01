@@ -1,6 +1,7 @@
 # Working in this repo
 
-This repo is a **library of agent skills for people managers and their direct reports**. It
+This repo is a **library of agent skills for people managers, their direct reports, and the HR
+admins who run review cycles**. It
 contains no application code.
 Everything here is Markdown that an agent will read at runtime, which changes what "quality" means:
 a wrong sentence in a SKILL.md is a bug that ships to every manager using it.
@@ -49,7 +50,9 @@ when-to-use lives in the body instead.
 **The user is not always the manager.** The core skills work from either chair — a manager
 working on their team, or a direct report prepping their own 1-on-1, giving feedback upward,
 posting their own goal check-ins. Say "the user" unless a step is genuinely chair-specific, and
-mark the steps that are.
+mark the steps that are. A third chair, **the HR admin running a review cycle**, has its own
+category, `skills/admin/`: process only, never what anyone wrote, and names of late people only
+in a direct conversation with the admin.
 
 Body sections, in this order:
 
