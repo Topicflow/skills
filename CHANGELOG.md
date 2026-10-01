@@ -3,6 +3,20 @@
 All notable changes to this library are documented here. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## 0.2.0 — 2026-10-01
+
+Writing reviews. Eleven installed skills.
+
+- **New: `write-review`.** One review assigned to the user — self, manager, peer or upward —
+  drafted from dated evidence in the user's own words and saved one question at a time. The user
+  sets every rating; submitting is a separate approval after the full preview. Waiting tasks are
+  not started, and nothing anyone else wrote about the same person is read or mentioned.
+- **Reactivated: `review-prep`**, now in `skills/conversations/`. It reads closed goals,
+  recognition (left out of the equity check when the record is empty for everyone), what is
+  outstanding in the cycle, and 1-on-1 transcripts for dated specifics only. It asks named writers
+  for peer input on a thin pack itself. The writing moved to `write-review`.
+- `scripts/check-skills.sh` now fails a Method that names a review, transcript or private-note tool.
+
 ## 0.1.1 — 2026-10-01
 
 Reference refresh for review cycles. No skill changes.

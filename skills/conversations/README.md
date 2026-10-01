@@ -32,3 +32,9 @@ manager's, and the skill says so.
   manager about one direct report, started directly or after selection in Ask Topicflow. It fills
   the important human gaps and turns them into next steps. A new report gets day-7/30/60 check-in
   topics too.
+- **[review-prep](./review-prep/SKILL.md)** — a dated evidence pack per report for a review cycle:
+  what they delivered, how they worked with others, how they grew, and the gaps. Runs the equity
+  check before any pack is shown. The manager's chair only.
+- **[write-review](./write-review/SKILL.md)** — one review assigned to the user, self, manager,
+  peer or upward, drafted from evidence in their own words and saved one question at a time. The
+  user sets every rating; submitting is its own approval.

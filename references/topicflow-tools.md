@@ -326,7 +326,11 @@ reviewers does not mean anyone has written anything.
 ### Finding the cycle and the work (reads)
 
 - **`list_my_review_tasks(program_id?, program_title?, current_only=true, include_completed=false, limit=10)`**
-  — review work assigned to the user. `limit` caps at 50. Each row carries a `review_type`.
+  — review work assigned to the user. `limit` caps at 50. Each row carries the program (`id`,
+  `title`, `current_stage`), `assessment_template_id`, `review_type`, `target`, `status`
+  (`not_started`, `in_progress`, `waiting` or `submitted`; a peer selection is `not_started` or
+  `completed`), `assessment_id` (once a draft exists), `due_date`, and `waiting_for` when waiting.
+  Never show the IDs to the user.
   - **A `peer_nomination` row means "choose reviewers".** Use the nomination calls for it,
     never `start_review`.
   - **A row with `status: "waiting"` cannot be started.** Say what it waits for, from its

@@ -62,12 +62,13 @@ Sources verified 2026-08; URLs in the footer.
 | direct-report-interview | P9 P13 P14 P16 | cares about success and well-being; supports career development |
 | ask-topicflow | P1-P17 as relevant to the thread | communicates well; good coach |
 | find-management-opportunities | P1-P4 P8-P16 as relevant to each action | good coach; cares about success and well-being; productive and results-oriented |
+| review-prep | P5 P10 (manager's chair) | strong decision maker; communicates well |
+| write-review | P5 P7 P10 (P10 from the manager's chair only) | communicates well; good coach |
 | save-private-note | P9 P16 (preferences and maturity are memory-worthy facts) | cares about success and well-being |
 
 Parked skills (`skills/later/`) keep their mappings for when they return: recognition-scan
 (P8 P10), relationship-drift (P2 P10 P13), weekly-brief (P3), stuck-work (P15 P16),
-onboard-direct-report (P13 P16 — absorbed into direct-report-interview), request-feedback (P5 P10),
-review-prep (P5 P10).
+onboard-direct-report (P13 P16 — absorbed into direct-report-interview), request-feedback (P5 P10).
 
 ## Sources
 

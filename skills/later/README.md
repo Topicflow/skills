@@ -20,8 +20,9 @@ What unblocks each one:
   exactly when a detector is least useful.
 - **goal-health** — the monthly goal detector (formerly named `goal-checkin`; that name now
   belongs to the conversation skill that posts progress). Needs a scheduler.
-- **request-feedback**, **review-prep** — review-cycle skills. Reviews are episodic, not weekly;
-  these come back when a review cycle is the driving use case.
+- **request-feedback** — peer input before a review. `review-prep` came back in 0.2.0 and asks
+  named writers for input itself; this skill returns if choosing writers and questions needs its
+  own workflow.
 - **onboard-direct-report** — absorbed into `direct-report-interview`: a new report starts with a
   guided manager interview, and the day-7/30/60 topics moved with it. Kept here for reference.
 

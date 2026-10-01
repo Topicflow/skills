@@ -87,6 +87,10 @@ Three things worth knowing before you start, so nothing is a surprise:
   guided interview with the manager about one direct report, started directly or after selecting
   it in Ask Topicflow. It fills the important human gaps and turns them into concrete support. A
   new report gets day-7/30/60 topics too.
+- **[review-prep](./skills/conversations/review-prep/SKILL.md)** — a dated evidence pack per report
+  for a review cycle, with the gaps named and an equity check across the team.
+- **[write-review](./skills/conversations/write-review/SKILL.md)** — write one review assigned to
+  you, from evidence and in your words, saved one question at a time. You set every rating.
 
 ### [Foundations](./skills/foundations) — what the others lean on
 
@@ -102,8 +106,9 @@ Three things worth knowing before you start, so nothing is a surprise:
 
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
-Seven more skills — team detectors (stuck work, relationship drift, recognition equity, a weekly
-brief) and the review-cycle pair — live in [skills/later/](./skills/later), not installed. The main
+Seven more skills — team detectors (stuck work, relationship drift, recognition equity, goal
+health, a weekly brief), peer-feedback requests, and the old onboarding flow — live in
+[skills/later/](./skills/later), not installed. The main
 thing they wait on is a scheduler for routine runs; the recognition read they also needed ships in
 the 2026-08 MCP update. [skills/later/README.md](./skills/later/README.md) says what unblocks each
 one; the wider backlog is tracked internally.
@@ -117,6 +122,7 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "I need to give Priya feedback about the docs"
 > "update my goal — the migration is at 60%"
 > "set my goals for Q4"
+> "help me write my self review"
 
 `/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
 selects it. The two deliberate manager workflows can also be started directly: run a guided
@@ -239,10 +245,10 @@ release.
 
 ## Status
 
-Version 0.1.1 — nine installed skills: five core workflows that work from either chair, a guided
-direct-report interview, durable private context, and two manager-facing entry points. The focused
-workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
-skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
+Version 0.2.0 — eleven installed skills: six core workflows that work from either chair, review
+prep for managers, a guided direct-report interview, durable private context, and two
+manager-facing entry points. The focused workflows own their Topicflow writes; the entry points
+choose what deserves attention. Seven further skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
 
 The 2026-08 MCP update ships the dependencies that mattered most: private-note read, create, and
 delete, plus the recognition read. The skills keep their fallbacks for deployments that predate it.
