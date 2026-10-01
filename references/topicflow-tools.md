@@ -326,14 +326,27 @@ reviewers does not mean anyone has written anything.
 ### Finding the cycle and the work (reads)
 
 - **`list_my_review_tasks(program_id?, program_title?, current_only=true, include_completed=false, limit=10)`**
-  — review work assigned to the user. `limit` caps at 50. Each row carries a `review_type`.
+  — review work assigned to the user. `limit` caps at 50. Each row carries the program (`id`,
+  `title`, `current_stage`), `assessment_template_id`, `review_type`, `target`, `status`
+  (`not_started`, `in_progress`, `waiting` or `submitted`; a peer selection is `not_started` or
+  `completed`), `assessment_id` (once a draft exists), `due_date`, and `waiting_for` when waiting.
+  Never show the IDs to the user.
   - **A `peer_nomination` row means "choose reviewers".** Use the nomination calls for it,
     never `start_review`.
   - **A row with `status: "waiting"` cannot be started.** Say what it waits for, from its
     `waiting_for` value ("waiting for pre-calibration"). Never offer to start it.
   - `include_completed: true` adds submitted reviews and finished peer selections that can still
     be revised.
-  - An empty list means no task is visible to this account, not that the user has no review work.
+  - **`current_only: true` leaves out a cycle that has not kicked off.** Observed live
+    2026-10-01: an empty current list, while `current_only: false` showed self and manager
+    reviews due 2026-10-13 in a cycle at `current_stage: "draft"`. So an empty list means no
+    *current* task is visible, not that the user has no review work.
+  - `review_type` observed live: `self_review`, `downward_review`, `manager_review` (an older
+    name for the same job on started drafts), `peer_review`, `upward_review`, `peer_nomination`,
+    and, for surveys, `survey_response` and `engagement_survey`. A survey is not a review of a
+    person.
+  - With `current_only: false` the list reaches back years, past-due drafts included. Filter on
+    `status` and `due_date` before showing it.
 - **`list_review_programs(program_id?, title?, state?, current_only=false, include_participants?, include_participant_status?, order="-start_date", limit=50, cursor?)`**
   — the review cycles this account can see, with `current_stage` (observed: `active`,
   `past_due`), `start_date`, `due_date`, the period dates, `ongoing`, `participant_count` and
