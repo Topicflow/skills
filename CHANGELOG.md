@@ -3,6 +3,12 @@
 All notable changes to this library are documented here. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+- **The plugin is now `topicflow-skills`** (was `manager-skills`). Install with
+  `/plugin install topicflow-skills@topicflow`. If you installed the old name, uninstall
+  `manager-skills@topicflow` first, then install the new one.
+
 ## 0.4.0 — 2026-10-01
 
 A third chair: the HR admin running a review cycle. Thirteen installed skills.
