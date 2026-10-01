@@ -38,3 +38,6 @@ manager's, and the skill says so.
 - **[write-review](./write-review/SKILL.md)** — one review assigned to the user, self, manager,
   peer or upward, drafted from evidence in their own words and saved one question at a time. The
   user sets every rating; submitting is its own approval.
+- **[nominate-peers](./nominate-peers/SKILL.md)** — peer reviewers for one person's review,
+  suggested from real shared work with a dated reason each and a mix check said once. Saves the
+  complete list the user chose. Works for your own review or a report's.

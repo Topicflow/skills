@@ -91,6 +91,8 @@ Three things worth knowing before you start, so nothing is a surprise:
   for a review cycle, with the gaps named and an equity check across the team.
 - **[write-review](./skills/conversations/write-review/SKILL.md)** — write one review assigned to
   you, from evidence and in your words, saved one question at a time. You set every rating.
+- **[nominate-peers](./skills/conversations/nominate-peers/SKILL.md)** — choose peer reviewers
+  from who actually worked with the person, with a dated reason each. You pick; it saves the list.
 
 ### [Foundations](./skills/foundations) — what the others lean on
 
@@ -123,6 +125,7 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "update my goal — the migration is at 60%"
 > "set my goals for Q4"
 > "help me write my self review"
+> "who should review Priya?"
 
 `/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
 selects it. The two deliberate manager workflows can also be started directly: run a guided
@@ -245,10 +248,11 @@ release.
 
 ## Status
 
-Version 0.2.0 — eleven installed skills: six core workflows that work from either chair, review
+Version 0.3.0 — twelve installed skills: seven core workflows that work from either chair, review
 prep for managers, a guided direct-report interview, durable private context, and two
 manager-facing entry points. The focused workflows own their Topicflow writes; the entry points
-choose what deserves attention. Seven further skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
+choose what deserves attention. Seven further skills are parked in
+[skills/later/](./skills/later) until the infrastructure they need exists.
 
 The 2026-08 MCP update ships the dependencies that mattered most: private-note read, create, and
 delete, plus the recognition read. The skills keep their fallbacks for deployments that predate it.

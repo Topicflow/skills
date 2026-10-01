@@ -62,6 +62,7 @@ first response to a report's problem becomes one open question before any soluti
 - Post progress, change a status → `goal-checkin`
 - Gather the evidence for a report's review → `review-prep`
 - Write a review assigned to you — self, manager, peer or upward → `write-review`
+- Choose who gives peer feedback in a review → `nominate-peers`
 - Keep a fact about a person → `save-private-note`
 - Run a guided interview about one direct report → `direct-report-interview`
 - Step back and choose the top actions across direct reports → `find-management-opportunities`
