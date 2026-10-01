@@ -41,8 +41,9 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 ## Method
 
 **1. Find the open review work.** List it in plain words: who it is about, which type, the due
-date, the status. Several tasks → ask which comes first, and suggest the one due soonest. Waiting
-tasks are listed with what they wait for, and not offered.
+date, the status. Several tasks → suggest the one due soonest and ask. Waiting tasks are listed
+with what they wait for, not offered. Nothing current → say so, and offer to look at upcoming
+cycles that have not kicked off. A survey is the user's own answers: no evidence, no drafting.
 
 **2. Start or resume the chosen review.** Choosing a task approves opening its private draft, so
 say that in the question. If answers are saved, say how far it is ("4 of 9 answered") and resume.
@@ -83,11 +84,12 @@ heard yet. Nothing in a review should be the first time.
 - `get_organization_context()` once, for the org's own word for a review.
 - `list_my_review_tasks(current_only: true)` — rows with program title, `review_type`, `target`,
   `status` (`not_started`, `in_progress`, `waiting`, `submitted`), `due_date`, `assessment_id`
-  and `waiting_for`. Never show an ID to the user.
-- `start_review(program_id, assessment_template_id, target_id)` then `confirm_creation` — opens
-  the draft and returns the first question. A row with an `assessment_id` resumes with
-  `get_review_progress(assessment_id)`: `completed_count`, `total_count`, `next_question`,
-  `ready_to_submit`.
+  and `waiting_for`. `manager_review` and `downward_review` are the same job. Never show an ID.
+  `current_only: true` hides a cycle not yet kicked off; `current_only: false` finds it, but
+  reaches back years — keep only unsubmitted rows due from today on.
+- `start_review(program_id, assessment_template_id, target_id)` then `confirm_creation` opens the
+  draft. A row with an `assessment_id` resumes with `get_review_progress(assessment_id)`:
+  `completed_count`, `total_count`, `next_question`, `ready_to_submit`.
 - `answer_review_question(assessment_id, question_id, response, comment?)` then
   `confirm_creation`, per answer. A rating's `response` is the displayed number or exact label.
 - `submit_review(assessment_id)`, every preview field shown, then `confirm_creation` on the
@@ -98,8 +100,8 @@ heard yet. Nothing in a review should be the first time.
   own 1-on-1s, and `list_private_notes(profile)`.
 - **Never `list_assessments` about the same subject.** Other reviews of this person stay unread.
 
-**Withheld.** No task rows → "no review task is visible to this account", never "you have no
-review work". Reads work but `start_review`, `answer_review_question` or `submit_review` is missing
+**Withheld.** No current rows → "no current review task is visible", never "you have no review
+work". Reads work but `start_review`, `answer_review_question` or `submit_review` is missing
 → the connection lacks review changes: ask the user to reconnect Topicflow, and meanwhile hand over
 the drafted answers to paste, never claiming anything was saved. No events, feedback or goals →
 build the answer by interview and say in one line which sources were empty; never "nothing
@@ -116,9 +118,8 @@ Thresholds (tunable): `due_soon_days: 3`, `ping_once_per: task`.
 
 ## Write-back
 
-A durable fact the user states about the person — a strength they name, a commitment, something
-the person was new to — becomes a private note via `save-private-note`. **Review content never
-goes into a note**: the review is its own record, and a copy elsewhere is a leak waiting to happen.
+A durable fact the user states about the person — a strength, a commitment, something new to them
+— becomes a private note via `save-private-note`. **Review content never goes into a note.**
 
 ## Output
 

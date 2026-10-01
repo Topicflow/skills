@@ -250,8 +250,8 @@ a channel, or another person's evidence. Counts and statuses are process facts; 
 
 *Withheld:*
 
-- **No `list_my_review_tasks` rows** → never "you have no review work". Say that no review task is
-  visible to this account.
+- **No `list_my_review_tasks` rows** → never "you have no review work". Say that no current review
+  task is visible to this account. `current_only: true` also hides a cycle not yet kicked off.
 - **A `waiting` task** → never "you can start now". Say what it waits for, from `waiting_for`.
 - **Assignments read without following the cursor** → no totals, no percentages, and no "only N
   people are late".
