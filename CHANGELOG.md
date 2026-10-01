@@ -3,6 +3,16 @@
 All notable changes to this library are documented here. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## 0.3.0 — 2026-10-01
+
+Choosing peer reviewers. Twelve installed skills.
+
+- **New: `nominate-peers`.** Peer reviewers for one person's review, from either chair. Ranks
+  candidates by real shared work in the period (meetings, work signals, feedback) with a dated
+  reason each, says the mix check once, and saves the complete list the user chose — never just
+  the added name. With no signal it does not rank, and an empty read is never a claim about a
+  relationship. A "top collaborators" read would replace its signal step; the MCP does not have one.
+
 ## 0.2.0 — 2026-10-01
 
 Writing reviews. Eleven installed skills.

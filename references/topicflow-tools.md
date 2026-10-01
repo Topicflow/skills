@@ -423,11 +423,17 @@ reviewers does not mean anyone has written anything.
   - **Candidates come back in alphabetical order.** The order says nothing about who works
     together.
   - `search` takes a name or email. When a name matches several people, ask. Never guess an ID.
+  - The response carries `target`, `selection_mode` (`employee`: the person picks their own;
+    `manager`: their manager picks), `nominees`, and `candidates` with ids and emails.
+  - A review whose peers are chosen automatically refuses the call. There is nothing to pick.
 - **`update_peer_nominations(program_id, assessment_template_id, target_id, responder_ids)`** —
   preview of replacing the selection.
   - **`responder_ids` is the COMPLETE final list.** To add one person, send the current nominees
     plus the new one. Sending the new one alone removes everyone else.
   - `[]` removes everyone. Use it only when the user asks for exactly that.
+  - The preview shows the cycle, the person and the full nominee list. If anything changed before
+    confirmation, the save is refused: read the options again and preview again.
+  - Saving nominees does not complete anyone's review.
 
 ### Running a cycle (admin)
 
