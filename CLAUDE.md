@@ -11,19 +11,19 @@ a wrong sentence in a SKILL.md is a bug that ships to every manager using it.
    skill follows.
 2. [references/management-rules.md](./references/management-rules.md) — the P1-P17 rules
    skills cite.
-3. [references/data-sources.md](./references/data-sources.md) — the eight kinds of data, the
+3. [references/data-sources.md](./references/data-sources.md) — the nine kinds of data, the
    Topicflow call that serves each one, and **the claim a skill must stop making when that call
    fails or returns empty**. Skills name these calls directly: one hop, traceable. Section 0 is
-   not a ninth kind: it is the organization's own labels, feature switches and fiscal year, which
-   decide how the eight get spoken about.
+   not a tenth kind: it is the organization's own labels, feature switches and fiscal year, which
+   decide how the nine get spoken about.
 4. [references/topicflow-tools.md](./references/topicflow-tools.md) — full parameters, the
-   preview-then-confirm write pattern, the tools shipping in the 2026-08 MCP update, and the
-   two still missing.
+   preview-then-confirm write pattern, the tools shipping in the 2026-08 MCP update, the
+   review-cycle family from the 2026-09 update, and what is still missing.
    **Never invent a tool or a parameter.** Where nothing serves a job, the job is unbound — a real
    answer, and the withheld conclusion applies as written.
 
 **The library assumes Topicflow.** That is deliberate: it ships as a Topicflow plugin, and naming
-the calls directly is what makes a skill readable. Another tool can serve any of the eight — the
+the calls directly is what makes a skill readable. Another tool can serve any of the nine — the
 practice does not change, only the call — but that is an extension, not the foundation. Keep tool
 names out of `## Method` so swapping one touches one section.
 
@@ -92,7 +92,7 @@ Body sections, in this order:
    skills; that is what this rule exists to prevent.
 3. Write the Method before you look at a single tool name.
 4. Add `evals/<skill>.md` with the five required cases: golden path, silence path, graceful-fail
-   path, practice-conformance path, and missing-source path (one of the eight is unavailable).
+   path, practice-conformance path, and missing-source path (one of the nine is unavailable).
 5. Register it in three places: `.claude-plugin/plugin.json`, the category `README.md`, and the
    root `README.md`.
 6. Run `scripts/check-skills.sh`.
@@ -116,7 +116,9 @@ the Method is good management practice. That is what review is for.
 ## Common mistakes
 
 - **Inventing tools.** The 2026-08 MCP update ships private-note read/create/delete and the
-  recognition read — take exact tool names from the live tool list, never guess one. **There is no
+  recognition read; the 2026-09 update ships the review-cycle family. Take exact tool names from
+  the live tool list, never guess one. **A review write can be missing from a live list only
+  because the connection predates `reviews:write`** — reconnect before concluding it is absent. **There is no
   AI-memory access and none is planned: no skill or doc refers to it.** Keep the fallback ladders
   rather than deleting them: self-hosted and older deployments still hit them.
 - **Letting a missing source become a negative finding.** "No recognition found" and "recognition

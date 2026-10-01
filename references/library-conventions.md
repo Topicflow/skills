@@ -52,11 +52,11 @@ returns empty. One hop, traceable: you read the skill and you know what it does.
 the skill stops and prompts the person to connect it through the portable setup flow in
 `topicflow-tools.md`. It does not produce a local-only, simulated, or partial workflow.
 
-The eight kinds of data, each with its call and its withheld conclusions:
+The nine kinds of data, each with its call and its withheld conclusions:
 [data-sources.md](data-sources.md). Full parameters and gotchas:
 [topicflow-tools.md](topicflow-tools.md).
 
-**The Method must not depend on a tool name.** A different tool can serve any of the eight; the
+**The Method must not depend on a tool name.** A different tool can serve any of the nine; the
 practice does not change, only the call. Keep tool names in Sources so swapping one touches one
 section.
 
@@ -131,7 +131,7 @@ run, never silently pretend the gap is a negative result ("no recognition found"
 "recognition history unreadable"). The manager should never have to guess how much the skill could
 actually see.
 
-The eight kinds of data, each with its call and the conclusions it withholds:
+The nine kinds of data, each with its call and the conclusions it withholds:
 [data-sources.md](data-sources.md). Full parameters and gaps:
 [topicflow-tools.md](topicflow-tools.md).
 
@@ -164,7 +164,7 @@ and a small limit, and favour the most recent.
 5. Write Sources: the calls it makes, from [data-sources.md](data-sources.md), and the
    conclusion it withholds when each one fails or returns empty.
 6. Add 5 eval cases in `evals/<skill>.md`: golden path, silence path, graceful-fail path,
-   practice-conformance path, and a **missing-source path** — one of the eight is unavailable,
+   practice-conformance path, and a **missing-source path** — one of the nine is unavailable,
    and the skill narrows honestly instead of guessing.
 7. Register it in `.claude-plugin/plugin.json`, the category README, and the root README.
 8. Run `scripts/check-skills.sh`.

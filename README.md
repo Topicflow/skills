@@ -17,11 +17,11 @@ manager-specific, and the skills say which.
 They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. Each skill names
 the Topicflow calls it makes — read a skill and you know exactly what it does, in one hop.
 
-Eight kinds of data sit underneath: **people, meetings, meeting agenda, work, goals, feedback,
-recognition, private notes.** Each one names the call that serves it and, more importantly, **the
+Nine kinds of data sit underneath: **people, meetings, meeting agenda, work, goals, feedback,
+recognition, private notes, reviews.** Each one names the call that serves it and, more importantly, **the
 claim a skill must stop making when that call comes back empty**. Where a deployment cannot serve
-one — recognition and private notes only gained their tools in the 2026-08 MCP update — the
-skills say so out loud rather than guessing. See
+one — recognition and private notes only gained their tools in the 2026-08 MCP update, and reviews
+in the 2026-09 one — the skills say so out loud rather than guessing. See
 [references/data-sources.md](./references/data-sources.md).
 
 ## Quickstart
@@ -211,7 +211,7 @@ not go in.
 references/
   management-rules.md       the seventeen rules, with sources
   library-conventions.md    the rules every skill follows
-  data-sources.md           the eight kinds of data, the call for each, what it withholds
+  data-sources.md           the nine kinds of data, the call for each, what it withholds
   topicflow-tools.md        full parameters, the write pattern, and the missing tools
 skills/
   conversations/  foundations/     the nine installed skills
@@ -239,13 +239,15 @@ release.
 
 ## Status
 
-Version 0.1.0 — nine installed skills: five core workflows that work from either chair, a guided
+Version 0.1.1 — nine installed skills: five core workflows that work from either chair, a guided
 direct-report interview, durable private context, and two manager-facing entry points. The focused
 workflows own their Topicflow writes; the entry points choose what deserves attention. Seven further
 skills are parked in [skills/later/](./skills/later) until the infrastructure they need exists.
 
 The 2026-08 MCP update ships the dependencies that mattered most: private-note read, create, and
 delete, plus the recognition read. The skills keep their fallbacks for deployments that predate it.
+The 2026-09 update adds the review cycle: reads plus writes for writing a review, choosing peers and
+running a cycle. The writes need a connection made after that update; older ones must reconnect.
 Full list, with the fallback each one uses:
 [references/topicflow-tools.md](./references/topicflow-tools.md).
 

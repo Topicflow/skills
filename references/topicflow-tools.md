@@ -1,6 +1,6 @@
 # Topicflow tools — what exists, what is missing, how to degrade
 
-Ground truth for the Topicflow MCP as of 2026-08. Skills name practices, not tools; this
+Ground truth for the Topicflow MCP as of 2026-10-01. Skills name practices, not tools; this
 file is where tool detail lives so a rename touches one file.
 
 Tool names below are unprefixed. In an MCP client they appear namespaced (for example
@@ -21,6 +21,11 @@ https://app.topicflow.com/mcp
 
 After that, ask them to retry the same skill. Do not invent a no-Topicflow fallback or claim that
 the server is connected until a Topicflow tool is actually exposed.
+
+**Connected but the review writes are missing.** The review writes need the `reviews:write` scope,
+and a connection made before the 2026-09 MCP update keeps its old, read-only grant. When the review
+reads are exposed but a write the skill needs is not, ask the user to disconnect and reconnect
+Topicflow, approving review changes. See [Reviews](#reviews--the-review-cycle-family).
 
 ## The write pattern — preview, then confirm
 
@@ -139,16 +144,8 @@ complete one look identical, so a skill that reports a count either paged or say
   `include_calibrations` are for reporting and each **requires `program_id`**.
   Pages with `cursor`: **follow `next_cursor` until `has_more` is false before reporting any
   distribution**, or the numbers describe the first page rather than the cycle.
-- **`list_review_programs(current_only?, state?, title?, program_id?, include_participants?, include_participant_status?, limit?, cursor?, order?)`**
-  — review cycles. `current_only: true` for what is running now. `state` is a string —
-  `draft`, `published`, `paused`, `closed` — and `published` means launched. `order` takes
-  `start_date` or `due_date`, `-` prefixed for descending. Pages with `cursor`.
-- **`list_my_review_tasks(current_only?, include_completed?, program_id?, program_title?, limit?)`**
-  — review work assigned to the user. `current_only` defaults to true; `include_completed`
-  defaults to false and turning it on also surfaces finished work that can still be revised.
-  Each row carries a `review_type`, and they are not all "write a review" — `peer_nomination`
-  means choosing who reviews someone, which is a different job with different tools.
-  The trigger for `review-prep` (parked in `skills/later/`).
+- **The review cycle itself** — `list_review_programs`, `list_my_review_tasks` and the rest of
+  the family have their own section: [Reviews](#reviews--the-review-cycle-family).
 - **`query_external_events(start_datetime, end_datetime, target?, sources?)`** — work
   signals from connected tools (GitHub, Linear, and others). **Both datetimes are
   required**, ISO 8601 UTC (`YYYY-MM-DDTHH:MM:SSZ`). `target` defaults to the current
@@ -309,48 +306,173 @@ manager to confirm the roster once rather than inferring it silently every run.
   "schedule a 1-on-1" action is always a request to the manager — the skill can only add
   topics to a meeting that already exists.
 
-## The review-cycle family — read-only here
+## Reviews — the review-cycle family
 
-Eight reads beyond `list_review_programs`, `list_my_review_tasks` and `list_assessments`. Nothing
-installed uses them yet; the parked `review-prep` rests on `list_my_review_tasks` alone.
+Shipped in the **2026-09 MCP update** (review completion 2026-09-02, peer nominations and
+calibration 2026-09-14, delivery 2026-09-16, participant changes 2026-09-21, reminders and dates
+2026-09-23). Reads verified live against a test cycle on 2026-10-01.
 
-- **`list_review_program_assignments(program_id, steps?, statuses?, subject_ids?, assignee_ids?, cursor?, limit?)`**
-  — every requirement in a cycle, **including unstarted and blocked work**, which is what makes it
-  the one that answers "what is outstanding". `steps` covers `self_review`, `downward_review`,
-  `peer_review`, `upward_review`, `peer_nomination`, `pre_calibration`, `post_calibration`,
-  `approval`, `delivery`, `one_on_one`, `engagement_survey`; `statuses` covers `not_started`,
-  `in_progress`, `completed`, `not_required`.
-- **`list_review_program_participants(program_id, user_ids?, cursor?, limit?)`** — who is enrolled.
-- **`list_review_program_events(program_id, user_id?, verb?, since?, limit?)`** — the activity log:
-  notification and reminder batches with sent / failed / skipped counts, plus admin actions. Pass
-  `user_id` for "did this person actually get it?" — it returns their individual rows with a
-  channel, a status, and a reason for any skip.
+**The writes need the `reviews:write` scope, and an older grant does not get it.** Every review
+write requires `reviews:read` *and* `reviews:write`, and the server hides any tool the token is
+not scoped for. A client that connected before the update sees the reads and none of the writes,
+with no error. So a missing review write is not proof the tool is absent: tell the user to
+disconnect and reconnect Topicflow, approving review changes, then retry. Until then the job is
+unbound and the skill hands over the text or the steps for the web app.
+
+Two cautions hold everywhere in this family. Review content and calibration content are private
+and never move to a public channel. A peer nomination is not a completed review — choosing
+reviewers does not mean anyone has written anything.
+
+### Finding the cycle and the work (reads)
+
+- **`list_my_review_tasks(program_id?, program_title?, current_only=true, include_completed=false, limit=10)`**
+  — review work assigned to the user. `limit` caps at 50. Each row carries a `review_type`.
+  - **A `peer_nomination` row means "choose reviewers".** Use the nomination calls for it,
+    never `start_review`.
+  - **A row with `status: "waiting"` cannot be started.** Say what it waits for, from its
+    `waiting_for` value ("waiting for pre-calibration"). Never offer to start it.
+  - `include_completed: true` adds submitted reviews and finished peer selections that can still
+    be revised.
+  - An empty list means no task is visible to this account, not that the user has no review work.
+- **`list_review_programs(program_id?, title?, state?, current_only=false, include_participants?, include_participant_status?, order="-start_date", limit=50, cursor?)`**
+  — the review cycles this account can see, with `current_stage` (observed: `active`,
+  `past_due`), `start_date`, `due_date`, the period dates, `ongoing`, `participant_count` and
+  `can_read_participant_details`. `state` is `draft`, `published` (launched), `paused` or
+  `closed`. `title` is a fuzzy match. Caps at 200; pages with `cursor`.
+  **An ongoing review has no dates of its own** (`ongoing: true`, `due_date: null`). Never
+  compute "days left" for one.
+- **`list_review_program_assignments(program_id, subject_ids?, assignee_ids?, steps?, statuses?, cursor?, limit=50)`**
+  — every requirement in a cycle, **including work that is not started or is blocked**. This is
+  the call that answers "what is outstanding". Caps at 200.
+  - `steps`: `self_review`, `downward_review`, `peer_review`, `upward_review`,
+    `peer_nomination`, `pre_calibration`, `post_calibration`, `approval`, `delivery`,
+    `one_on_one`, `engagement_survey`.
+  - `statuses`: `not_started`, `in_progress`, `completed`, `not_required`.
+  - Each row carries `subject`, `assignees`, `due_date`, `overdue` (a boolean),
+    `blocked_reason`, `not_required_reason`, `responsible_role`, `completion_rule`, and the
+    `template_id`, `assessment_ids` and `delivery_id` other calls need.
+  - **Several eligible managers on one row are alternatives, not extra requirements.** A
+    `completion_rule` of `any_eligible_manager` is done when one of them finishes. Count the row
+    once.
+  - **Follow `next_cursor` until `has_more` is false before reporting any total.**
+  - The cycle's `current_stage` and a row's `overdue` are separate facts. A cycle can be
+    `past_due` while every row is `completed` or `not_required`.
+- **`list_review_program_participants(program_id, user_ids?, cursor?, limit=50)`** — the people
+  enrolled in a cycle, with their current and snapshot dimensions (managers, departments,
+  position). **The source of `user_id` for any action on one participant.** Caps at 200.
+- **`list_review_program_events(program_id, user_id?, verb?, since?, limit=50)`** — the review's
+  Activity log, newest first. By default it returns notification and reminder batches with
+  `sent_count`, `failed_count` and `skipped_count`, plus admin actions (`review.published`,
+  `review.kickoff`). `verb` is a prefix (`notification.`, `reminder.`). `since` is ISO 8601,
+  UTC when no offset is given. Caps at 200.
+  - **For "did this person get the email?", pass `user_id`.** That returns their own rows, each
+    with a `channel`, a `status` and, for a skip, `payload.reason`. Quote the reason; never
+    guess one.
+  - **`has_more: true` means you only have the latest rows.** Narrow by `since` or `verb`, or
+    raise `limit`, before saying anything about who did *not* get something.
+  - A batch with `failed_count` above zero is worth surfacing. A batch is not a person: read the
+    person's rows before saying who it failed for.
+- **`list_assessments(...)`** — the written reviews themselves. Documented under Reads above.
+- **`get_review_program_setup(program_id)`** — a draft cycle's saved configuration and its
+  validation issues.
 - **`list_review_program_setup_options(resource_type?, assessment_type?, search?, page?, limit?)`**
   — what a draft cycle may be configured with: participant scopes, question sets, 1-on-1
   templates, career framework, core values, talent indicators.
-- **`get_review_program_setup(program_id)`** — a draft cycle's saved configuration and its
-  outstanding validation issues.
-- **`get_review_progress(assessment_id)`** — saved answers and the next unanswered question on the
-  caller's own draft review.
-- **`get_review_calibration(program_id, target_id, assessment_template_id)`** — calibration state,
-  permitted actions, ratings and suggestion history. Get the template id from the subject's
-  `downward_review` row in the assignments call, including when that row is blocked.
-- **`get_peer_nomination_options(program_id, assessment_template_id, target_id, search?, offset?, limit?)`**
-  — current nominees and eligible coworkers for a `peer_nomination` task. Eligible coworkers need
-  not be enrolled in the cycle themselves.
 
-**Over MCP this family is read-only, and that may be a scope gate rather than a real absence.**
-The matching writes — starting a review, saving an answer, submitting it, updating peer
-nominations, applying or suggesting a calibration rating, completing calibration, configuring a
-draft program — are named inside these tools' own descriptions but **are not exposed to the
-client this was verified against**. That is exactly the `list_recognitions` situation again: a
-scope-gated tool is invisible, and invisible is indistinguishable from absent. **Verify against an
-admin account before building a skill that assumes any of those writes.**
+### Writing a review (the responder's own draft)
 
-Two cautions carried over from the in-app skills, which are worth keeping whatever serves this:
-calibration content and review contents are private, and never move to a public channel; and
-a peer nomination is not a completed review — selecting reviewers does not mean they have written
-anything.
+- **`start_review(program_id, assessment_template_id, target_id?)`** — preview of starting or
+  resuming one task. Use the exact IDs from `list_my_review_tasks`; omit `target_id` only for an
+  organization survey. After confirmation it returns the draft progress and the first unanswered
+  question.
+- **`get_review_progress(assessment_id)`** — the saved answers and the next unanswered question.
+  Ask one question at a time, with its description, criteria and numbered response options.
+- **`answer_review_question(assessment_id, question_id, response?, comment?, skip=false)`** —
+  preview of saving one answer. Confirmation returns the next question.
+  - `response` is text for a text question, a displayed number or the exact label for a rating or
+    NPS question, and a list of numbers or labels for multiple choice.
+  - `comment` keeps the user's wording; markdown is allowed.
+  - `skip: true` only when the user asks to skip a fully optional question.
+  - **It never submits.**
+- **`submit_review(assessment_id)`** — preview of the complete review with every answer, using
+  the configured labels. Show every preview field, then ask for explicit approval to submit.
+  Only `confirm_creation` submits, and an approval of an answer is not an approval to submit.
+- **`reopen_review(assessment_id)`** — global administrators only. It reopens a submitted
+  response (a closed cycle must be reopened first). After that, only the original responder can
+  edit and resubmit it. No skill uses it.
+
+### Choosing peers
+
+- **`get_peer_nomination_options(program_id, assessment_template_id, target_id, search?, offset=0, limit=10)`**
+  — the current nominees and the eligible coworkers for a `peer_nomination` task. `limit` caps
+  at 50; follow `next_offset` for more candidates.
+  - Coworkers do not need to be enrolled in the review themselves.
+  - **Candidates come back in alphabetical order.** The order says nothing about who works
+    together.
+  - `search` takes a name or email. When a name matches several people, ask. Never guess an ID.
+- **`update_peer_nominations(program_id, assessment_template_id, target_id, responder_ids)`** —
+  preview of replacing the selection.
+  - **`responder_ids` is the COMPLETE final list.** To add one person, send the current nominees
+    plus the new one. Sending the new one alone removes everyone else.
+  - `[]` removes everyone. Use it only when the user asks for exactly that.
+
+### Running a cycle (admin)
+
+All three are preview-then-confirm and need the admin's own rights on the review.
+
+- **`send_review_reminder(program_id, steps?, message?, channels?)`** — preview of a reminder to
+  everyone the review calls late.
+  - **The review picks the recipients, not the agent:** whoever is past a step's due date and
+    still owes it. The preview shows the recipient count per step; show it.
+  - `steps`: `self-review`, `manager-review`, `upward-review`, `peer-review`, `survey`,
+    `one-on-one`. Omit to chase every late step. **These use hyphens; the assignment steps use
+    underscores.** `self_review` here is an error.
+  - `message` is an optional line in the admin's own words. `channels`: `email` (the default),
+    `slack`, `teams`.
+  - Paused and closed reviews send nothing.
+- **`change_review_dates(program_id, kickoff_date?, due_date?, period_start_date?, period_end_date?)`**
+  — preview of moving the review's own dates (`YYYY-MM-DD`).
+  - Name only the dates that move; the rest stay.
+  - **Step due dates are not changed by this tool.**
+  - An ongoing review (no dates of its own) is refused.
+  - A published review's change is written to its Activity tab; a draft's is not.
+- **`update_review_participant(program_id, user_id, action, reason?)`** — preview of an action on
+  ONE participant of a published review. `user_id` comes from
+  `list_review_program_participants`.
+  - `excuse` keeps the person on the roster and stops all their reminders. **`reason` is
+    required**, in the admin's own words; it is stored and shown.
+  - `add_back` undoes an excuse.
+  - **`remove` takes the person off the roster for good** and cannot be undone with this tool.
+  - **The person is never notified** of any of the three.
+
+### Calibration, delivery and draft setup (no skill yet)
+
+Listed so nothing reaches for them by accident. All private, all preview-then-confirm.
+
+- **`get_review_calibration(program_id, target_id, assessment_template_id)`** — calibration
+  state, permitted actions, ratings and suggestion history. The template id comes from the
+  subject's `downward_review` assignment row, including when that row is blocked.
+- **`calibrate_review_answer(program_id, target_id, assessment_template_id, question_id, action, answer_id?, rating?, comment?)`**
+  — `action` is `suggest` or `apply`. Applying a rating does not complete calibration.
+- **`complete_review_calibration(program_id, target_id, assessment_template_id)`** — marks one
+  person's calibration complete. Kept separate from rating edits.
+- **`get_review_delivery(delivery_id)`** — the results package, what the employee will see, and
+  the available actions. `delivery_id` comes from the `delivery` assignment row.
+- **`update_review_delivery(delivery_id, action, summary?, excluded_answer_ids?)`** — `action`
+  is `edit`, `request_approval`, `approve` or `share`. Approving does not release results;
+  sharing does.
+- **`configure_review_program_workflow`, `configure_review_program_questions`,
+  `configure_review_program_participants`, `configure_review_program_notifications`** — create
+  and shape a **draft** single-cycle review. They never publish it.
+
+### Missing from this MCP
+
+- **No tool publishes a review.** A draft can be set up over MCP; launching it happens only in
+  the web app.
+- **No "top collaborators" read.** The Topicflow app works this out for the profile page; over
+  MCP a skill builds its own signal from meetings, work signals and feedback.
+- **No tool changes one step's due date.** `change_review_dates` moves the review's own dates
+  only. A step date is a web-app change.
 
 ## Secondary sources
 
