@@ -17,7 +17,7 @@ Every skill file has at least these, in this order:
 4. **Practice-conformance path** — an output that violates a mapped P-rule must be rejected. The
    skill either fixes it before showing it or asks the question that fixes it. Showing a
    non-conformant draft with a caveat is a fail.
-5. **Missing-source path** — **one of the eight sources is unavailable, errors, or returns empty.**
+5. **Missing-source path** — **one of the nine sources is unavailable, errors, or returns empty.**
    Recognition and private notes only gained their tools in the 2026-08 MCP update, so on many
    deployments this is still the normal case, not the edge one. The
    skill must do the most the remaining sources allow, name what was missing in one line, and never

@@ -1,6 +1,6 @@
-# Data sources — the eight things a skill reads or writes
+# Data sources — the nine things a skill reads or writes
 
-Eight kinds of data. Each one names the Topicflow call that serves it, what the call cannot tell
+Nine kinds of data. Each one names the Topicflow call that serves it, what the call cannot tell
 you, and **the claim a skill must stop making when it fails**. That last column is the important
 one: it is the difference between "I don't know" and a false statement about a real person.
 
@@ -20,7 +20,7 @@ report's ID, and the sections below say where that matters.
 
 ## 0. The organization — what this one calls things
 
-Not a ninth kind of data. It is the context that decides how the eight are *spoken about*, and it
+Not a tenth kind of data. It is the context that decides how the nine are *spoken about*, and it
 comes from one call, `get_organization_context()`. Make it **once per run**, before naming a
 feature or a core value, and reuse the answer.
 
@@ -223,10 +223,45 @@ pastes somewhere is still kept; a fact silently dropped is not.
 
 **Dropping a note is better than writing it somewhere the report can read.**
 
+## 9. Reviews — the review cycle and the work it assigns
+
+`list_my_review_tasks()` for the user's own review work. `list_review_programs(current_only:
+true)` for the cycles, then `list_review_program_assignments(program_id, ...)` for every
+requirement in one cycle, `list_review_program_participants(program_id)` for who is enrolled, and
+`list_review_program_events(program_id, user_id?)` for what was sent. `get_review_progress` reads a
+draft the user is writing; `get_peer_nomination_options` reads the nominees and candidates for a
+peer selection. `list_assessments` reads what was written.
+
+**Over MCP this kind is read-only today.** Starting, answering and submitting a review, saving peer
+nominations, reminders, date changes and participant changes are not in the live tool list
+(verified 2026-10-01). A skill that needs one hands the user the text or the steps for the web app,
+and says so. Details: the Reviews section of [topicflow-tools.md](topicflow-tools.md).
+
+**A review task is not always a review.** A `peer_nomination` row means choosing reviewers. A
+`waiting` row is blocked on an earlier step. Read the row before naming the job.
+
+**Review content is private.** What someone wrote about a person never goes into a meeting agenda,
+a channel, or another person's evidence. Counts and statuses are process facts; answers are not.
+
+*Withheld:*
+
+- **No `list_my_review_tasks` rows** → never "you have no review work". Say that no review task is
+  visible to this account.
+- **A `waiting` task** → never "you can start now". Say what it waits for, from `waiting_for`.
+- **Assignments read without following the cursor** → no totals, no percentages, and no "only N
+  people are late".
+- **The events log with `has_more: true`** → no "nobody got the email" and no "everyone got it".
+  You have the latest rows only.
+- **A skipped send in the events log** → the reason is in the row. Quote it; never guess it.
+- **No access to a cycle** (the call refuses or returns nothing) → "this account cannot see that
+  review", never "the review does not exist".
+- **A cycle with `ongoing: true`** → no due date, so no "days left" and no "late" from the cycle's
+  own dates. Use the rows' own `due_date` and `overdue`.
+
 ## Using something other than Topicflow
 
 The skills are written against Topicflow because that is what they ship with. Another tool can
-serve any of the eight — the practice does not change, only the call.
+serve any of the nine — the practice does not change, only the call.
 
 To swap one in: list what the MCP server actually exposes, find a read that returns the fields
 above and a write if the skill needs one, **test one real call per direction**, then note the
