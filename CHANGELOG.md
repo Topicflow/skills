@@ -3,6 +3,20 @@
 All notable changes to this library are documented here. Versions follow
 [Semantic Versioning](https://semver.org/).
 
+## 0.4.0 — 2026-10-01
+
+A third chair: the HR admin running a review cycle. Thirteen installed skills.
+
+- **New category `skills/admin/`** and the third chair in `README.md`, `CLAUDE.md` and
+  `library-conventions.md`: process only, never review content, names of late people only in a
+  direct conversation.
+- **New: `run-review-cycle`.** Shows one running cycle per step — done, not started, late,
+  blocked, every page read first — then does the routine actions with one approval each: remind
+  late people (the review picks them), move the review's own dates, excuse or remove one
+  participant (excuse offered first; removal only on a second explicit choice; the person is never
+  notified), and answer "did they get the email?" from the person's own log rows. Its weekly
+  routine proposes reminders and never sends one.
+
 ## 0.3.0 — 2026-10-01
 
 Choosing peer reviewers. Twelve installed skills.

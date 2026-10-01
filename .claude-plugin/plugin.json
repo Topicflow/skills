@@ -1,7 +1,7 @@
 {
   "name": "manager-skills",
-  "version": "0.3.0",
-  "description": "Agent skills for people managers and their direct reports — 1-on-1 prep, SBI feedback, recognition, goals and check-ins, and writing reviews. Grounded in management research, built on Topicflow, and honest about what it cannot see.",
+  "version": "0.4.0",
+  "description": "Agent skills for people managers and their direct reports — 1-on-1 prep, SBI feedback, recognition, goals and check-ins, writing reviews, and running review cycles. Grounded in management research, built on Topicflow, and honest about what it cannot see.",
   "author": {
     "name": "Topicflow",
     "url": "https://www.topicflow.com"
@@ -31,6 +31,7 @@
     "./skills/conversations/direct-report-interview",
     "./skills/conversations/review-prep",
     "./skills/conversations/write-review",
-    "./skills/conversations/nominate-peers"
+    "./skills/conversations/nominate-peers",
+    "./skills/admin/run-review-cycle"
   ]
 }

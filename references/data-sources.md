@@ -257,7 +257,9 @@ a channel, or another person's evidence. Counts and statuses are process facts; 
   people are late".
 - **The events log with `has_more: true`** → no "nobody got the email" and no "everyone got it".
   You have the latest rows only.
-- **A skipped send in the events log** → the reason is in the row. Quote it; never guess it.
+- **A skipped or failed send in the events log** → the reason is in the row (`payload.reason` for a
+  skip, `error` for a failure). Quote it; never guess it. A failure on one channel is not a missed
+  notification if another channel's row says `sent`.
 - **No access to a cycle** (the call refuses or returns nothing) → "this account cannot see that
   review", never "the review does not exist".
 - **A review write missing while the reads work** → never "this cannot be done". Say the

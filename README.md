@@ -1,6 +1,6 @@
-# Skills for managers and their direct reports
+# Skills for managers, their direct reports, and the people who run reviews
 
-Agent skills for the human half of work: 1-on-1s, feedback, recognition, goals.
+Agent skills for the human half of work: 1-on-1s, feedback, recognition, goals, and review cycles.
 
 Management advice is abundant and almost never applied, because applying it means remembering the
 right practice at the exact moment you are busy. These skills close that gap. Each one encodes a
@@ -13,6 +13,10 @@ meeting with their manager — and that second case is the practice at its best,
 belongs to the report. Feedback travels down, sideways, and up. A goal check-in is best posted by
 the goal's own owner. The rules do not care about the org chart; only a few steps are
 manager-specific, and the skills say which.
+
+A third chair sits beside the two: **the HR admin who runs a review cycle**. They do not prep
+1-on-1s or write about a person; they keep the process moving — who is late, which dates move,
+who is excused. Their skills live in their own category and never read what anyone wrote.
 
 They run in any agent: Claude app, Claude Code, ChatGPT/Codex, or any MCP client. Each skill names
 the Topicflow calls it makes — read a skill and you know exactly what it does, in one hop.
@@ -106,6 +110,13 @@ Three things worth knowing before you start, so nothing is a surprise:
   — a deliberate manager review of the named direct reports, started directly or after selecting
   it in Ask Topicflow: the few next actions that would help them most.
 
+### [Admin](./skills/admin) — the HR admin running a review cycle
+
+- **[run-review-cycle](./skills/admin/run-review-cycle/SKILL.md)** — where one running cycle stands
+  per step, then the routine actions with one approval each: remind late people, move the review's
+  dates, excuse or remove one participant, check whether someone got an email. Process only; names
+  of late people only in a direct conversation.
+
 ### [Parked](./skills/later) — written, waiting on infrastructure
 
 Seven more skills — team detectors (stuck work, relationship drift, recognition equity, goal
@@ -126,6 +137,7 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "set my goals for Q4"
 > "help me write my self review"
 > "who should review Priya?"
+> "who is late on the H2 review?"
 
 `/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
 selects it. The two deliberate manager workflows can also be started directly: run a guided
@@ -223,7 +235,7 @@ references/
   data-sources.md           the nine kinds of data, the call for each, what it withholds
   topicflow-tools.md        full parameters, the write pattern, and the missing tools
 skills/
-  conversations/  foundations/     the nine installed skills
+  conversations/  foundations/  admin/   the installed skills
   later/                           parked skills, not installed
 evals/                      5 cases per skill; evals/later/ mirrors skills/later/
 .out-of-scope/              designs we considered and rejected, with reasons
@@ -248,9 +260,9 @@ release.
 
 ## Status
 
-Version 0.3.0 — twelve installed skills: seven core workflows that work from either chair, review
-prep for managers, a guided direct-report interview, durable private context, and two
-manager-facing entry points. The focused workflows own their Topicflow writes; the entry points
+Version 0.4.0 — thirteen installed skills: seven core workflows that work from either chair, review
+prep for managers, a guided direct-report interview, durable private context, two manager-facing
+entry points, and one skill for the HR admin running a review cycle. The focused workflows own their Topicflow writes; the entry points
 choose what deserves attention. Seven further skills are parked in
 [skills/later/](./skills/later) until the infrastructure they need exists.
 
