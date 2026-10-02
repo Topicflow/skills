@@ -501,6 +501,7 @@ Listed so nothing reaches for them by accident. All private, all preview-then-co
 - **`configure_review_program_workflow`, `configure_review_program_questions`,
   `configure_review_program_participants`, `configure_review_program_notifications`** — create
   and shape a **draft** single-cycle review. They never publish it.
+  What to configure, with the evidence: [review-templates.md](review-templates.md).
 
 ### Missing from this MCP
 

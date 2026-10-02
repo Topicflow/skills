@@ -12,6 +12,10 @@ Three rules hold across this category, on top of the library conventions:
 - **Edit rights are real.** When the account cannot change a review, the skill says so plainly
   and stops. It does not look for another tool that might.
 
+Setting up a new cycle starts from [review-templates.md](../../references/review-templates.md):
+starter cycles, question sets, talent indicators, frequency, calibration and delivery, each with
+the research behind it. No skill sets up a cycle yet.
+
 - **[run-review-cycle](./run-review-cycle/SKILL.md)** — where one running cycle stands, per step:
   done, not started, late, blocked. Then the routine actions with one approval each: remind late
   people, move the review's dates, excuse or remove one participant, and check whether someone
