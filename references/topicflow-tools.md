@@ -482,7 +482,7 @@ All three are preview-then-confirm and need the admin's own rights on the review
     web app). For a recurring review the "What happens" field says the removal carries into
     future cycles; show it verbatim.
 
-### Calibration, delivery and draft setup (no skill yet)
+### Calibration and delivery (no skill yet)
 
 Listed so nothing reaches for them by accident. All private, all preview-then-confirm.
 
@@ -498,10 +498,81 @@ Listed so nothing reaches for them by accident. All private, all preview-then-co
 - **`update_review_delivery(delivery_id, action, summary?, excluded_answer_ids?)`** — `action`
   is `edit`, `request_approval`, `approve` or `share`. Approving does not release results;
   sharing does.
-- **`configure_review_program_workflow`, `configure_review_program_questions`,
-  `configure_review_program_participants`, `configure_review_program_notifications`** — create
-  and shape a **draft** single-cycle review. They never publish it.
-  What to configure, with the evidence: [review-templates.md](review-templates.md).
+
+### Setting up a draft cycle (admin)
+
+Used by `setup-review-cycle`. Parameters read from the Topicflow source (`chatbot/llm_types.py`
+and `compliance/program_setup_registry.py` on `production`) on 2026-10-09; not yet called live
+from this library, because the test grant lacked `reviews:write`. What to configure, with the
+evidence: [review-templates.md](review-templates.md).
+
+All five writes need `reviews:read` and `reviews:write`. Each returns a preview with
+`preview_fields` and a `pending_id`; `confirm_creation` saves it. **Each part gets its own
+preview and its own confirmation.** Nothing here publishes: the saved draft ends with a
+**Review settings and publish** link, and publishing happens in the web app.
+
+- **`get_review_program_setup(program_id)`** — the saved draft, `validation_issues` (blocking),
+  a top-level `warnings` list (never blocking; say each one before giving the link), and a
+  `timeline`.
+- **`list_review_program_setup_options(resource_type="all", assessment_type?, search?, page=1, limit=25)`**
+  — `resource_type`: `participant_scopes`, `question_sets`, `one_on_one_templates`,
+  `career_framework`, `core_values`, `talent_indicators`. `assessment_type`: `performance`,
+  `peer`, `upward`. The source of every id the writes take.
+- **`duplicate_review_program(program_id, kickoff_date?, title?)`** — preview of copying an
+  earlier cycle into a new draft. It keeps the steps, question sets, participant rule,
+  calibration and reminders; dates move to the new kickoff and keep their length; the title is
+  "Copy of <title>" unless given; the copy does not repeat, and calibration groups are not copied.
+- **`configure_review_program_workflow(program_id?, title, kickoff_date, due_date, evaluation_period, evaluation_period_start?, evaluation_period_end?, enabled_steps, step_due_dates?, peer_responder_selection?, peer_anonymity?, upward_anonymity="not_anonymous", share_with_subject=true, one_on_one_template_id?)`**
+  — omit `program_id` to create a new draft.
+  - `evaluation_period`: `past_week` … `past_year` are rolling lookbacks ending on kickoff; a
+    named quarter or year is `custom` with its own start and end. `past_quarter` is not Q3.
+  - `enabled_steps`: `pre_calibration`, `peer_nomination`, `self_review`, `peer_review`,
+    `upward_review`, `downward_review`, `post_calibration`, `delivery`, `one_on_one`.
+    **`self_review` and `downward_review` go together.** At least one of downward, peer or
+    upward. Calibration needs the downward review.
+  - **Calibration is a step, one of two.** `pre_calibration` runs *before any review is
+    started*; `post_calibration` runs *after the reviews are completed* and makes the manager
+    review's results wait for admin approval. "Calibrate before delivery" is `post_calibration`.
+    Not both.
+  - `peer_responder_selection` (required with peer review): `same_manager_peers` (automatic),
+    `manager_selection`, `subject_selection`. Include `peer_nomination` exactly for the last two.
+    **Ask; the server refuses a silent default.**
+  - `peer_anonymity` (required with peer review) and `upward_anonymity`: `not_anonymous`,
+    `semi_anonymous` (names hidden from the person reviewed, shown to other viewers), `anonymous`
+    (names hidden from everyone but the reviewer).
+  - `share_with_subject: true` needs the `delivery` step. A final `one_on_one` needs
+    `one_on_one_template_id`.
+  - The preview carries a **`timeline`**: dated entries with a `label`, a `recipient_count` on
+    entries that reach people, `timeline.warnings` that name the people the review will miss
+    (for example, people with no manager), and sometimes a `summary_note`. Put a number only on
+    an entry that has `recipient_count`. The timeline is a forecast, not a setting to approve.
+- **`configure_review_program_questions(program_id, templates[])`** — one entry per enabled
+  review type: `assessment_type` (`performance`, `peer`, `upward`), then either
+  `existing_question_set_id` or `new_question_set {title, sections[{title, description,
+  questions[]}]}`. Existing sets are reused, never edited.
+  - **The self and manager reviews share one `performance` set.** Each question's `responders`
+    says who answers it: `subject_only` (the self review), `manager_only`, or
+    `manager_and_subject` (the default: both). There is no setting that hides a self-answer from
+    the manager until the manager submits.
+  - Per question: `title`, `question_type` (`text`, `rating`, `multiple_choice`),
+    `description`, `response_required=true`, `comment` (`optional`, `required`, `none`),
+    `subject_visibility` (`visible`, `hidden`), and for ratings `start_value`, `end_value`,
+    `labels`, `label_descriptions`; for multiple choice `options`, `option_descriptions`.
+  - Optional blocks: `role_review` (current and next role against the career framework),
+    `goal_review`, `core_value_review` (each a scale with `responders`, default `manager_only`),
+    and `talent_indicators {section_title, section_description, indicators[{talent_indicator_id,
+    description, comment, responders="manager_only", subject_visibility="hidden"}]}`. Indicator
+    ids come from the setup options; a new indicator is created in the web app.
+- **`configure_review_program_participants(program_id, applies_to, team_ids?, manager_ids?, user_ids?, excluded_user_ids?, hired_after?)`**
+  — replaces the participant rule. `applies_to`: `organization`, `managers`, `ics` (people with
+  no direct reports), `creator_direct_reports`, `creator_management_tree`, `departments`,
+  `reports_to`, `users`. `hired_after` excludes people hired after that date.
+- **`configure_review_program_notifications(program_id, reminders[])`** — replaces the reminder
+  schedule. Each reminder: `scheduled_date`, `steps` (underscore names, from `peer_nomination`,
+  `self_review`, `peer_review`, `upward_review`, `downward_review`, `one_on_one`), `channels`
+  (`email`, `slack`, `teams`) and `message`. An empty list clears them. Draft reminders stay
+  inactive until the cycle is published.
+- **A stale preview is refused.** Read the setup again and preview again.
 
 ### Missing from this MCP
 

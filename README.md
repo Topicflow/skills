@@ -112,6 +112,9 @@ Three things worth knowing before you start, so nothing is a surprise:
 
 ### [Admin](./skills/admin) — the HR admin running a review cycle
 
+- **[setup-review-cycle](./skills/admin/setup-review-cycle/SKILL.md)** — a draft cycle from an
+  evidence-backed template: the questions, ratings, talent indicators and calibration, each with
+  the research behind it, saved one part at a time. Never publishes.
 - **[run-review-cycle](./skills/admin/run-review-cycle/SKILL.md)** — where one running cycle stands
   per step, then the routine actions with one approval each: remind late people, move the review's
   dates, excuse or remove one participant, check whether someone got an email. Process only; names
@@ -137,6 +140,7 @@ Talk normally. The core skills are model-invoked — no slash commands to memori
 > "set my goals for Q4"
 > "help me write my self review"
 > "who should review Priya?"
+> "set up our annual review for 2026"
 > "who is late on the H2 review?"
 
 `/ask-topicflow` is the user-invoked front door. It starts any other installed skill after the manager
@@ -260,9 +264,9 @@ release.
 
 ## Status
 
-Version 0.4.0 — thirteen installed skills: seven core workflows that work from either chair, review
+Version 0.4.0 — fourteen installed skills: seven core workflows that work from either chair, review
 prep for managers, a guided direct-report interview, durable private context, two manager-facing
-entry points, and one skill for the HR admin running a review cycle. The focused workflows own their Topicflow writes; the entry points
+entry points, and two skills for the HR admin: setting up a review cycle and running one. The focused workflows own their Topicflow writes; the entry points
 choose what deserves attention. Seven further skills are parked in
 [skills/later/](./skills/later) until the infrastructure they need exists.
 

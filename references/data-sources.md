@@ -235,7 +235,10 @@ was written.
 Writes, all preview-then-confirm: `start_review`, `answer_review_question` and `submit_review` for
 the responder's own draft (`get_review_progress` reads it); `update_peer_nominations` for choosing
 reviewers (`get_peer_nomination_options` reads the candidates); `send_review_reminder`,
-`change_review_dates` and `update_review_participant` for an admin running a cycle.
+`change_review_dates` and `update_review_participant` for an admin running a cycle;
+`duplicate_review_program` and the four `configure_review_program_*` parts for an admin setting
+up a draft (`get_review_program_setup` and `list_review_program_setup_options` read it). Nothing
+publishes a cycle.
 
 **The writes need the `reviews:write` scope, and a grant made before the update does not have it.**
 The server hides a tool the token is not scoped for, so an old connection shows the reads and no
@@ -264,6 +267,9 @@ a channel, or another person's evidence. Counts and statuses are process facts; 
   review", never "the review does not exist".
 - **A review write missing while the reads work** → never "this cannot be done". Say the
   connection lacks review changes and ask the user to reconnect; until then, hand over the text.
+- **Setup options unreadable** → no "the org has no such question set or indicator". Propose new
+  questions; never reuse a set or an indicator by a guessed name or id.
+- **A saved draft** → never "the review is live". Only the web app publishes it.
 - **A cycle with `ongoing: true`** → no due date, so no "days left" and no "late" from the cycle's
   own dates. Use the rows' own `due_date` and `overdue`.
 

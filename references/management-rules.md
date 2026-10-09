@@ -64,6 +64,7 @@ Sources verified 2026-08; URLs in the footer.
 | find-management-opportunities | P1-P4 P8-P16 as relevant to each action | good coach; cares about success and well-being; productive and results-oriented |
 | review-prep | P5 P10 (manager's chair) | strong decision maker; communicates well |
 | write-review | P5 P7 P10 (P10 from the manager's chair only) | communicates well; good coach |
+| setup-review-cycle | P5 P10 P13 (questions ask for evidence; one rubric; pay and potential kept apart) | strong decision maker; has a clear vision |
 | run-review-cycle | P10 (the same rules for everyone in the cycle) | productive and results-oriented; has a clear vision |
 | nominate-peers | P10 P15 | good coach; cares about success and well-being (inclusive team) |
 | save-private-note | P9 P16 (preferences and maturity are memory-worthy facts) | cares about success and well-being |
