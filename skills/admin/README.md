@@ -14,8 +14,12 @@ Three rules hold across this category, on top of the library conventions:
 
 Setting up a new cycle starts from [review-templates.md](../../references/review-templates.md):
 starter cycles, question sets, talent indicators, frequency, calibration and delivery, each with
-the research behind it. No skill sets up a cycle yet.
+the research behind it. `setup-review-cycle` applies it.
 
+- **[setup-review-cycle](./setup-review-cycle/SKILL.md)** — a draft cycle from a starting
+  template, or a copy of an earlier one. Recommends the questions, ratings, talent indicators and
+  calibration with the reason and evidence label for each, lets the admin decide, and saves each
+  part with its own approval. It never publishes; the admin does that in the web app.
 - **[run-review-cycle](./run-review-cycle/SKILL.md)** — where one running cycle stands, per step:
   done, not started, late, blocked. Then the routine actions with one approval each: remind late
   people, move the review's dates, excuse or remove one participant, and check whether someone

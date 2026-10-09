@@ -155,7 +155,7 @@ while IFS= read -r skill_md; do
     err "does not require Topicflow MCP setup before work"
   fi
 
-  tool_names='notion-[a-z-]+|slack_[a-z_]+|list_meetings|list_recognitions|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_review_program_[a-z_]+|list_my_review_tasks|get_review_[a-z_]+|start_review|answer_review_question|submit_review|reopen_review|get_peer_nomination_options|update_peer_nominations|send_review_reminder|change_review_dates|update_review_participant|get_meeting_transcript|list_private_notes|create_private_note|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
+  tool_names='notion-[a-z-]+|slack_[a-z_]+|list_meetings|list_recognitions|query_external_events|list_goals|list_feedback|list_assessments|list_review_programs|list_review_program_[a-z_]+|list_my_review_tasks|get_review_[a-z_]+|start_review|answer_review_question|submit_review|reopen_review|get_peer_nomination_options|update_peer_nominations|send_review_reminder|change_review_dates|update_review_participant|duplicate_review_program|configure_review_program_[a-z_]+|get_meeting_transcript|list_private_notes|create_private_note|get_user_infos|add_meeting_topics|edit_meeting_topic|create_feedback|create_recognition|edit_recognition|create_goal|edit_goal|create_goal_checkin|confirm_creation'
   method_body="$(awk '/^## Method/{f=1;next} /^## /{f=0} f' "$skill_md")"
   if named="$(printf '%s\n' "$method_body" | grep -oiE "$tool_names" | sort -u | tr '\n' ' ')"; [ -n "$named" ]; then
     err "Method names tools ($named) — the practice goes in Method, the calls in Sources"

@@ -17,10 +17,11 @@ Research checked 2026-10-02. The window is 2021-2026; anything older is marked *
 only where recent work points the same way. Topicflow setup fields in
 [section 10](#10-mapping-to-topicflow-setup) were read live from a draft cycle the same day.
 
-**No skill uses this file yet.** It is the reference a future cycle-setup skill would cite, and
-the practice `run-review-cycle` and `write-review` should not contradict. The setup writes
-(`configure_review_program_*`) are listed in [topicflow-tools.md](topicflow-tools.md) under
-"no skill yet".
+**`setup-review-cycle` applies this file**: it recommends a template, its questions and its
+settings to an admin, quoting the reason and the evidence label from here. `run-review-cycle`
+and `write-review` should not contradict it. The setup writes (`configure_review_program_*`,
+`duplicate_review_program`) are documented in [topicflow-tools.md](topicflow-tools.md) under
+"Setting up a draft cycle".
 
 ## 0. How to read the evidence labels
 
@@ -453,19 +454,24 @@ What this means for the skills that help write reviews (`write-review`, `review-
 ## 10. Mapping to Topicflow setup
 
 Fields read from `get_review_program_setup` on a draft cycle, 2026-10-02. The setup writes were
-not visible to this session (the grant lacked `reviews:write`), so only the values seen in the
-read are listed. Any other value is unverified.
+not visible to that session (the grant lacked `reviews:write`); their parameters were read from
+the Topicflow source on 2026-10-09 and are in [topicflow-tools.md](topicflow-tools.md).
 
 - **Steps** (`enabled_steps`): `self_review`, `peer_nomination`, `peer_review`,
   `downward_review`, `upward_review`, `pre_calibration`, `post_calibration`, `approval`,
   `delivery`, `one_on_one`. The names come from `list_review_program_assignments`.
-  - Observed: a manager review row can wait for pre-calibration, so pre-calibration runs
-    before the manager review opens. Reading post-calibration as "after manager reviews,
-    before delivery" is an inference; confirm in the web app.
+  - Pre-calibration runs before any review is started (observed: a manager review row
+    waiting for it). Post-calibration runs after the reviews are completed, and holds the
+    manager review's results for admin approval (source, 2026-10-09). So "calibrate before
+    delivery" in [section 7](#7-calibration) is post-calibration. Only one of the two.
   - Observed: "Manager review opens as the self review completes." So in the default flow the
     manager review unlocks after the self review. Whether the manager can see a self-*rating*
-    while writing was not checked. Section 1, point 2 needs that answer.
-- **Calibration** (`workflow.calibration`): seen as `off`.
+    while writing was not checked live. The setup has no setting that hides a self-answer
+    until the manager submits, so section 1, point 2 is met by asking for no self-rating.
+- **Calibration** (`workflow.calibration`): seen as `off`. Set through the steps above.
+- **One question set for self and manager.** The `performance` set holds both; each question's
+  `responders` (`subject_only`, `manager_only`, `manager_and_subject`) decides who answers it.
+  The self set in section 3 is `subject_only`, the manager set `manager_only`.
 - **Question types:** `rating` (with `start_value`, `end_value`, `labels` and
   `label_descriptions`), `text`, `talent_indicator`.
 - **Per question:** `response_required`; `comment` as `required`, `optional` or `none`;

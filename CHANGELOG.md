@@ -5,6 +5,16 @@ All notable changes to this library are documented here. Versions follow
 
 ## Unreleased
 
+- **New: `setup-review-cycle`.** Sets up a draft review cycle for an HR admin from one of six
+  templates in `references/review-templates.md`, or from a copy of an earlier cycle. Recommends
+  the questions, the one rating, talent indicators, calibration and peer settings, each with its
+  reason and evidence label; asks rather than defaults on peer selection and anonymity; saves
+  schedule, questions, participants and reminders with one approval each; never publishes.
+- **`topicflow-tools.md` documents the draft-setup writes** (`duplicate_review_program` and the
+  four `configure_review_program_*` parts), read from the Topicflow source. Pre-calibration runs
+  before reviews start, post-calibration after; the self and manager reviews share one
+  `performance` question set split by `responders`.
+
 - **The plugin is now `topicflow-skills`** (was `manager-skills`). Install with
   `/plugin install topicflow-skills@topicflow`. If you installed the old name, uninstall
   `manager-skills@topicflow` first, then install the new one.

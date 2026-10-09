@@ -32,6 +32,7 @@
     "./skills/conversations/review-prep",
     "./skills/conversations/write-review",
     "./skills/conversations/nominate-peers",
-    "./skills/admin/run-review-cycle"
+    "./skills/admin/run-review-cycle",
+    "./skills/admin/setup-review-cycle"
   ]
 }
