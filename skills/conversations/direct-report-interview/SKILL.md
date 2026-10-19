@@ -27,7 +27,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
-- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **State the goal first.** Say this is a short refresh about one direct report, ending in a plan
   to support them better. Never make the manager guess why questions are being asked.
 - **Look up first, ask second.** Do not ask for goals, recent topics, or feedback that the record
@@ -118,7 +118,7 @@ Keep each confirmed durable fact as one dated third-person sentence through
 Three short parts: what the record already says, the confirmed human context, and one to three
 next actions with owners. For the primary next action, ask whether to start it now rather than
 telling the manager to type or run another command. Follow the
-[portable choice controls](../../references/interaction-controls.md).
+[portable choice controls](../../../references/interaction-controls.md).
 
 ## Worked example
 

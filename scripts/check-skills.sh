@@ -41,6 +41,7 @@ while IFS= read -r skill_md; do
   rel="${skill_md#"$REPO"/}"
   checked=$((checked + 1))
   skill_errors=0
+  split=no
 
   printf '\n%s\n' "$rel"
 
@@ -160,6 +161,25 @@ while IFS= read -r skill_md; do
   if named="$(printf '%s\n' "$method_body" | grep -oiE "$tool_names" | sort -u | tr '\n' ' ')"; [ -n "$named" ]; then
     err "Method names tools ($named) — the practice goes in Method, the calls in Sources"
   fi
+
+  # --- links ---------------------------------------------------------------
+  # Every relative link in the skill's files must resolve. A split skill must also be
+  # self-contained: `npx skills add` copies one skill folder, so a link that leaves it breaks.
+  while IFS= read -r md; do
+    md_dir="$(dirname "$md")"
+    while IFS= read -r target; do
+      [ -n "$target" ] || continue
+      if [ ! -e "$md_dir/$target" ]; then
+        err "broken link in ${md#"$dir"/}: $target"
+      elif [ "$split" = yes ]; then
+        resolved="$(cd "$md_dir/$(dirname "$target")" && pwd)"
+        case "$resolved/" in
+          "$dir"/*) ;;
+          *) err "link leaves the skill folder in ${md#"$dir"/}: $target (copy the file into references/)" ;;
+        esac
+      fi
+    done < <(grep -oE '\]\([^)#[:space:]]+' "$md" | sed 's/^](//' | grep -vE '^[a-z]+:' | sort -u)
+  done < <(find "$dir" -name '*.md' | sort)
 
   # --- companion files ---------------------------------------------------
   [ -f "$dir/agents/openai.yaml" ] || err "missing agents/openai.yaml (Codex/ChatGPT interface)"

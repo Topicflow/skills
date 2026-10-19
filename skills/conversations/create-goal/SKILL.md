@@ -22,7 +22,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
-- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **Every key result has a number or an unambiguous done-state** (P11). A goal with no measure is
   not created — sharpen it first or do not send it.
 - **Every quantitative key result has its real scale.** Set the current baseline and target in the
@@ -40,7 +40,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 - **Challenging but real** (P11). A goal that will certainly happen anyway is a task; say so
   rather than dressing it up.
 - **Use real choices.** For the owner and final approval, follow the
-  [portable choice controls](../../references/interaction-controls.md); never render bracketed
+  [portable choice controls](../../../references/interaction-controls.md); never render bracketed
   labels as controls.
 
 ## Method
@@ -125,7 +125,7 @@ in the goal record.
 
 The goal in plain text — outcome, key results with their `start → end` values and units, owner,
 due date, and **Average Progress of Key Results & Aligned Goals** — then use the [portable choice
-controls](../../references/interaction-controls.md) to ask whether to create it, edit it, or make
+controls](../../../references/interaction-controls.md) to ask whether to create it, edit it, or make
 it a 1-on-1 topic instead.
 
 ## Worked example
