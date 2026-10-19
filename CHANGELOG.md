@@ -5,6 +5,18 @@ All notable changes to this library are documented here. Versions follow
 
 ## Unreleased
 
+- **Fixed: broken links in six skills.** `give-recognition`, `prep-1on1`, `goal-checkin`,
+  `direct-report-interview`, `give-feedback` and `create-goal` pointed at `../../references/`, so
+  the connection prompt and the choice controls did not resolve. The checker now fails on any
+  relative link that does not resolve.
+- **Pilot: `give-recognition` in the split shape.** `SKILL.md` keeps the steps (115 body lines,
+  was 164); the calls and withheld conclusions move to `references/sources.md`, and four worked
+  examples (was one) to `references/examples.md`. The folder carries generated copies of the
+  connection prompt and the choice controls, so it works when installed on its own. The private
+  path now names its call, `create_feedback`, which the Method already used.
+- **`references/connect-topicflow.md`** now holds the connection prompt;
+  `topicflow-tools.md` points to it.
+
 - **New: `setup-review-cycle`.** Sets up a draft review cycle for an HR admin from one of six
   templates in `references/review-templates.md`, or from a copy of an earlier cycle. Recommends
   the questions, the one rating, talent indicators, calibration and peer settings, each with its

@@ -49,6 +49,12 @@ fails at 165. One worked example at the end. `agents/openai.yaml` for Codex / Ch
 A skill may add one support file next to `SKILL.md` (like prep-1on1's `questions.md`) when the
 body budget cannot hold reference material — linked from the body, loaded on demand.
 
+*Pilot, give-recognition only:* the **split shape**. The skill gets its own `references/` folder:
+`sources.md` holds the calls and withheld conclusions, `examples.md` the worked examples, and
+generated copies of the shared files make the folder work on its own. `SKILL.md` keeps the steps
+and names each file at the step that needs it. Ceiling 135 lines, and no link leaves the folder.
+See the anatomy in `CLAUDE.md`.
+
 **2. Two-part body: the practice, then the calls.** *Method* first — the management practice,
 written so it reads correctly whatever tool serves it. *Sources* second — **the actual Topicflow
 calls the skill makes**, named directly, plus the conclusions it withholds when a call fails or

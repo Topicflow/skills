@@ -15,6 +15,12 @@ PLUGIN_JSON="$REPO/.claude-plugin/plugin.json"
 TARGET_BODY_LINES=150
 MAX_BODY_LINES=165
 
+# Split shape (pilot): a skill with its own references/ folder keeps the steps in SKILL.md and
+# moves the call detail to references/sources.md and the worked examples to
+# references/examples.md. Its body budget is smaller, and it must not link outside its folder.
+SPLIT_TARGET_BODY_LINES=120
+SPLIT_MAX_BODY_LINES=135
+
 # Reference-style skills: no Method/Sources/Gate/Output, no eval cases. The current catalog has
 # none; the management rules live in references/ rather than as a user-facing skill.
 REFERENCE_SKILLS=""
@@ -42,6 +48,7 @@ while IFS= read -r skill_md; do
   checked=$((checked + 1))
   skill_errors=0
   split=no
+  [ -d "$dir/references" ] && split=yes
 
   printf '\n%s\n' "$rel"
 
@@ -101,10 +108,12 @@ while IFS= read -r skill_md; do
   # --- body length --------------------------------------------------------
   total_lines="$(wc -l < "$skill_md" | tr -d ' ')"
   body_lines=$((total_lines - fm_end))
-  if [ "$body_lines" -gt "$MAX_BODY_LINES" ]; then
-    err "body is $body_lines lines, over the $MAX_BODY_LINES-line ceiling"
-  elif [ "$body_lines" -gt "$TARGET_BODY_LINES" ]; then
-    warn "body is $body_lines lines, over the ~$TARGET_BODY_LINES-line target"
+  target="$TARGET_BODY_LINES"; ceiling="$MAX_BODY_LINES"
+  if [ "$split" = yes ]; then target="$SPLIT_TARGET_BODY_LINES"; ceiling="$SPLIT_MAX_BODY_LINES"; fi
+  if [ "$body_lines" -gt "$ceiling" ]; then
+    err "body is $body_lines lines, over the $ceiling-line ceiling"
+  elif [ "$body_lines" -gt "$target" ]; then
+    warn "body is $body_lines lines, over the ~$target-line target"
   fi
 
   # --- required sections --------------------------------------------------
@@ -112,9 +121,15 @@ while IFS= read -r skill_md; do
     grep -q '^## Worked example' "$skill_md" \
       || warn "reference skill has no '## Worked example'"
   else
-    for section in "## When to use" "## Non-negotiables" "## Method" "## Sources" "## Output" "## Worked example"; do
+    for section in "## When to use" "## Non-negotiables" "## Method" "## Sources" "## Output"; do
       grep -q "^$section" "$skill_md" || err "missing section '$section'"
     done
+    if [ "$split" = yes ]; then
+      [ -f "$dir/references/sources.md" ] || err "split skill has no references/sources.md"
+      [ -f "$dir/references/examples.md" ] || err "split skill has no references/examples.md"
+    else
+      grep -q '^## Worked example' "$skill_md" || err "missing section '## Worked example'"
+    fi
     # Gate is required, even to say it does not apply.
     grep -q '^## Gate' "$skill_md" || err "missing section '## Gate' (say 'not applicable' if it is)"
     case " $NO_WRITEBACK_SECTION " in
@@ -146,10 +161,15 @@ while IFS= read -r skill_md; do
   #   1. the Sources section points at the data-source reference
   #   2. no tool name appears inside Method
   # Neither can verify the calls are the *right* ones — that is review.
-  if grep -q '^## Sources' "$skill_md" && ! grep -q 'data-sources.md' "$skill_md"; then
+  sources_file="$skill_md"
+  [ "$split" = yes ] && [ -f "$dir/references/sources.md" ] && sources_file="$dir/references/sources.md"
+  if grep -q '^## Sources' "$skill_md" && ! grep -q 'data-sources.md' "$sources_file"; then
     err "Sources does not reference data-sources.md (name the calls and what they withhold)"
   fi
-  if grep -q '^## Sources' "$skill_md" && ! grep -q 'topicflow-tools.md' "$skill_md"; then
+  if [ "$split" = yes ]; then
+    [ -f "$dir/references/connect-topicflow.md" ] \
+      || err "split skill has no references/connect-topicflow.md (run scripts/sync-shared-references.sh)"
+  elif grep -q '^## Sources' "$skill_md" && ! grep -q 'topicflow-tools.md' "$skill_md"; then
     err "Sources does not reference topicflow-tools.md (include the MCP connection contract)"
   fi
   if ! grep -q '\*\*Topicflow first\.\*\*' "$skill_md"; then
@@ -209,10 +229,13 @@ done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -
 # --- repo-level checks ---------------------------------------------------
 printf '\n--- repo ---\n'
 for f in references/management-rules.md references/library-conventions.md \
-         references/interaction-controls.md references/topicflow-tools.md README.md CLAUDE.md LICENSE; do
+         references/interaction-controls.md references/topicflow-tools.md \
+         references/connect-topicflow.md README.md CLAUDE.md LICENSE; do
   [ -f "$REPO/$f" ] || err "missing $f"
 done
 "$REPO/scripts/check-version.sh" || err "version surfaces are inconsistent"
+"$REPO/scripts/sync-shared-references.sh" --check \
+  || err "shared references in a skill folder are out of date (run scripts/sync-shared-references.sh)"
 
 # Every eval file should correspond to a skill.
 while IFS= read -r eval_md; do
