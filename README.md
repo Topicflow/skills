@@ -238,6 +238,7 @@ references/
   library-conventions.md    the rules every skill follows
   data-sources.md           the nine kinds of data, the call for each, what it withholds
   topicflow-tools.md        full parameters, the write pattern, and the missing tools
+  connect-topicflow.md      the connection prompt every skill shows when Topicflow is missing
 skills/
   conversations/  foundations/  admin/   the installed skills
   later/                           parked skills, not installed
@@ -245,6 +246,7 @@ evals/                      5 cases per skill; evals/later/ mirrors skills/later
 .out-of-scope/              designs we considered and rejected, with reasons
 scripts/
   check-skills.sh           conformance check — run before committing
+  sync-shared-references.sh copies shared references into skills that carry their own
   link-skills.sh            dev-only: symlink skills into your local agent
 ```
 

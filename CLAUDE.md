@@ -38,6 +38,22 @@ skills/<category>/<skill-name>/
 skills/later/          parked skills — written, not installed, skipped by the checker
 ```
 
+**Pilot: the split shape** (give-recognition only, for now). A skill with its own `references/`
+folder keeps the steps in `SKILL.md` and moves the detail beside it, so the one folder works
+when `npx skills add` copies it alone:
+
+```
+skills/<category>/<skill-name>/
+  SKILL.md                         steps only: Method, Non-negotiables, Sources as call names
+  references/sources.md            the calls, their parameters, the withheld conclusions
+  references/examples.md           the worked examples, read before the first draft
+  references/connect-topicflow.md  generated copy — edit references/, then run
+  references/interaction-controls.md  scripts/sync-shared-references.sh
+```
+
+No link may leave the folder. The checker enforces that, a body ceiling of 135 lines, and that
+the generated copies match their sources.
+
 `SKILL.md` frontmatter carries **`name`, `description`, and nothing else** — with one exception:
 user-invoked skills add `disable-model-invocation: true`. That key decides the description style.
 A *model-invoked* description does double duty: it says what the skill does *and* carries the

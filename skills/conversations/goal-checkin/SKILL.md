@@ -25,7 +25,7 @@ Rules: [management-rules.md](../../../references/management-rules.md).
 
 ## Non-negotiables
 
-- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **A check-in belongs to the goal's owner.** Never post on someone else's goal; when a manager
   raises a report's goal, the action is a 1-on-1 topic or a nudge to the report (P15). The one
   exception: the manager explicitly asks, and is told plainly whose name it appears under.
@@ -110,7 +110,7 @@ new-to facts surfaced along the way go the same route.
 ## Output
 
 The check-in text, the key-result values that change, and any status change with its reason. Then
-use the [portable choice controls](../../references/interaction-controls.md) to offer post, edit,
+use the [portable choice controls](../../../references/interaction-controls.md) to offer post, edit,
 or make it a 1-on-1 topic instead.
 
 ## Worked example

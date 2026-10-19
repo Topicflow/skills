@@ -22,7 +22,7 @@ Question bank, per lane and chair, with sources: [questions.md](questions.md).
 
 ## Non-negotiables
 
-- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../references/topicflow-tools.md).
+- **Topicflow first.** If no Topicflow MCP tool is exposed, stop and use [the connection prompt](../../../references/topicflow-tools.md).
 - **Three lanes, every agenda.** *The work* — blockers and decisions. *The person* — how they are
   actually doing. *The direction* — growth, career, feedback in both directions. The work lane
   never takes more than half the topics; the person and direction lanes get at least one topic
@@ -130,7 +130,7 @@ loud — via `save-private-note`. On a silent run, findings are still written ba
 ## Output
 
 Plain text, no tables, third person about people. Each topic is a question with a one-line why.
-Then use the [portable choice controls](../../references/interaction-controls.md) to offer add to
+Then use the [portable choice controls](../../../references/interaction-controls.md) to offer add to
 the meeting, edit, or skip.
 
 ## Worked example
